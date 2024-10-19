@@ -250,7 +250,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - name: Add Android targets
         # could add more targets like armv7-linux-androideabi here (then also add to cargo-apk config)
-        run: rustup target add aarch64-linux-android
+        run: rustup target add aarch64-linux-android aarch64-linux-android i686-linux-android x86_64-linux-android
       - name: Install Cargo APK
         run: cargo install --force cargo-apk
       - name: Build app for Android
