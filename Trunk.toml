@@ -1,6 +1,3 @@
-# A sem-ver version requirement of trunk required for this project
-trunk-version = "0.20.3"
-
 [build]
 # The index HTML file to drive the bundling process.
 target = "web/index.html"
