@@ -115,7 +115,7 @@ jobs:
           tag: ${{ env.VERSION }}
           overwrite: true
 
-    build-windows:
+  build-windows:
     runs-on: windows-latest
     needs: get-version
     env:
