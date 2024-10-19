@@ -20,13 +20,10 @@ pub(super) fn plugin(app: &mut App) {
             WireframePlugin,
             PanOrbitCameraPlugin,
         ))
-        .add_systems(Startup, startup)
+        .add_systems(OnEnter(Screen::Pipeline), startup)
         .add_systems(
             Update,
-            (
-                toggle_wireframe,
-                manage_chunks,
-            ).run_if(in_state(Screen::Playing)),
+            (toggle_wireframe, manage_chunks).run_if(in_state(Screen::Playing)),
         );
 }
 

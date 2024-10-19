@@ -145,7 +145,7 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
                         normal: Color::NONE,
                         hovered: Color::linear_rgb(0.25, 0.25, 0.25),
                     },
-                    OpenLink("https://github.com/NiklasEi/bevy_game_template"),
+                    OpenLink("https://github.com/heydocode/limitpush"),
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(

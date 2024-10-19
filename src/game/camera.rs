@@ -6,10 +6,8 @@ use crate::states::screens::Screen;
 use super::player::Player;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_systems(Update, (
-        player_camera, 
-    ).run_if(in_state(Screen::Playing)));
-    app.add_systems(OnEnter(Screen::Loading), spawn_camera);
+    app.add_systems(Update, (player_camera,).run_if(in_state(Screen::Playing)));
+    app.add_systems(Startup, spawn_camera);
 }
 
 #[derive(Component)]
@@ -59,7 +57,8 @@ fn player_camera(
             let camera_position = camera_transform.translation;
 
             // Ideal camera position behind the player with a specific distance
-            let ideal_position = player_position - Vec3::new(0.0, 0.0, main_camera.ideal_distance as f32);
+            let ideal_position =
+                player_position - Vec3::new(0.0, 0.0, main_camera.ideal_distance as f32);
 
             // Adjust height based on player movement
             let dynamic_height = player_transform.translation.y + main_camera.height_offset;

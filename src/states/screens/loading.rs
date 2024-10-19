@@ -6,21 +6,24 @@ use bevy_kira_audio::AudioSource;
 use bevy_vector_shapes::prelude::*;
 use std::f32::consts::TAU;
 
+use super::cleanup;
+
 /// This plugin loads all assets using [`AssetLoader`] from a third party bevy plugin
 /// Alternatively you can write the logic to load assets yourself
 /// If interested, take a look at <https://bevy-cheatbook.github.io/features/assets.html>
 pub(super) fn plugin(app: &mut App) {
     app.add_plugins(ShapePlugin::default());
+    app.add_systems(OnExit(Screen::Loading), cleanup::<LoadingOnly>);
+    app.add_systems(OnEnter(Screen::Loading), setup_loading_screen);
     app.add_systems(
         Update,
         draw_loading_screen.run_if(in_state(Screen::Loading)),
     );
-    app.add_systems(OnExit(Screen::Loading), remove_loading_screen);
 
     // Linking Screen::Loading with the loading assets logic
     app.add_loading_state(
         LoadingState::new(Screen::Loading)
-            .continue_to_state(Screen::Menu)
+            .continue_to_state(Screen::Pipeline)
             .load_collection::<AudioAssets>()
             .load_collection::<TextureAssets>()
             .load_collection::<PlayerAssets>(),
@@ -55,6 +58,9 @@ pub struct PlayerAssets {
 // ---------------------------------------------------------------------------------------------------------------------------------
 // ------------- LOADING SCREEN ------------- LOADING SCREEN ------------- LOADING SCREEN ------------- LOADING SCREEN -------------
 // ---------------------------------------------------------------------------------------------------------------------------------
+
+#[derive(Component)]
+pub struct LoadingOnly;
 
 pub trait Pastel {
     fn pastel(&self) -> Srgba;
@@ -91,5 +97,11 @@ pub fn gallery(mut painter: ShapePainter, seconds: f32) {
     painter.circle(1.5 * circle_fill);
 }
 
-/// This function removes the loading screen interface
-fn remove_loading_screen() {}
+fn setup_loading_screen(
+    mut commands: Commands,
+) {
+    commands.spawn((
+        TextBundle::from_section("Assets loading...".to_string(), TextStyle::default()),
+        LoadingOnly,
+    ));
+}

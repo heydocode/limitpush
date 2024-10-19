@@ -22,20 +22,18 @@ pub fn start_audio(
     audio: Res<Audio>,
     state: Res<State<Screen>>,
 ) {
-    // audio.pause();
-    if state.get() == &Screen::Playing {
-        let handle = audio
+    let handle = match *state.get() {
+        Screen::Playing => audio
             .play(audio_assets.flying.clone())
             .looped()
             .with_volume(0.01)
-            .handle();
-        commands.insert_resource(BackgroundAudio(handle));
-    } else {
-        eprintln!("An error occured: tried to start background music not on Playing state!");
-    }
+            .handle(),
+        _ => return
+    };
+    commands.insert_resource(BackgroundAudio(handle));
 }
 
-pub fn control_flying_sound(
+pub fn toggle_audio(
     audio: Res<BackgroundAudio>,
     mut audio_instances: ResMut<Assets<AudioInstance>>,
 ) {

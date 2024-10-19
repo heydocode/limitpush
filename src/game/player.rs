@@ -4,7 +4,7 @@ use bevy::prelude::*;
 use crate::states::screens::{loading::PlayerAssets, Screen};
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_systems(OnEnter(Screen::Playing), spawn_player);
+    app.add_systems(OnEnter(Screen::Pipeline), spawn_player);
     app.add_systems(Update, apply_movement.run_if(in_state(Screen::Playing)));
 }
 
@@ -37,8 +37,8 @@ fn spawn_player(mut commands: Commands, player_assets: Res<PlayerAssets>) {
 }
 
 fn apply_movement(
-    input: Res<ButtonInput<KeyCode>>, 
-    mut players: Query<&mut Transform, With<Player>>
+    input: Res<ButtonInput<KeyCode>>,
+    mut players: Query<&mut Transform, With<Player>>,
 ) {
     let mut direction = Vec3::ZERO;
     if input.pressed(KeyCode::KeyW) {

@@ -88,6 +88,7 @@ noise = "0.9.0"
 
 # Camera control for the player
 bevy_panorbit_camera = "0.19.3"
+bevy_pipelines_ready = "0.4.0"
 
 [build-dependencies]
 # Embedding resources such as icons or manifest files in Windows binaries

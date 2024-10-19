@@ -74,7 +74,7 @@ impl Plugin for GamePlugin {
         // 2. `InternalAudioPlugin`: Manages the audio (e.g., background music, sound effects).
         // 3. `game::plugin`: Handles the core game logic, such as player movement and animations.
         app.add_plugins((
-            states::plugin,     // Plugin for screen (UI) management.
+            states::plugin,      // Plugin for screen (UI) management.
             InternalAudioPlugin, // Plugin for handling audio in the game.
             game::plugin,        // Plugin for the core game mechanics.
         ));

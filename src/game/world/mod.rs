@@ -6,9 +6,7 @@ use levels::openworld::Terrain;
 pub mod levels;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_plugins((
-        levels::plugin,
-    ));
+    app.add_plugins((levels::plugin,));
 }
 
 #[derive(Bundle)]
