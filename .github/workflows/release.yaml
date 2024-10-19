@@ -36,7 +36,7 @@ jobs:
     env:
       # macOS 11.0 Big Sur is the first version to support universal binaries
       MACOSX_DEPLOYMENT_TARGET: 11.0
-      VERSION: ${{needs.get-version.outputs.version}}
+      VERSION: ${{ needs.get-version.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-version
     env:
-      VERSION: ${{needs.get-version.outputs.version}}
+      VERSION: ${{ needs.get-version.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -119,7 +119,7 @@ jobs:
     runs-on: windows-latest
     needs: get-version
     env:
-      VERSION: ${{needs.get-version.outputs.version}}
+      VERSION: ${{ needs.get-version.outputs.version }}
       BUILD_INSTALLER: ${{ false }}
     steps:
       - name: Checkout repository
@@ -171,7 +171,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-version
     env:
-      VERSION: ${{needs.get-version.outputs.version}}
+      VERSION: ${{ needs.get-version.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -215,7 +215,7 @@ jobs:
     timeout-minutes: 30
     needs: get-version
     env:
-      VERSION: ${{needs.get-version.outputs.version}}
+      VERSION: ${{ needs.get-version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -244,18 +244,15 @@ jobs:
     timeout-minutes: 30
     needs: get-version
     env:
-      VERSION: ${{needs.get-version.outputs.version}}
+      VERSION: ${{ needs.get-version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - name: Add Android targets
-        # could add more targets like armv7-linux-androideabi here (then also add to cargo-apk config)
-        run: rustup target add aarch64-linux-android aarch64-linux-android i686-linux-android x86_64-linux-android
+        run: rustup target add armv7-linux-androideabi aarch64-linux-android i686-linux-android x86_64-linux-android
       - name: Install Cargo APK
         run: cargo install --force cargo-apk
       - name: Build app for Android
-        # This uses a debug build, since release builds require keystore configuration
-        # For AAB builds that can be pushed to the Play store, see the release-android-google-play workflow.
         run: ANDROID_NDK_ROOT=$ANDROID_NDK_LATEST_HOME cargo apk build --package mobile
       - name: Upload release
         uses: svenstaro/upload-release-action@v2
