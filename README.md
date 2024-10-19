@@ -1,6 +1,3 @@
-Here's the complete `README.md` for your LimitPush project:
-
-```markdown
 # LimitPush
 
 LimitPush is a cross-platform 3D game developed using Bevy. This project focuses on enhancing gameplay performance and implementing an engaging player camera system.
