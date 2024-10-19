@@ -1,0 +1,264 @@
+use bevy::{
+    color::palettes::tailwind::*,
+    ecs::world::Command,
+    pbr::wireframe::{Wireframe, WireframePlugin},
+    prelude::*,
+    render::mesh::VertexAttributeValues,
+    utils::HashMap,
+};
+use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
+use noise::{BasicMulti, NoiseFn, Perlin};
+use std::f32::consts::PI;
+
+use crate::game::{camera::MainCamera, player::Player};
+
+pub(super) fn plugin(app: &mut App) {
+    app.insert_resource(TerrainStore(HashMap::default()))
+        .add_plugins((
+            // You need to add this plugin to enable wireframe rendering
+            WireframePlugin,
+            PanOrbitCameraPlugin,
+        ))
+        .add_systems(Startup, startup)
+        .add_systems(
+            Update,
+            (
+                toggle_wireframe,
+                sync_camera_to_ship,
+                manage_chunks,
+                control_ship,
+            ),
+        );
+}
+
+fn startup(mut commands: Commands) {
+    commands.add(SpawnTerrain(IVec2::new(-1, -1)));
+    commands.add(SpawnTerrain(IVec2::new(-1, 0)));
+    commands.add(SpawnTerrain(IVec2::new(-1, 1)));
+    commands.add(SpawnTerrain(IVec2::new(0, -1)));
+    commands.add(SpawnTerrain(IVec2::new(0, 0)));
+    commands.add(SpawnTerrain(IVec2::new(0, 1)));
+    commands.add(SpawnTerrain(IVec2::new(1, -1)));
+    commands.add(SpawnTerrain(IVec2::new(1, 0)));
+    commands.add(SpawnTerrain(IVec2::new(1, 1)));
+
+    // directional 'sun' light
+    commands.spawn(DirectionalLightBundle {
+        directional_light: DirectionalLight {
+            illuminance: light_consts::lux::OVERCAST_DAY,
+            shadows_enabled: true,
+            ..default()
+        },
+        transform: Transform {
+            translation: Vec3::new(0.0, 2.0, 0.0),
+            rotation: Quat::from_rotation_x(-PI / 4.),
+            ..default()
+        },
+        ..default()
+    });
+}
+
+#[derive(Resource)]
+struct TerrainStore(HashMap<IVec2, Handle<Mesh>>);
+
+struct SpawnTerrain(IVec2);
+
+impl Command for SpawnTerrain {
+    fn apply(self, world: &mut World) {
+        if world
+            .get_resource_mut::<TerrainStore>()
+            .expect("TerrainStore to be available")
+            .0
+            .get(&self.0)
+            .is_some()
+        {
+            // mesh already exists
+            // do nothing for now
+            warn!("mesh {} already exists", self.0);
+            return;
+        };
+
+        let terrain_height = 70.;
+        let noise = BasicMulti::<Perlin>::new(900);
+        let mesh_size = 1000.;
+
+        let mut terrain = Mesh::from(
+            Plane3d::default()
+                .mesh()
+                .size(mesh_size, mesh_size)
+                .subdivisions(200),
+        );
+
+        if let Some(VertexAttributeValues::Float32x3(positions)) =
+            terrain.attribute_mut(Mesh::ATTRIBUTE_POSITION)
+        {
+            for pos in positions.iter_mut() {
+                let val = noise.get([
+                    (pos[0] as f64 + (mesh_size as f64 * self.0.x as f64)) / 300.,
+                    (pos[2] as f64 + (mesh_size as f64 * self.0.y as f64)) / 300.,
+                ]);
+
+                pos[1] = val as f32 * terrain_height;
+            }
+
+            let colors: Vec<[f32; 4]> = positions
+                .iter()
+                .map(|[_, g, _]| {
+                    let g = *g / terrain_height * 2.;
+
+                    if g > 0.8 {
+                        (Color::LinearRgba(LinearRgba {
+                            red: 20.,
+                            green: 20.,
+                            blue: 20.,
+                            alpha: 1.,
+                        }))
+                        .to_linear()
+                        .to_f32_array()
+                    } else if g > 0.3 {
+                        Color::from(AMBER_800).to_linear().to_f32_array()
+                    } else if g < -0.8 {
+                        Color::BLACK.to_linear().to_f32_array()
+                    } else {
+                        (Color::from(GREEN_400).to_linear()).to_f32_array()
+                    }
+                })
+                .collect();
+            terrain.insert_attribute(Mesh::ATTRIBUTE_COLOR, colors);
+        }
+        terrain.compute_normals();
+
+        let mesh = world
+            .get_resource_mut::<Assets<Mesh>>()
+            .expect("meshes db to be available")
+            .add(terrain);
+        let material = world
+            .get_resource_mut::<Assets<StandardMaterial>>()
+            .expect("StandardMaterial db to be available")
+            .add(Color::WHITE);
+
+        world
+            .get_resource_mut::<TerrainStore>()
+            .expect("TerrainStore to be available")
+            .0
+            .insert(self.0, mesh.clone());
+
+        world.spawn((
+            PbrBundle {
+                mesh,
+                material,
+                transform: Transform::from_xyz(
+                    self.0.x as f32 * mesh_size,
+                    0.,
+                    self.0.y as f32 * mesh_size,
+                ),
+                ..default()
+            },
+            Terrain,
+        ));
+    }
+}
+
+fn manage_chunks(
+    mut commands: Commands,
+    mut current_chunk: Local<IVec2>,
+    ship: Query<&Transform, With<Player>>,
+    mut terrain_store: ResMut<TerrainStore>,
+    terrain_entities: Query<(Entity, &Handle<Mesh>), With<Terrain>>,
+) {
+    // same as mesh_size for us
+    let chunk_size = 1000.;
+
+    let Ok(transform) = ship.get_single() else {
+        warn!("no ship!");
+        return;
+    };
+
+    let xz = (transform.translation.xz() / chunk_size).trunc().as_ivec2();
+
+    if *current_chunk != xz {
+        *current_chunk = xz;
+        let chunks_to_render = [
+            *current_chunk + IVec2::new(-1, -1),
+            *current_chunk + IVec2::new(-1, 0),
+            *current_chunk + IVec2::new(-1, 1),
+            *current_chunk + IVec2::new(0, -1),
+            *current_chunk + IVec2::new(0, 0),
+            *current_chunk + IVec2::new(0, 1),
+            *current_chunk + IVec2::new(1, -1),
+            *current_chunk + IVec2::new(1, 0),
+            *current_chunk + IVec2::new(1, 1),
+        ];
+        // extract_if is perfect here, but its nightly
+        let chunks_to_despawn: Vec<(IVec2, Handle<Mesh>)> = terrain_store
+            .0
+            .clone()
+            .into_iter()
+            .filter(|(key, _)| !chunks_to_render.contains(key))
+            .collect();
+
+        for (chunk, mesh) in chunks_to_despawn {
+            let Some((entity, _)) = terrain_entities.iter().find(|(_, handle)| handle == &&mesh)
+            else {
+                continue;
+            };
+            commands.entity(entity).despawn_recursive();
+            terrain_store.0.remove(&chunk);
+        }
+
+        for chunk in chunks_to_render {
+            commands.add(SpawnTerrain(chunk));
+        }
+    }
+}
+
+#[derive(Component)]
+struct Terrain;
+
+fn toggle_wireframe(
+    mut commands: Commands,
+    landscapes_wireframes: Query<Entity, (With<Terrain>, With<Wireframe>)>,
+    landscapes: Query<Entity, (With<Terrain>, Without<Wireframe>)>,
+    input: Res<ButtonInput<KeyCode>>,
+) {
+    if input.just_pressed(KeyCode::Space) {
+        for terrain in &landscapes {
+            commands.entity(terrain).insert(Wireframe);
+        }
+        for terrain in &landscapes_wireframes {
+            commands.entity(terrain).remove::<Wireframe>();
+        }
+    }
+}
+
+fn control_ship(input: Res<ButtonInput<KeyCode>>, mut ships: Query<&mut Transform, With<Player>>) {
+    let mut direction = Vec2::new(0., 0.);
+    if input.pressed(KeyCode::KeyW) {
+        direction.y += 1.;
+    }
+    if input.pressed(KeyCode::KeyS) {
+        direction.y -= 1.;
+    }
+    if input.pressed(KeyCode::KeyA) {
+        direction.x += 1.;
+    }
+    if input.pressed(KeyCode::KeyD) {
+        direction.x -= 1.;
+    }
+    for mut ship in &mut ships {
+        ship.translation.x += direction.x * 1.;
+        ship.translation.z += direction.y * 5.;
+    }
+}
+
+fn sync_camera_to_ship(
+    ships: Query<&Transform, (With<Player>, Without<MainCamera>)>,
+    mut camera: Query<&mut PanOrbitCamera, With<MainCamera>>,
+) {
+    let Ok(ship) = ships.get_single() else {
+        return;
+    };
+    let mut orbit = camera.single_mut();
+
+    orbit.target_focus = Vec3::new(ship.translation.x, ship.translation.y, ship.translation.z);
+}
