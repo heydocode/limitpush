@@ -89,9 +89,6 @@ noise = "0.9.0"
 # Camera control for the player
 bevy_panorbit_camera = "0.19.3"
 
-# Physics engine for 3D
-avian3d = "0.1.2"
-
 [build-dependencies]
 # Embedding resources such as icons or manifest files in Windows binaries
 embed-resource = "2.5.0"

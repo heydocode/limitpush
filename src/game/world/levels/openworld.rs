@@ -1,4 +1,4 @@
-use avian3d::prelude::{Collider, RigidBody};
+// use avian3d::prelude::{Collider, RigidBody};
 use bevy::{
     color::palettes::tailwind::*,
     ecs::world::Command,
@@ -158,10 +158,10 @@ impl Command for SpawnTerrain {
             },
             Terrain,
             Name::new("Procedurally-generated terrain"),
-            RigidBody::Static,
-            Collider::convex_decomposition_from_mesh(&Mesh::from(terrain)).unwrap(),
+            // RigidBody::Static,
+            // Collider::convex_decomposition_from_mesh(&Mesh::from(terrain)).unwrap(),
         ));
-        eprintln!("The plane mesh isn't a real 3D mesh so there is no active collider...");
+        // eprintln!("The plane mesh isn't a real 3D mesh so there is no active collider...");
     }
 }
 

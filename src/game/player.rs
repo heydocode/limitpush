@@ -1,4 +1,4 @@
-use avian3d::prelude::{Collider, RigidBody};
+// use avian3d::prelude::{Collider, RigidBody};
 use bevy::prelude::*;
 
 use crate::states::screens::{loading::PlayerAssets, Screen};
@@ -29,8 +29,8 @@ fn spawn_player(mut commands: Commands, player_assets: Res<PlayerAssets>) {
             max_speed: 8.0,
             jump_intensity: 10.0,
         },
-        RigidBody::Dynamic,
-        Collider::capsule(2.0, 2.0),
+        // RigidBody::Dynamic,
+        // Collider::capsule(2.0, 2.0),
     );
 
     commands.spawn(player);

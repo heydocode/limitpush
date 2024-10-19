@@ -1,6 +1,6 @@
 use bevy::prelude::*;
-use avian3d::prelude::Collider;
-use avian3d::prelude::RigidBody;
+// use avian3d::prelude::Collider;
+// use avian3d::prelude::RigidBody;
 use levels::openworld::Terrain;
 
 pub mod levels;
@@ -16,6 +16,6 @@ pub struct TerrainBundle {
     pub terrain: Terrain,
     pub pbr: PbrBundle,
     pub name: Name,
-    pub body: RigidBody,
-    pub collider: Collider,
+    // pub body: RigidBody,
+    // pub collider: Collider,
 }
