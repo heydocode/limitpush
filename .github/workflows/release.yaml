@@ -241,7 +241,7 @@ jobs:
 
   build-for-Android:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     needs: get-version
     env:
       VERSION: ${{ needs.get-version.outputs.version }}
