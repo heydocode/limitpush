@@ -22,10 +22,6 @@ pub mod window; // This module handles the window logic, including launching fix
 fn main() {
     // Create a new Bevy application instance.
     App::new()
-        // Disable multisampling, which can be used for anti-aliasing.
-        .insert_resource(Msaa::Off)
-        // Set the clear color of the window, which is the background color when nothing is rendered.
-        .insert_resource(ClearColor(Color::linear_rgb(0.4, 0.4, 0.4))) // A grey background color.
         .add_plugins((
             #[cfg(not(target_family = "wasm"))]
             DefaultPlugins // Add default plugins for basic functionality (input handling, rendering, etc.).

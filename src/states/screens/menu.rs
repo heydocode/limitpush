@@ -1,4 +1,4 @@
-use crate::screens::loading::TextureAssets;
+use crate::states::screens::loading::TextureAssets;
 use crate::Screen;
 use bevy::prelude::*;
 

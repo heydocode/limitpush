@@ -44,12 +44,10 @@
 /// This means it works for all targets: desktop, mobile, and web platforms alike.
 pub mod audio; // This module manages the game's audio (e.g., background music, sound effects).
 pub mod game; // This module handles the game logic, including player controls and animations.
-pub mod screens; // This module contains the screen (UI) management logic.
-                 // pub mod window; // This module handles the window logic, including launching fixes and various parameters.
-pub mod world; // This module handles the world (environment) logic, including blenvy crate support.
+pub mod states; // This module contains the screen (UI) management logic.
 
 use crate::audio::InternalAudioPlugin; // Import the custom audio plugin for managing sound.
-use crate::screens::Screen; // Import the Screen state, which manages different game screens (e.g., menu, playing).
+use crate::states::screens::Screen; // Import the Screen state, which manages different game screens (e.g., menu, playing).
 
 use bevy::app::App; // Bevy's core app structure that drives the game engine.
 #[cfg(debug_assertions)]
@@ -76,17 +74,15 @@ impl Plugin for GamePlugin {
         // 2. `InternalAudioPlugin`: Manages the audio (e.g., background music, sound effects).
         // 3. `game::plugin`: Handles the core game logic, such as player movement and animations.
         app.add_plugins((
-            screens::plugin,     // Plugin for screen (UI) management.
+            states::plugin,     // Plugin for screen (UI) management.
             InternalAudioPlugin, // Plugin for handling audio in the game.
             game::plugin,        // Plugin for the core game mechanics.
-            // window::plugin,      // Moved to desktop native codebase
-            world::plugin, // Plugin for environment set
         ));
 
-        app.insert_resource(AmbientLight {
-            color: Color::WHITE,
-            brightness: 2000.,
-        });
+        // Disable multisampling, which can be used for anti-aliasing.
+        app.insert_resource(Msaa::Off);
+        // Set the clear color of the window, which is the background color when nothing is rendered.
+        app.insert_resource(ClearColor(Color::linear_rgb(0.4, 0.4, 0.4))); // A grey background color.
 
         // The following block only runs in debug mode (during development).
         // It adds diagnostic plugins to help developers monitor performance.

@@ -1,3 +1,4 @@
+use avian3d::prelude::{Collider, RigidBody};
 use bevy::{
     color::palettes::tailwind::*,
     ecs::world::Command,
@@ -6,11 +7,11 @@ use bevy::{
     render::mesh::VertexAttributeValues,
     utils::HashMap,
 };
-use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
+use bevy_panorbit_camera::PanOrbitCameraPlugin;
 use noise::{BasicMulti, NoiseFn, Perlin};
 use std::f32::consts::PI;
 
-use crate::game::{camera::MainCamera, player::Player};
+use crate::{game::player::Player, states::screens::Screen};
 
 pub(super) fn plugin(app: &mut App) {
     app.insert_resource(TerrainStore(HashMap::default()))
@@ -24,10 +25,8 @@ pub(super) fn plugin(app: &mut App) {
             Update,
             (
                 toggle_wireframe,
-                sync_camera_to_ship,
                 manage_chunks,
-                control_ship,
-            ),
+            ).run_if(in_state(Screen::Playing)),
         );
 }
 
@@ -86,7 +85,7 @@ impl Command for SpawnTerrain {
             Plane3d::default()
                 .mesh()
                 .size(mesh_size, mesh_size)
-                .subdivisions(200),
+                .subdivisions(50),
         );
 
         if let Some(VertexAttributeValues::Float32x3(positions)) =
@@ -94,8 +93,8 @@ impl Command for SpawnTerrain {
         {
             for pos in positions.iter_mut() {
                 let val = noise.get([
-                    (pos[0] as f64 + (mesh_size as f64 * self.0.x as f64)) / 300.,
-                    (pos[2] as f64 + (mesh_size as f64 * self.0.y as f64)) / 300.,
+                    (pos[0] as f64 + (mesh_size as f64 * self.0.x as f64)) / 300., // From 300. to 500.
+                    (pos[2] as f64 + (mesh_size as f64 * self.0.y as f64)) / 300., // From 300. to 500.
                 ]);
 
                 pos[1] = val as f32 * terrain_height;
@@ -117,10 +116,13 @@ impl Command for SpawnTerrain {
                         .to_f32_array()
                     } else if g > 0.3 {
                         Color::from(AMBER_800).to_linear().to_f32_array()
+                        // Color::from(YELLOW_500).to_linear().to_f32_array()
                     } else if g < -0.8 {
                         Color::BLACK.to_linear().to_f32_array()
+                        // Color::WHITE.to_linear().to_f32_array()
                     } else {
                         (Color::from(GREEN_400).to_linear()).to_f32_array()
+                        // (Color::from(BLUE_400).to_linear()).to_f32_array()
                     }
                 })
                 .collect();
@@ -131,7 +133,7 @@ impl Command for SpawnTerrain {
         let mesh = world
             .get_resource_mut::<Assets<Mesh>>()
             .expect("meshes db to be available")
-            .add(terrain);
+            .add(terrain.clone());
         let material = world
             .get_resource_mut::<Assets<StandardMaterial>>()
             .expect("StandardMaterial db to be available")
@@ -155,7 +157,11 @@ impl Command for SpawnTerrain {
                 ..default()
             },
             Terrain,
+            Name::new("Procedurally-generated terrain"),
+            RigidBody::Static,
+            Collider::convex_decomposition_from_mesh(&Mesh::from(terrain)).unwrap(),
         ));
+        eprintln!("The plane mesh isn't a real 3D mesh so there is no active collider...");
     }
 }
 
@@ -213,7 +219,7 @@ fn manage_chunks(
 }
 
 #[derive(Component)]
-struct Terrain;
+pub struct Terrain;
 
 fn toggle_wireframe(
     mut commands: Commands,
@@ -229,36 +235,4 @@ fn toggle_wireframe(
             commands.entity(terrain).remove::<Wireframe>();
         }
     }
-}
-
-fn control_ship(input: Res<ButtonInput<KeyCode>>, mut ships: Query<&mut Transform, With<Player>>) {
-    let mut direction = Vec2::new(0., 0.);
-    if input.pressed(KeyCode::KeyW) {
-        direction.y += 1.;
-    }
-    if input.pressed(KeyCode::KeyS) {
-        direction.y -= 1.;
-    }
-    if input.pressed(KeyCode::KeyA) {
-        direction.x += 1.;
-    }
-    if input.pressed(KeyCode::KeyD) {
-        direction.x -= 1.;
-    }
-    for mut ship in &mut ships {
-        ship.translation.x += direction.x * 1.;
-        ship.translation.z += direction.y * 5.;
-    }
-}
-
-fn sync_camera_to_ship(
-    ships: Query<&Transform, (With<Player>, Without<MainCamera>)>,
-    mut camera: Query<&mut PanOrbitCamera, With<MainCamera>>,
-) {
-    let Ok(ship) = ships.get_single() else {
-        return;
-    };
-    let mut orbit = camera.single_mut();
-
-    orbit.target_focus = Vec3::new(ship.translation.x, ship.translation.y, ship.translation.z);
 }

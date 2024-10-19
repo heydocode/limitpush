@@ -1,4 +1,4 @@
-use crate::screens::loading::AudioAssets;
+use crate::states::screens::loading::AudioAssets;
 use crate::Screen;
 use bevy::prelude::*;
 use bevy_kira_audio::prelude::*;
@@ -27,7 +27,7 @@ pub fn start_audio(
         let handle = audio
             .play(audio_assets.flying.clone())
             .looped()
-            .with_volume(0.3)
+            .with_volume(0.01)
             .handle();
         commands.insert_resource(BackgroundAudio(handle));
     } else {

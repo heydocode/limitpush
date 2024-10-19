@@ -38,9 +38,8 @@ build_targets = [
 ]
 
 [package.metadata.android.sdk]
-min_sdk_version = 14
-target_sdk_version = 35
-max_sdk_version = 34
+min_sdk_version = 7
+max_sdk_version = 35
 
 [package.metadata.android.application]
 icon = "@mipmap/icon"
