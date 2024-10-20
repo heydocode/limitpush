@@ -22,21 +22,27 @@ jobs:
   get-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Get tag
-        id: tag
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+      - name: Get tag or branch
+        id: get_ref
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            version="${GITHUB_REF#refs/tags/}"
+          else
+            version="0.0.0"  # Default version for non-tag builds
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Strip 'v' from version (if exists)
         id: strip_v
         run: |
-          version_without_v="${{ steps.tag.outputs.tag }}"
+          version_without_v="${{ steps.get_ref.outputs.version }}"
           if [[ "$version_without_v" == v* ]]; then
             version_without_v="${version_without_v:1}"
           fi
           echo "version_without_v=$version_without_v" >> "$GITHUB_OUTPUT"
 
     outputs:
-      version: ${{ steps.tag.outputs.tag }}
+      version: ${{ steps.get_ref.outputs.version }}
       version_without_v: ${{ steps.strip_v.outputs.version_without_v }}
 
   build-windows:
