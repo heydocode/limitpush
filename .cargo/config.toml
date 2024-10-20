@@ -2,7 +2,8 @@
 # This needs some workarounds for now
 # See https://github.com/bevyengine/bevy/pull/10178 - remove if it's not needed anymore.
 [target.aarch64-apple-ios-sim]
-rustflags = ["--cfg=ios_simulator"]
+rustflags = ["--cfg=ios_simulator"] 
+
 
 # # # # FROM OFFICIAL BEVY GITHUB # # # #
 #
@@ -71,7 +72,7 @@ rustflags = ["--cfg=ios_simulator"]
 # For more information, see the blog post at <https://blog.rust-lang.org/2023/11/09/parallel-rustc.html>.
 
 [target.x86_64-unknown-linux-gnu]
-linker = "clang"
+# linker = "clang"
 rustflags = [
   # LLD linker
   #
@@ -89,7 +90,7 @@ rustflags = [
   # - Ubuntu: `sudo apt-get install mold clang`
   # - Fedora: `sudo dnf install mold clang`
   # - Arch: `sudo pacman -S mold clang`
-  "-Clink-arg=-fuse-ld=mold",
+  # "-Clink-arg=-fuse-ld=mold",
 
   # Nightly
   # "-Zshare-generics=y",
@@ -102,7 +103,7 @@ rustdocflags = [
   # "-Clink-arg=-fuse-ld=lld",
 
   # Mold linker
-  "-Clink-arg=-fuse-ld=mold",
+  # "-Clink-arg=-fuse-ld=mold",
 ]
 
 [target.x86_64-apple-darwin]
@@ -148,8 +149,8 @@ rustflags = [
 # cargo install -f cargo-binutils
 # rustup component add llvm-tools
 # ```
-linker = "rust-lld.exe"
-rustdocflags = ["-Clinker=rust-lld.exe"]
+# linker = "rust-lld.exe"
+# rustdocflags = ["-Clinker=rust-lld.exe"]
 rustflags = [
   # Nightly
   # "-Zshare-generics=n", # This needs to be off if you use dynamic linking on Windows.
