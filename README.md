@@ -3,7 +3,7 @@
 LimitPush is a cross-platform 3D game developed using Bevy. This project focuses on enhancing gameplay performance and implementing an engaging player camera system.
 
 ## IMPORTANT
-PLEASE TAKE IF NEEDED THE CAMERA SYSTEM WHICH IS LITERALLY AWESOME! Don't forget to pick the `MainCamera` struct with its fields and make this component attached to the player `PbrBundle` (or another Bundle if you've done such). Please enjoy the template and feel free to create an issue if you need help or if there's a problem — I'll be happy to help! :) Also, please commit if you have some improvements to propose! I really love Bevy, and I hope it becomes even more ergonomic!
+Please enjoy the template and feel free to create an issue if you need help or if there's a problem — I'll be happy to help! :) Also, please commit if you have some improvements to propose! I really love Bevy, and I hope it becomes even more ergonomic!
 
 ## Table of Contents
 
