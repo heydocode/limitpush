@@ -35,6 +35,10 @@ fn spawn_camera(mut commands: Commands) {
         },
         PanOrbitCamera {
             modifier_pan: Some(KeyCode::Abort),
+            // Fix all target-specific issues
+            // Indeed, for some reason PanOrbitCamera
+            // works differently on wasm builds...
+            zoom_upper_limit: Some(1000.0),
             ..default()
         },
         RenderLayers::default(),
@@ -72,6 +76,12 @@ fn player_camera(
 
             // Always look at the player
             camera_transform.look_at(player_position, Vec3::Y);
+        } else {
+            #[cfg(all(feature = "dev", not(target_family = "wasm")))]
+            eprintln!("The camera components aren't available");
         }
+    } else {
+        #[cfg(all(feature = "dev", not(target_family = "wasm")))]
+        eprintln!("The player is out of scope and is no more calculated");
     }
 }

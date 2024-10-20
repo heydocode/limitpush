@@ -1,11 +1,7 @@
 // use avian3d::prelude::{Collider, RigidBody};
 use bevy::{
-    color::palettes::tailwind::*,
-    ecs::world::Command,
-    pbr::wireframe::{Wireframe, WireframePlugin},
-    prelude::*,
-    render::mesh::VertexAttributeValues,
-    utils::HashMap,
+    color::palettes::tailwind::*, ecs::world::Command, prelude::*,
+    render::mesh::VertexAttributeValues, utils::HashMap,
 };
 use bevy_panorbit_camera::PanOrbitCameraPlugin;
 use noise::{BasicMulti, NoiseFn, Perlin};
@@ -15,22 +11,9 @@ use crate::{game::player::Player, states::screens::Screen};
 
 pub(super) fn plugin(app: &mut App) {
     app.insert_resource(TerrainStore(HashMap::default()))
-        .add_plugins((
-            // You need to add this plugin to enable wireframe rendering
-            #[cfg(all(feature = "dev", not(target_family = "wasm")))]
-            WireframePlugin,
-            PanOrbitCameraPlugin,
-        ))
+        .add_plugins((PanOrbitCameraPlugin,))
         .add_systems(OnEnter(Screen::Pipeline), startup)
-        .add_systems(
-            Update,
-            (
-                #[cfg(all(feature = "dev", not(target_family = "wasm")))]
-                toggle_wireframe,
-                manage_chunks,
-            )
-                .run_if(in_state(Screen::Playing)),
-        );
+        .add_systems(Update, (manage_chunks,).run_if(in_state(Screen::Playing)));
 }
 
 fn startup(mut commands: Commands) {
@@ -223,19 +206,3 @@ fn manage_chunks(
 
 #[derive(Component)]
 pub struct Terrain;
-
-fn toggle_wireframe(
-    mut commands: Commands,
-    landscapes_wireframes: Query<Entity, (With<Terrain>, With<Wireframe>)>,
-    landscapes: Query<Entity, (With<Terrain>, Without<Wireframe>)>,
-    input: Res<ButtonInput<KeyCode>>,
-) {
-    if input.just_pressed(KeyCode::Space) {
-        for terrain in &landscapes {
-            commands.entity(terrain).insert(Wireframe);
-        }
-        for terrain in &landscapes_wireframes {
-            commands.entity(terrain).remove::<Wireframe>();
-        }
-    }
-}
