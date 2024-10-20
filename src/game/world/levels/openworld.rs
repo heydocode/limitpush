@@ -28,19 +28,22 @@ fn startup(mut commands: Commands) {
     commands.add(SpawnTerrain(IVec2::new(1, 1)));
 
     // directional 'sun' light
-    commands.spawn(DirectionalLightBundle {
-        directional_light: DirectionalLight {
-            illuminance: light_consts::lux::OVERCAST_DAY,
-            shadows_enabled: true,
+    commands.spawn((
+        DirectionalLightBundle {
+            directional_light: DirectionalLight {
+                illuminance: light_consts::lux::OVERCAST_DAY,
+                shadows_enabled: true,
+                ..default()
+            },
+            transform: Transform {
+                translation: Vec3::new(0.0, 2.0, 0.0),
+                rotation: Quat::from_rotation_x(-PI / 4.),
+                ..default()
+            },
             ..default()
         },
-        transform: Transform {
-            translation: Vec3::new(0.0, 2.0, 0.0),
-            rotation: Quat::from_rotation_x(-PI / 4.),
-            ..default()
-        },
-        ..default()
-    });
+        Name::new("Sun"),
+    ));
 }
 
 #[derive(Resource)]

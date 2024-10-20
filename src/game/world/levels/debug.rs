@@ -27,21 +27,10 @@ pub(super) fn plugin(app: &mut App) {
 }
 
 #[cfg(not(target_os = "android"))]
-#[derive(Reflect, Resource)]
+#[derive(Reflect, Resource, Default)]
 #[reflect(Resource)]
 struct Configuration {
-    name: String,
-    toggle: bool,
-}
-
-#[cfg(not(target_os = "android"))]
-impl Default for Configuration {
-    fn default() -> Self {
-        Self {
-            name: "WireFrame".to_string(),
-            toggle: false,
-        }
-    }
+    wireframe_toggle: bool,
 }
 
 fn toggle_wireframe(
@@ -52,7 +41,7 @@ fn toggle_wireframe(
 ) {
     #[cfg(not(target_os = "android"))]
     {
-        if input.toggle {
+        if input.wireframe_toggle {
             for terrain in &landscapes {
                 commands.entity(terrain).insert(Wireframe);
             }
