@@ -30,11 +30,14 @@ codegen-units = 1
 strip = true
 
 [features]
-dev = []
+bevy_egui = []
+dev = [
+    "bevy_egui",
+]
 
 [dependencies]
 # Bevy Engine
-bevy = { version = "0.14", default-features = false, features = [
+bevy = { version = "*", default-features = false, features = [
     "animation",             # Enable animations
     "bevy_state",            # State system
     "bevy_color",            # Color system
@@ -92,8 +95,12 @@ bevy_panorbit_camera = "0.19.3"
 # Pipelines control for the Loading and Pipeline screens
 bevy_pipelines_ready = "0.4.0"
 
+# To test pan_orbit_camera module
+float-cmp = "0.10.0"
+
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 # For dev builds & debugging
+bevy_egui = "0.30.0"
 bevy-inspector-egui = "0.27.0"
 
 [build-dependencies]
