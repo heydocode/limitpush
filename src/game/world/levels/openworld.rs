@@ -102,13 +102,10 @@ impl Command for SpawnTerrain {
                         .to_f32_array()
                     } else if g > 0.3 {
                         Color::from(AMBER_800).to_linear().to_f32_array()
-                        // Color::from(YELLOW_500).to_linear().to_f32_array()
                     } else if g < -0.8 {
                         Color::BLACK.to_linear().to_f32_array()
-                        // Color::WHITE.to_linear().to_f32_array()
                     } else {
-                        (Color::from(GREEN_400).to_linear()).to_f32_array()
-                        // (Color::from(BLUE_400).to_linear()).to_f32_array()
+                        (Color::from(GREEN_700).to_linear()).to_f32_array()
                     }
                 })
                 .collect();
