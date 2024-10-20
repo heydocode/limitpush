@@ -28,7 +28,7 @@ pub fn start_audio(
             .looped()
             .with_volume(0.01)
             .handle(),
-        _ => return
+        _ => return,
     };
     commands.insert_resource(BackgroundAudio(handle));
 }

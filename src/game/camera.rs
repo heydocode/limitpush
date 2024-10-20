@@ -1,8 +1,8 @@
 use bevy::{prelude::*, render::view::RenderLayers};
 use bevy_panorbit_camera::PanOrbitCamera;
 
-use crate::states::screens::Screen;
 use super::player::Player;
+use crate::states::screens::Screen;
 
 pub(super) fn plugin(app: &mut App) {
     app.add_systems(Update, player_camera.run_if(in_state(Screen::Playing)));
@@ -62,7 +62,8 @@ fn player_camera(
 
             // Move the camera smoothly towards the target
             if distance > camera.min_distance {
-                let speed_factor = (distance - camera.min_distance) / (camera.max_distance - camera.min_distance);
+                let speed_factor =
+                    (distance - camera.min_distance) / (camera.max_distance - camera.min_distance);
                 let speed = camera.min_speed + speed_factor * (camera.max_speed - camera.min_speed);
                 camera_transform.translation += direction * speed * time.delta_seconds();
             } else {

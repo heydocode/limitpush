@@ -1,10 +1,10 @@
 use bevy::prelude::*;
 // use avian3d::prelude::Collider;
 // use avian3d::prelude::RigidBody;
-use levels::openworld::Terrain;
 #[cfg(feature = "dev")]
 #[cfg(not(target_family = "wasm"))]
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use levels::openworld::Terrain;
 
 pub mod levels;
 

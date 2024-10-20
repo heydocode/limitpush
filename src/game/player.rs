@@ -38,7 +38,7 @@ fn spawn_player(mut commands: Commands, player_assets: Res<PlayerAssets>) {
 
 fn apply_movement(
     input: Res<ButtonInput<KeyCode>>,
-    mut player_query: Query<&mut Transform, With<Player>>, 
+    mut player_query: Query<&mut Transform, With<Player>>,
 ) {
     let mut transform = player_query.single_mut();
     let mut direction = Vec3::ZERO;

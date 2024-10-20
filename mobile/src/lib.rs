@@ -7,19 +7,20 @@ use limitpush::GamePlugin; // ToDo: Replace bevy_game with your new crate name.
 fn main() {
     App::new()
         .add_plugins((
-            DefaultPlugins.set(WindowPlugin {
-                primary_window: Some(Window {
-                    resizable: false,
-                    mode: WindowMode::BorderlessFullscreen,
+            DefaultPlugins
+                .set(WindowPlugin {
+                    primary_window: Some(Window {
+                        resizable: false,
+                        mode: WindowMode::BorderlessFullscreen,
+                        ..default()
+                    }),
                     ..default()
+                })
+                // Configure the AssetPlugin to never perform asset metadata checks (improving performance).
+                .set(AssetPlugin {
+                    meta_check: AssetMetaCheck::Never,
+                    ..default() // Use default settings for the rest of the AssetPlugin.
                 }),
-                ..default()
-            })
-            // Configure the AssetPlugin to never perform asset metadata checks (improving performance).
-            .set(AssetPlugin {
-                meta_check: AssetMetaCheck::Never,
-                ..default() // Use default settings for the rest of the AssetPlugin.
-            }),
             GamePlugin,
         ))
         .run();

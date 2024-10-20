@@ -97,9 +97,7 @@ pub fn gallery(mut painter: ShapePainter, seconds: f32) {
     painter.circle(1.5 * circle_fill);
 }
 
-fn setup_loading_screen(
-    mut commands: Commands,
-) {
+fn setup_loading_screen(mut commands: Commands) {
     commands.spawn((
         TextBundle::from_section("Assets loading...".to_string(), TextStyle::default()),
         LoadingOnly,

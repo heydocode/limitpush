@@ -26,9 +26,10 @@ pub(super) fn plugin(app: &mut App) {
             Update,
             (
                 #[cfg(all(feature = "dev", not(target_family = "wasm")))]
-                toggle_wireframe, 
+                toggle_wireframe,
                 manage_chunks,
-            ).run_if(in_state(Screen::Playing)),
+            )
+                .run_if(in_state(Screen::Playing)),
         );
 }
 

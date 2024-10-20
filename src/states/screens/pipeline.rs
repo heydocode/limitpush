@@ -23,9 +23,7 @@ pub(super) fn plugin(app: &mut App) {
 
 // Your loading screen should include all of the cameras, lights, and other elements that cause
 // pipelines to be built in your app.
-fn setup_loading_screen(
-    mut commands: Commands,
-) {
+fn setup_loading_screen(mut commands: Commands) {
     commands.spawn((
         TextBundle::from_section("Pipelines loading...".to_string(), TextStyle::default()),
         PipelineOnly,
