@@ -11,9 +11,7 @@ on:
         required: true
         type: string
 
-# ToDo: adapt names
 env:
-  # This variable is used to name release output files.
   GAME_EXECUTABLE_NAME: limitpush
   GAME_OSX_APP_NAME: LimitPush
 
@@ -34,7 +32,6 @@ jobs:
     runs-on: macos-latest
     needs: get-version
     env:
-      # macOS 11.0 Big Sur is the first version to support universal binaries
       MACOSX_DEPLOYMENT_TARGET: 11.0
       VERSION: ${{ needs.get-version.outputs.version }}
     steps:
@@ -251,6 +248,9 @@ jobs:
         run: rustup target add armv7-linux-androideabi aarch64-linux-android
       - name: Install Cargo APK
         run: cargo install --force cargo-apk
+      - name: Install Android SDK Platform
+        run: |
+          echo "y" | sdkmanager "platforms;android-30" # Install Android SDK Platform 30
       - name: Build app for Android
         run: ANDROID_NDK_ROOT=$ANDROID_NDK_LATEST_HOME cargo apk build --package mobile
       - name: Upload release
