@@ -25,9 +25,13 @@ jobs:
       - name: Get tag
         id: tag
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+      - name: Strip v from version (if exists)
+        id: strip_v
+        run: echo "version_without_v=${{ steps.tag.outputs.tag#v }}" >> "$GITHUB_OUTPUT"
     outputs:
-      version: ${{ inputs.version || steps.tag.outputs.tag }}
-
+      version: ${{ steps.tag.outputs.tag }}
+      version_without_v: ${{ steps.strip_v.outputs.version_without_v }}
+      
   build-macOS:
     runs-on: macos-latest
     needs: get-version
@@ -117,6 +121,7 @@ jobs:
     needs: get-version
     env:
       VERSION: ${{ needs.get-version.outputs.version }}
+      VERSION_NO_V: ${{ needs.get-version.outputs.version_without_v }}
       BUILD_INSTALLER: ${{ false }}
     steps:
       - name: Checkout repository
@@ -144,7 +149,7 @@ jobs:
           dest: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
       - name: Create Installer
         if: ${{ env.BUILD_INSTALLER }}
-        run: dotnet build -p:Version=${{ needs.get-version.outputs.version }} -c Release build/windows/installer/Installer.wixproj --output installer
+        run: dotnet build -p:Version=${{ env.VERSION_NO_V }} -c Release build/windows/installer/Installer.wixproj --output installer
       - name: Upload release
         uses: svenstaro/upload-release-action@v2
         with:
