@@ -26,54 +26,50 @@ fn spawn_camera(mut commands: Commands) {
             ..default()
         },
         MainCamera {
-            min_distance: 0.1,
+            min_distance: 0.0,
             min_speed: 0.05,
-            max_distance: 10.0,
-            max_speed: 15.0,
+            max_distance: 8.0,
+            max_speed: 50.0,
             ideal_distance: 7.5,
             height_offset: 2.5,
         },
-        PanOrbitCamera::default(),
+        PanOrbitCamera {
+            modifier_pan: Some(KeyCode::Abort),
+            ..default()
+        },
         RenderLayers::default(),
     ));
 }
 
 fn player_camera(
-    player_query: Query<&Player, With<Player>>, // TODO! WHERE IS THE PROBLEM WHY WHEN THE CAMERA GO AWAY FROM THE PLAYER THE CAMERA DONT GO TO THE PLAYER?
-    mut camera_query: Query<(&mut Transform, &MainCamera), With<MainCamera>>,
+    player_query: Query<&Transform, With<Player>>,
+    mut camera_query: Query<(&mut Transform, &MainCamera), Without<Player>>,
     time: Res<Time>,
 ) {
     if let Ok(player_transform) = player_query.get_single() {
-        let player_position = player_transform.position + Vec3::Y * 3.0;
+        let player_position = player_transform.translation + Vec3::Y * 3.0;
 
         if let Ok((mut camera_transform, camera)) = camera_query.get_single_mut() {
-            // Target position directly behind the player, adjusted for ideal distance
             let target_position = player_position - Vec3::Z * camera.ideal_distance;
             let target_position = Vec3::new(
                 target_position.x,
-                player_transform.position.y + camera.height_offset,
+                player_transform.translation.y + camera.height_offset,
                 target_position.z,
             );
 
-            // Interpolate camera movement using a damping factor for smooth transitions
-            let damping_factor = 0.1;
-            camera_transform.translation = camera_transform
-                .translation
-                .lerp(target_position, damping_factor);
+            let direction = (target_position - camera_transform.translation).normalize();
+            let distance = camera_transform.translation.distance(target_position);
 
-            // Calculate distance and speed factor for camera movement
-            let distance = camera_transform.translation.distance(player_position);
+            // Move the camera smoothly towards the target
             if distance > camera.min_distance {
-                let speed_factor = (distance - camera.min_distance)
-                    / (camera.max_distance - camera.min_distance);
+                let speed_factor = (distance - camera.min_distance) / (camera.max_distance - camera.min_distance);
                 let speed = camera.min_speed + speed_factor * (camera.max_speed - camera.min_speed);
-
-                // Move camera smoothly towards the target
-                let direction = (target_position - camera_transform.translation).normalize();
                 camera_transform.translation += direction * speed * time.delta_seconds();
+            } else {
+                camera_transform.translation = target_position; // Snap to position if close enough
             }
 
-            // Ensure the camera always looks at the player
+            // Always look at the player
             camera_transform.look_at(player_position, Vec3::Y);
         }
     }

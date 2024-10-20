@@ -17,13 +17,18 @@ pub(super) fn plugin(app: &mut App) {
     app.insert_resource(TerrainStore(HashMap::default()))
         .add_plugins((
             // You need to add this plugin to enable wireframe rendering
+            #[cfg(all(feature = "dev", not(target_family = "wasm")))]
             WireframePlugin,
             PanOrbitCameraPlugin,
         ))
         .add_systems(OnEnter(Screen::Pipeline), startup)
         .add_systems(
             Update,
-            (toggle_wireframe, manage_chunks).run_if(in_state(Screen::Playing)),
+            (
+                #[cfg(all(feature = "dev", not(target_family = "wasm")))]
+                toggle_wireframe, 
+                manage_chunks,
+            ).run_if(in_state(Screen::Playing)),
         );
 }
 

@@ -30,7 +30,7 @@ codegen-units = 1
 strip = true
 
 [features]
-dev = ["bevy/dynamic_linking"] # Enable dynamic linking in Bevy for development.
+dev = []
 
 [dependencies]
 # Bevy Engine
@@ -88,7 +88,13 @@ noise = "0.9.0"
 
 # Camera control for the player
 bevy_panorbit_camera = "0.19.3"
+
+# Pipelines control for the Loading and Pipeline screens
 bevy_pipelines_ready = "0.4.0"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+# For dev builds & debugging
+bevy-inspector-egui = "0.27.0"
 
 [build-dependencies]
 # Embedding resources such as icons or manifest files in Windows binaries
