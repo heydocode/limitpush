@@ -18,7 +18,7 @@ use winit::window::Icon; // Importing the Icon type for window icon management.
 
 #[cfg(not(target_family = "wasm"))]
 pub mod window; // This module handles the window logic, including launching fixes and various parameters.
-
+ 
 fn main() {
     // Create a new Bevy application instance.
     App::new()

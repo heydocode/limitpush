@@ -42,3 +42,12 @@ pub fn cleanup<T: Component>(mut commands: Commands, query: Query<Entity, With<T
         commands.entity(entity).despawn_recursive();
     }
 }
+
+/// These objects should despawn on exit of loading state
+#[derive(Component)]
+pub struct LoadingObject;
+
+/// All objects with this component should be invisible until switching
+/// screen from `Loading` to `Playing`
+#[derive(Component)]
+pub struct GameObject;

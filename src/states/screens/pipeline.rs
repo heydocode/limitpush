@@ -6,16 +6,6 @@ use super::{cleanup, Screen};
 #[derive(Component)]
 struct PipelineOnly;
 
-// This value should be found experimentally by logging `PipelinesReady` in your app
-// during normal use and noting the maximum value.
-#[cfg(not(target_arch = "wasm32"))]
-const EXPECTED_PIPELINES: usize = 13;
-// The value will likely differ on the web due to different implementations of some
-// render features.
-#[cfg(all(target_arch = "wasm32", feature = "webgpu", not(feature = "webgl2")))]
-const EXPECTED_PIPELINES: usize = 11;
-// Note: you must add these features to your app. See `Cargo.toml`.
-#[cfg(all(target_arch = "wasm32", feature = "webgl2", not(feature = "webgpu")))]
 const EXPECTED_PIPELINES: usize = 9;
 
 pub(super) fn plugin(app: &mut App) {

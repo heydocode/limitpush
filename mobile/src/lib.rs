@@ -1,6 +1,5 @@
+use bevy::asset::AssetMetaCheck;
 use bevy::prelude::*;
-use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
-use bevy::render::RenderPlugin;
 use bevy::window::WindowMode;
 use limitpush::GamePlugin; // ToDo: Replace bevy_game with your new crate name.
 
@@ -15,6 +14,11 @@ fn main() {
                     ..default()
                 }),
                 ..default()
+            })
+            // Configure the AssetPlugin to never perform asset metadata checks (improving performance).
+            .set(AssetPlugin {
+                meta_check: AssetMetaCheck::Never,
+                ..default() // Use default settings for the rest of the AssetPlugin.
             }),
             GamePlugin,
         ))
