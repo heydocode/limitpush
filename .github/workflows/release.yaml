@@ -25,12 +25,61 @@ jobs:
       - name: Get tag
         id: tag
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
-      - name: Strip v from version (if exists)
+
+      - name: Strip 'v' from version (if exists)
         id: strip_v
-        run: echo "version_without_v=${{ steps.tag.outputs.tag#v }}" >> "$GITHUB_OUTPUT"
+        run: |
+          version_without_v="${{ steps.tag.outputs.tag }}"
+          if [[ "$version_without_v" == v* ]]; then
+            version_without_v="${version_without_v:1}"
+          fi
+          echo "version_without_v=$version_without_v" >> "$GITHUB_OUTPUT"
+
     outputs:
       version: ${{ steps.tag.outputs.tag }}
       version_without_v: ${{ steps.strip_v.outputs.version_without_v }}
+
+  build-windows:
+    runs-on: windows-latest
+    needs: get-version
+    env:
+      VERSION: ${{ needs.get-version.outputs.version }}
+      VERSION_NO_V: ${{ needs.get-version.outputs.version_without_v }}
+      BUILD_INSTALLER: ${{ false }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Install dotnet
+        if: ${{ env.BUILD_INSTALLER }}
+        uses: actions/setup-dotnet@v3
+        with:
+          global-json-file: build/windows/installer/global.json
+      - name: Build release
+        run: cargo build --profile dist
+      - name: Prepare release
+        run: |
+          mkdir target/dist/assets && cp -r assets target/dist/assets
+          mkdir target/dist/credits && cp -r credits target/dist/credits
+      - name: Zip release
+        uses: vimtor/action-zip@v1.1
+        with:
+          files: target/dist/assets/ target/dist/credits/ target/dist/${{ env.GAME_EXECUTABLE_NAME }}.exe
+          dest: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
+      - name: Create Installer
+        if: ${{ env.BUILD_INSTALLER }}
+        run: dotnet build -p:Version=${{ env.VERSION_NO_V }} -c Release build/windows/installer/Installer.wixproj --output installer
+      - name: Upload release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
+          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_windows.zip
+          tag: ${{ env.VERSION }}
+          overwrite: true
       
   build-macOS:
     runs-on: macos-latest
@@ -112,59 +161,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.GAME_EXECUTABLE_NAME }}_linux.tar.gz
           asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_linux.tar.gz
-          release_name: ${{ env.VERSION }}
-          tag: ${{ env.VERSION }}
-          overwrite: true
-
-  build-windows:
-    runs-on: windows-latest
-    needs: get-version
-    env:
-      VERSION: ${{ needs.get-version.outputs.version }}
-      VERSION_NO_V: ${{ needs.get-version.outputs.version_without_v }}
-      BUILD_INSTALLER: ${{ false }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Install rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: stable
-      - name: Install dotnet
-        if: ${{ env.BUILD_INSTALLER }}
-        uses: actions/setup-dotnet@v3
-        with:
-          global-json-file: build/windows/installer/global.json
-      - name: Build release
-        run: |
-          cargo build --profile dist
-      - name: Prepare release
-        run: |
-          mkdir target/dist/assets && cp -r assets target/dist/assets
-          mkdir target/dist/credits && cp -r credits target/dist/credits
-      - name: Zip release
-        uses: vimtor/action-zip@v1.1
-        with:
-          files: target/dist/assets/ target/dist/credits/ target/dist/${{ env.GAME_EXECUTABLE_NAME }}.exe
-          dest: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
-      - name: Create Installer
-        if: ${{ env.BUILD_INSTALLER }}
-        run: dotnet build -p:Version=${{ env.VERSION_NO_V }} -c Release build/windows/installer/Installer.wixproj --output installer
-      - name: Upload release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
-          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_windows.zip
-          tag: ${{ env.VERSION }}
-          overwrite: true
-      - name: Upload installer
-        if: ${{ env.BUILD_INSTALLER }}
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: installer/en-US/installer.msi
-          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_windows.msi
           release_name: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           overwrite: true
