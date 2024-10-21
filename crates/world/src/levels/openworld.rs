@@ -3,15 +3,16 @@ use bevy::{
     color::palettes::tailwind::*, ecs::world::Command, prelude::*,
     render::mesh::VertexAttributeValues, utils::HashMap,
 };
-use bevy_panorbit_camera::PanOrbitCameraPlugin;
 use noise::{BasicMulti, NoiseFn, Perlin};
+use player::Player;
 use std::f32::consts::PI;
 
-use crate::{game::player::Player, states::screens::Screen};
+use states::screens::Screen;
+
+
 
 pub(super) fn plugin(app: &mut App) {
     app.insert_resource(TerrainStore(HashMap::default()))
-        .add_plugins((PanOrbitCameraPlugin,))
         .add_systems(OnEnter(Screen::Pipeline), startup)
         .add_systems(Update, (manage_chunks,).run_if(in_state(Screen::Playing)));
 }

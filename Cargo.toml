@@ -1,30 +1,39 @@
 [package]
-name = "limitpush" # TODO: Update this with the final name of your project.
+name = "limitpush" # Todo
 version = "0.1.0"
-authors = ["heydocode <heydocode@outlook.fr>"] # TODO: Update your contact information if needed.
+authors = ["heydocode <heydocode@outlook.fr>"] # Todo
 edition = "2021"
-publish = false # Prevent accidental publishing.
-exclude = ["dist", "build", "assets", "credits"] # Exclude non-source folders from publishing.
+publish = false
+exclude = ["dist", "build", "assets", "credits"]
 
 [workspace]
-members = ["mobile"] # Specify workspace members.
+members = [
+    "crates/audio", 
+    "crates/camera_system", 
+    "crates/debug", 
+    "crates/player", 
+    "crates/states", 
+    "crates/ui", 
+    "crates/window_manager", 
+    "crates/world",
+    "mobile"
+]
 
 [profile.dev.package."*"]
-opt-level = 3 # Per-package optimization level (debug).
+opt-level = 3
 
 [profile.dev]
-opt-level = 1 # Global optimization level (debug).
+opt-level = 1
 
 [profile.release]
-opt-level = "s" # Optimize for size (smallest code size).
-lto = true # Enable Link Time Optimization.
-codegen-units = 1 # Single code generation unit for better optimization.
-strip = true # Strip symbols to reduce binary size.
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
 
-# Custom profile for distribution builds.
 [profile.dist]
-inherits = "release" # Inherits from the release profile.
-opt-level = 3 # Maximum optimization for performance.
+inherits = "release"
+opt-level = 3
 lto = true
 codegen-units = 1
 strip = true
@@ -32,77 +41,50 @@ strip = true
 [features]
 bevy_egui = []
 dev = [
-    "bevy_egui",
+    "bevy_egui"
 ]
 
 [dependencies]
 # Bevy Engine
 bevy = { version = "*", default-features = false, features = [
-    "animation",             # Enable animations
-    "bevy_state",            # State system
-    "bevy_color",            # Color system
-    "bevy_gilrs",            # Gamepad support via Gilrs
-    "bevy_scene",            # Scene loading
-    "bevy_winit",            # Window support with Winit
-    "bevy_core_pipeline",    # Core rendering pipeline
-    "bevy_pbr",              # Physically Based Rendering
-    "bevy_gltf",             # GLTF loading
-    "bevy_render",           # Rendering features
-    "bevy_sprite",           # 2D sprite support
-    "bevy_text",             # Text rendering
-    "bevy_ui",               # UI support
-    "multi_threaded",        # Enable multi-threading
-    "png",                   # PNG image support
-    "jpeg",                  # JPEG image support
-    "hdr",                   # HDR image support
-    "x11",                   # X11 windowing on Linux
-    "bevy_gizmos",           # Gizmo support for debug visuals
-    "tonemapping_luts",      # Tone mapping
-    "smaa_luts",             # Anti-aliasing support
-    "default_font",          # Default font for UI
-    "webgl2",                # WebGL2 support for browsers
-    "sysinfo_plugin",        # System info plugin
+    # "animation",
+    # "bevy_state",
+    # "bevy_color",
+    # "bevy_gilrs",
+    # "bevy_scene",
+    # "bevy_winit",
+    # "bevy_core_pipeline",
+    # "bevy_pbr",
+    # "bevy_gltf",
+    # "bevy_render",
+    # "bevy_sprite",
+    # "bevy_text",
+    # "bevy_ui",
+    # "multi_threaded",
+    # "png",
+    # "jpeg",
+    # "hdr",
+    # "x11",
+    # "bevy_gizmos",
+    # "tonemapping_luts",
+    # "smaa_luts",
+    # "default_font",
+    # "webgl2",
+    # "sysinfo_plugin"
 ] }
 
-# Audio via Kira
-bevy_kira_audio = { version = "0.20" }
-
-# Asset loading helper for Bevy
-bevy_asset_loader = { version = "0.21" }
-
-# Random number generation
-rand = { version = "0.8.3" }
-
-# Open web browsers from the game
-webbrowser = { version = "1.0.2", features = ["hardened"] }
+audio = { path = "crates/audio" }
+camera_system = { path = "crates/camera_system" }
+debug = { path = "crates/debug" }
+player = { path = "crates/player" }
+states = { path = "crates/states" }
+ui = { path = "crates/ui" }
+window_manager = { path = "crates/window_manager" }
+world = { path = "crates/world" }
 
 # Synchronize with Bevy dependencies for window management and image loading
 winit = { version = "0.30.5", default-features = false }
 image = { version = "0.25.4", default-features = false }
 
-# Logging with better performance
-log = { version = "0.4.22", features = ["max_level_debug", "release_max_level_warn"] }
-
-# Loading screen animations
-bevy_vector_shapes = "0.8.2"
-
-# Procedural world generation using noise algorithms
-noise = "0.9.0"
-
-# Camera control for the player
-bevy_panorbit_camera = "0.19.3"
-
-# Pipelines control for the Loading and Pipeline screens
-bevy_pipelines_ready = "0.4.0"
-
-# To test pan_orbit_camera module
-float-cmp = "0.10.0"
-
-[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-# For dev builds & debugging
-bevy_egui = "0.30.0"
-bevy-inspector-egui = "0.27.0"
-
 [build-dependencies]
-# Embedding resources such as icons or manifest files in Windows binaries
 embed-resource = "2.5.0"

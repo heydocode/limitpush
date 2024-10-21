@@ -1,12 +1,12 @@
 use bevy::{prelude::*, render::view::RenderLayers};
 
-pub mod pan_orbit_camera;
+use crate::pan_orbit_camera::{self};
 
-use super::player::Player;
-use crate::states::screens::Screen;
-use pan_orbit_camera::*;
+use player::Player;
+use crate::pan_orbit_camera::PanOrbitCamera;
+use states::screens::Screen;
 
-pub(super) fn plugin(app: &mut App) {
+pub fn plugin(app: &mut App) {
     app.add_systems(Update, player_camera.run_if(in_state(Screen::Playing)));
     app.add_systems(Startup, spawn_camera);
     app.add_plugins(pan_orbit_camera::plugin);
@@ -35,12 +35,12 @@ fn spawn_camera(mut commands: Commands) {
         },
         Name::new("Camera"),
         MainCamera {
-            min_distance: 0.1,
+            min_distance: 0.0,
             min_speed: 0.05,
             max_distance: 8.0,
             max_speed: 50.0,
             ideal_distance: 7.5,
-            height_offset: 2.5,
+            height_offset: 4.0,
         },
         PanOrbitCamera {
             // Fix all target-specific issues

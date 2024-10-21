@@ -1,4 +1,4 @@
-use crate::Screen;
+use super::Screen;
 use bevy::color::palettes::css::*;
 use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;

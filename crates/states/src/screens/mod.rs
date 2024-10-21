@@ -1,7 +1,5 @@
 use bevy::prelude::*;
 
-use crate::audio::start_audio;
-
 pub mod loading;
 pub mod menu;
 pub mod pipeline;
@@ -19,7 +17,6 @@ pub(super) fn plugin(app: &mut App) {
         playing::plugin,
         pipeline::plugin,
     ));
-    app.add_systems(OnEnter(Screen::Playing), start_audio);
 }
 
 // This example game uses States to separate logic

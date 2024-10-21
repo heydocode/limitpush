@@ -1,40 +1,32 @@
 use std::f32::consts::{PI, TAU};
 
+// #[cfg(feature = "bevy_egui")] isn't used because inter-crates features doen't work
+// #[cfg(debug_assertions)] is used instead
+
+
 use bevy::input::mouse::MouseWheel;
 use bevy::prelude::*;
 use bevy::render::camera::{CameraUpdateSystem, RenderTarget};
 use bevy::transform::TransformSystem;
 use bevy::window::{PrimaryWindow, WindowRef};
-#[cfg(feature = "bevy_egui")]
+#[cfg(debug_assertions)]
 use bevy_egui::EguiSet;
 
-#[cfg(feature = "bevy_egui")]
+#[cfg(debug_assertions)]
 pub use egui::{EguiFocusIncludesHover, EguiWantsFocus};
 use input::{mouse_key_tracker, MouseKeyTracker};
 pub use touch::TouchControls;
 use touch::{touch_tracker, TouchGestures, TouchTracker};
 use traits::OptionalClamp;
 
-#[cfg(feature = "bevy_egui")]
+#[cfg(debug_assertions)]
 mod egui;
 mod input;
 mod touch;
 mod traits;
 mod util;
 
-/// Bevy plugin that contains the systems for controlling `PanOrbitCamera` components.
-/// # Example
-/// ```no_run
-/// # use bevy::prelude::*;
-/// # use bevy_panorbit_camera::{PanOrbitCameraPlugin, PanOrbitCamera};
-/// fn main() {
-///     App::new()
-///         .add_plugins(DefaultPlugins)
-///         .add_plugins(PanOrbitCameraPlugin)
-///         .run();
-/// }
-/// ```
-pub(super) fn plugin(app: &mut App) {
+pub fn plugin(app: &mut App) {
     app.init_resource::<ActiveCameraData>()
         .init_resource::<MouseKeyTracker>()
         .init_resource::<TouchTracker>()
@@ -55,7 +47,7 @@ pub(super) fn plugin(app: &mut App) {
                 .before(CameraUpdateSystem),
         );
 
-    #[cfg(feature = "bevy_egui")]
+        #[cfg(debug_assertions)]
     {
         app.init_resource::<EguiWantsFocus>()
             .init_resource::<EguiFocusIncludesHover>()
@@ -319,7 +311,7 @@ fn active_viewport_data(
     primary_windows: Query<&Window, With<PrimaryWindow>>,
     other_windows: Query<&Window, Without<PrimaryWindow>>,
     orbit_cameras: Query<(Entity, &Camera, &PanOrbitCamera)>,
-    #[cfg(feature = "bevy_egui")] egui_wants_focus: Res<EguiWantsFocus>,
+    #[cfg(debug_assertions)] egui_wants_focus: Res<EguiWantsFocus>,
 ) {
     let mut new_resource = ActiveCameraData::default();
     let mut max_cam_order = 0;
@@ -336,7 +328,7 @@ fn active_viewport_data(
             has_input = true;
             #[allow(unused_mut, unused_assignments)]
             let mut should_get_input = true;
-            #[cfg(feature = "bevy_egui")]
+            #[cfg(debug_assertions)]
             {
                 should_get_input = !egui_wants_focus.prev && !egui_wants_focus.curr;
             }

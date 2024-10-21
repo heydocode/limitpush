@@ -16,9 +16,6 @@ use limitpush::GamePlugin; // Importing the GamePlugin, which contains core game
 use std::io::Cursor; // Used to create an in-memory cursor for the image data.
 use winit::window::Icon; // Importing the Icon type for window icon management.
 
-#[cfg(not(target_family = "wasm"))]
-pub mod window; // This module handles the window logic, including launching fixes and various parameters.
-
 fn main() {
     // Create a new Bevy application instance.
     App::new()
@@ -79,7 +76,7 @@ fn main() {
             // on wasm builds (trunk should ignore this
             // file but anyway)
             #[cfg(not(target_family = "wasm"))]
-            window::plugin, // Plugin for the window handling
+            window_manager::plugin,
             GamePlugin, // Add the GamePlugin, which contains the main game logic.
         ))
         // Register the system to set the window icon on startup.

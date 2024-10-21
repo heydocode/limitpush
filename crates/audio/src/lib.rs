@@ -1,16 +1,11 @@
-use crate::states::screens::loading::AudioAssets;
-use crate::Screen;
+use states::screens::loading::AudioAssets;
+use states::screens::Screen;
 use bevy::prelude::*;
 use bevy_kira_audio::prelude::*;
 
-pub struct InternalAudioPlugin;
-
-// This plugin is responsible to control the game audio
-impl Plugin for InternalAudioPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_plugins(AudioPlugin);
-        app.add_systems(OnEnter(Screen::Playing), start_audio);
-    }
+pub fn plugin(app: &mut App) {
+    app.add_plugins(AudioPlugin);
+    app.add_systems(OnEnter(Screen::Playing), start_audio);
 }
 
 #[derive(Resource)]
