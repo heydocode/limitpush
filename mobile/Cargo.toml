@@ -37,11 +37,6 @@ build_targets = [
 #     "x86_64-linux-android"
 ]
 
-[features]
-dev = [
-    "limitpush/dev",
-]
-
 [package.metadata.android.sdk]
 min_sdk_version = 14
 target_sdk_version = 35

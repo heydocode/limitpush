@@ -1,5 +1,5 @@
-use crate::screens::loading::TextureAssets;
 use super::Screen;
+use crate::screens::loading::TextureAssets;
 use bevy::prelude::*;
 
 pub(super) fn plugin(app: &mut App) {

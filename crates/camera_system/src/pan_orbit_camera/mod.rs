@@ -3,7 +3,6 @@ use std::f32::consts::{PI, TAU};
 // #[cfg(feature = "bevy_egui")] isn't used because inter-crates features doen't work
 // #[cfg(debug_assertions)] is used instead
 
-
 use bevy::input::mouse::MouseWheel;
 use bevy::prelude::*;
 use bevy::render::camera::{CameraUpdateSystem, RenderTarget};
@@ -47,7 +46,7 @@ pub fn plugin(app: &mut App) {
                 .before(CameraUpdateSystem),
         );
 
-        #[cfg(debug_assertions)]
+    #[cfg(debug_assertions)]
     {
         app.init_resource::<EguiWantsFocus>()
             .init_resource::<EguiFocusIncludesHover>()
@@ -64,32 +63,6 @@ pub fn plugin(app: &mut App) {
 #[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
 pub struct PanOrbitCameraSystemSet;
 
-/// Tags an entity as capable of panning and orbiting, and provides a way to configure the
-/// camera's behaviour and controls.
-/// The entity must have `Transform` and `Projection` components. Typically you would add a
-/// `Camera3dBundle` which already contains these.
-/// # Example
-/// ```no_run
-/// # use bevy::prelude::*;
-/// # use bevy_panorbit_camera::{PanOrbitCameraPlugin, PanOrbitCamera};
-/// # fn main() {
-/// #     App::new()
-/// #         .add_plugins(DefaultPlugins)
-/// #         .add_plugins(PanOrbitCameraPlugin)
-/// #         .add_systems(Startup, setup)
-/// #         .run();
-/// # }
-/// fn setup(mut commands: Commands) {
-///     commands
-///         .spawn((
-///             Camera3dBundle {
-///                 transform: Transform::from_translation(Vec3::new(0.0, 1.5, 5.0)),
-///                 ..default()
-///             },
-///             PanOrbitCamera::default(),
-///         ));
-///  }
-/// ```
 #[derive(Component, Copy, Clone, Debug, PartialEq)]
 pub struct PanOrbitCamera {
     /// The point to orbit around, and what the camera looks at. Updated automatically.

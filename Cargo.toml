@@ -38,12 +38,6 @@ lto = true
 codegen-units = 1
 strip = true
 
-[features]
-bevy_egui = []
-dev = [
-    "bevy_egui"
-]
-
 [dependencies]
 # Bevy Engine
 bevy = { version = "*", default-features = false, features = [

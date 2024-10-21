@@ -1,10 +1,12 @@
 #![allow(clippy::type_complexity)] // Allow complex types flagged by Clippy (optional).
 
+#[cfg(debug_assertions)]
+use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 /// This project follows the structure of the `bevy_new_2d` template.
 /// For reference: https://github.com/TheBevyFlock/bevy_new_2d.
 ///
 /// # Code Organization:
-/// 
+///
 /// - **screens/**: Handles different UI states (e.g., main menu, pause, inventory).
 ///   Manages window attributes, like cursor visibility and gameplay freezing during screens.
 ///   
@@ -19,10 +21,7 @@
 /// and functionalities as needed, such as mobile controllers or Android-specific features.
 ///
 /// All code in **lib.rs** is shared across all platforms.
-
-use bevy::prelude::*; // Common Bevy imports for ease of development.
-#[cfg(debug_assertions)]
-use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin}; // Debugging tools.
+use bevy::prelude::*; // Common Bevy imports for ease of development. // Debugging tools.
 
 /// Core game plugin for Bevy.
 /// This manages all game-related features and systems by bundling them into the Bevy app.
@@ -33,11 +32,11 @@ impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         // Register core game plugins
         app.add_plugins((
-            audio::plugin,          // Audio management (e.g., background music, sound effects).
-            camera_system::plugin,  // Camera system management.
-            player::plugin,         // Player controls, animations, and gameplay.
-            states::plugin,         // Screen state.
-            world::plugin,          // World spawn.
+            audio::plugin,         // Audio management (e.g., background music, sound effects).
+            camera_system::plugin, // Camera system management.
+            player::plugin,        // Player controls, animations, and gameplay.
+            states::plugin,        // Screen state.
+            world::plugin,         // World spawn.
             #[cfg(debug_assertions)]
             // This plugin isn't available at release to offer
             // cleaner game experience
@@ -45,6 +44,7 @@ impl Plugin for GamePlugin {
         ));
 
         // Enable debug tools in development mode (only when `debug_assertions` is enabled).
+        #[cfg(debug_assertions)]
         {
             app.add_plugins((
                 FrameTimeDiagnosticsPlugin, // Tracks frame time for performance tuning.

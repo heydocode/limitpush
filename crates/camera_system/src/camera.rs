@@ -2,8 +2,8 @@ use bevy::{prelude::*, render::view::RenderLayers};
 
 use crate::pan_orbit_camera::{self};
 
-use player::Player;
 use crate::pan_orbit_camera::PanOrbitCamera;
+use player::Player;
 use states::screens::Screen;
 
 pub fn plugin(app: &mut App) {
@@ -88,12 +88,6 @@ fn player_camera(
 
             // Always look at the player
             camera_transform.look_at(player_position, Vec3::Y);
-        } else {
-            #[cfg(all(feature = "dev", not(target_family = "wasm")))]
-            eprintln!("The camera components aren't available");
         }
-    } else {
-        #[cfg(all(feature = "dev", not(target_family = "wasm")))]
-        eprintln!("The player is out of scope and is no more calculated");
     }
 }

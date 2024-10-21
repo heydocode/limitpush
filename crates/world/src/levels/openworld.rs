@@ -9,8 +9,6 @@ use std::f32::consts::PI;
 
 use states::screens::Screen;
 
-
-
 pub(super) fn plugin(app: &mut App) {
     app.insert_resource(TerrainStore(HashMap::default()))
         .add_systems(OnEnter(Screen::Pipeline), startup)

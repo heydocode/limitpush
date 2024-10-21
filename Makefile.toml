@@ -1,0 +1,24 @@
+[tasks.format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--", "--emit=files"]
+
+# [tasks.build-windows64]
+# command = "cargo"
+# args = ["build --profile dist --target=x86_64-pc-windows-msvc"]
+
+# [tasks.build-windows32]
+# command = "cargo"
+# args = ["build --profile dist --target=i686-pc-windows-msvc"]
+
+[tasks.clippy]
+command = "cargo"
+args = ["clippy --workspace --all-targets --all-features -- -Dwarnings"]
+
+[tasks.my-flow]
+dependencies = [
+    "format",
+    "clippy",
+    # "build-windows64",
+    # "build-windows32"
+]

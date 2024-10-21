@@ -1,7 +1,7 @@
-use states::screens::loading::AudioAssets;
-use states::screens::Screen;
 use bevy::prelude::*;
 use bevy_kira_audio::prelude::*;
+use states::screens::loading::AudioAssets;
+use states::screens::Screen;
 
 pub fn plugin(app: &mut App) {
     app.add_plugins(AudioPlugin);
