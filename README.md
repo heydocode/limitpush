@@ -1,70 +1,20 @@
-# LimitPush
+**[Announcement] Bevy Template in Development** 🚀
 
-LimitPush is a cross-platform 3D game developed using Bevy. This project focuses on enhancing gameplay performance and implementing an engaging player camera system.
+Hey everyone!
 
-## IMPORTANT
-Please enjoy the template and feel free to create an issue if you need help or if there's a problem — I'll be happy to help! :) Also, please commit if you have some improvements to propose! I really love Bevy, and I hope it becomes even more ergonomic!
+I’m working on a **Bevy template** that will be regularly updated (until life gets too busy 😅). The main goals of the template are **blazing performance** and **cross-platform support**. Here’s what’s supported so far:
 
-## Table of Contents
+- **Mobile**: Some Android distributives (other Android distributives and iOS not tested yet)
+- **Web**: Fully supported
+- **Desktop**: Fully supported
+  - **MacOS**: Both ARM and Intel-based  
+  - **Linux**: Tested on Ubuntu, works perfectly  
+  - **Windows**: All current builds (planning to test for older versions like Windows 8 soon)
 
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Camera System](#camera-system)
-- [Contributing](#contributing)
-- [License](#license)
+The template is **modular, comprehensive, and universal**. The game is organized in **crates**, which makes it easy to customize and switch between 3D and 2D with minimal changes (e.g., adjusting player movement, world generation, etc.). 
 
-## Features
+Additionally, the template features a **debug menu** using **bevy-inspector-egui** and all components reflected to help with development and testing. The plan is to support as many targets as possible, including **Raspberry Pi**, **Steam Deck**, and other platforms.
 
-- Cross-platform compatibility
-- Smooth camera follow mechanics
-- Customizable camera settings
+Right now, the project is in a private repo until I complete the basics, but I’ll make it public soon!
 
-## Getting Started
-
-To get started with LimitPush, ensure you have the following prerequisites:
-
-1. [Rust](https://www.rust-lang.org/tools/install) (with Cargo)
-2. [Bevy](https://bevyengine.org)
-
-Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/limitpush.git
-cd limitpush
-```
-
-## Usage
-
-After cloning the repository, you can run the project using:
-
-```bash
-cargo run
-```
-
-Feel free to explore the code, make changes, and enhance the gameplay!
-
-## Camera System
-
-The camera system in LimitPush is designed to follow the player smoothly while **not** avoiding obstacles (it's an issue, please commit if you have time to). The `MainCamera` struct includes fields to customize its behavior. Here's a brief overview of the struct:
-
-```rust
-#[derive(Component)]
-pub struct MainCamera {
-    pub min_distance: f64,
-    pub min_speed: f64,
-    pub max_distance: f64,
-    pub max_speed: f64,
-    pub ideal_distance: f64,
-}
-```
-
-Integrate this camera system into your player entity for an immersive experience!
-
-## Contributing
-
-Contributions are welcome! If you have suggestions or improvements, feel free to create a pull request or open an issue. Let's make LimitPush even better together!
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+I’d love to know if anyone is interested in this! Feel free to drop any questions or thoughts below 👇

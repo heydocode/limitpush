@@ -21,7 +21,7 @@ pub enum TouchControls {
 }
 
 /// Holds information about current mobile gestures
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum TouchGestures {
     /// No mobile gestures
     None,
@@ -29,6 +29,8 @@ pub enum TouchGestures {
     OneFinger(OneFingerGestures),
     /// Two finger mobile gestures
     TwoFinger(TwoFingerGestures),
+    /// Three finger mobile gestures
+    ThreeFinger,
 }
 
 /// Holds information pertaining to one finger gestures
@@ -54,11 +56,27 @@ pub struct TwoFingerGestures {
     pub rotation: f32,
 }
 
+impl PartialEq for OneFingerGestures {
+    fn eq(&self, other: &Self) -> bool {
+        self.motion == other.motion
+    }
+}
+
+impl Eq for OneFingerGestures {}
+
+impl PartialEq for TwoFingerGestures {
+    fn eq(&self, other: &Self) -> bool {
+        self.motion == other.motion
+    }
+}
+
+impl Eq for TwoFingerGestures {}
+
 /// Stores current and previous frame mobile data, and provides a method to get mobile gestures
 #[derive(Resource, Default, Debug)]
 pub struct TouchTracker {
-    curr_pressed: (Option<Touch>, Option<Touch>),
-    prev_pressed: (Option<Touch>, Option<Touch>),
+    curr_pressed: (Option<Touch>, Option<Touch>, Option<Touch>),
+    prev_pressed: (Option<Touch>, Option<Touch>, Option<Touch>),
 }
 
 impl TouchTracker {
@@ -70,9 +88,9 @@ impl TouchTracker {
         // in any adverse effects.
         match (self.curr_pressed, self.prev_pressed) {
             // Zero fingers
-            ((None, None), (None, None)) => TouchGestures::None,
+            ((None, None, None), (None, None, None)) => TouchGestures::None,
             // One finger
-            ((Some(curr), None), (Some(prev), None)) => {
+            ((Some(curr), None, None), (Some(prev), None, None)) => {
                 let curr_pos = curr.position();
                 let prev_pos = prev.position();
 
@@ -81,7 +99,7 @@ impl TouchTracker {
                 TouchGestures::OneFinger(OneFingerGestures { motion })
             }
             // Two fingers
-            ((Some(curr1), Some(curr2)), (Some(prev1), Some(prev2))) => {
+            ((Some(curr1), Some(curr2), None), (Some(prev1), Some(prev2), None)) => {
                 let curr1_pos = curr1.position();
                 let curr2_pos = curr2.position();
                 let prev1_pos = prev1.position();
@@ -124,6 +142,7 @@ impl TouchTracker {
                     rotation,
                 })
             }
+            ((Some(_), Some(_), _), (Some(_), Some(_), _)) => TouchGestures::ThreeFinger,
             // Three fingers and more not currently supported
             _ => TouchGestures::None,
         }
@@ -136,19 +155,26 @@ pub fn touch_tracker(touches: Res<Touches>, mut touch_tracker: ResMut<TouchTrack
 
     match pressed.len() {
         0 => {
-            touch_tracker.curr_pressed = (None, None);
-            touch_tracker.prev_pressed = (None, None);
+            touch_tracker.curr_pressed = (None, None, None);
+            touch_tracker.prev_pressed = (None, None, None);
         }
         1 => {
             let touch: &Touch = pressed.first().unwrap();
             touch_tracker.prev_pressed = touch_tracker.curr_pressed;
-            touch_tracker.curr_pressed = (Some(*touch), None);
+            touch_tracker.curr_pressed = (Some(*touch), None, None);
         }
         2 => {
             let touch1: &Touch = pressed.first().unwrap();
             let touch2: &Touch = pressed.last().unwrap();
             touch_tracker.prev_pressed = touch_tracker.curr_pressed;
-            touch_tracker.curr_pressed = (Some(*touch1), Some(*touch2));
+            touch_tracker.curr_pressed = (Some(*touch1), Some(*touch2), None);
+        }
+        3 => {
+            let touch1: &Touch = pressed.first().unwrap();
+            let touch2: &Touch = pressed.last().unwrap();
+            let touch3: &Touch = pressed.last().unwrap();
+            touch_tracker.prev_pressed = touch_tracker.curr_pressed;
+            touch_tracker.curr_pressed = (Some(*touch1), Some(*touch2), Some(*touch3));
         }
         _ => {}
     }

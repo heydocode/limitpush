@@ -32,5 +32,8 @@ bevy = { version = "*", default-features = false, features = [
 ] }
 bevy_egui = "0.30.0"
 float-cmp = "0.10.0"
-player = {path = "../player"}
-states ={ path = "../states"}
+
+# Internal crates
+# Avoid them to escape cyclic dependencies
+player = {path = "../player"} # Dependency & dependent crate (= be aware of cyclic dependencies issue)
+states ={ path = "../states"} # Dependency crate (= safe)

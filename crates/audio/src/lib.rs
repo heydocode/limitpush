@@ -8,6 +8,13 @@ pub fn plugin(app: &mut App) {
     app.add_systems(OnEnter(Screen::Playing), start_audio);
 }
 
+// TODO!: implement a struct of background music with
+// handle (can be multiple), current handle, volume
+// and maybe more params. Also implement a system which
+// rerun the background music with updated changes when
+// the BackgroundAudio ressource is changed so the BackgroundAudio 
+// will be this struct with all params
+
 #[derive(Resource)]
 pub struct BackgroundAudio(pub Handle<AudioInstance>);
 

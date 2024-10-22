@@ -30,7 +30,10 @@ bevy = { version = "*", default-features = false, features = [
     "webgl2",
     "sysinfo_plugin"
 ] }
-
-states = { path = "../states"}
-player = { path = "../player"}
 noise = "0.9.0"
+bevy_rapier3d = "0.27.0"
+
+# Internal crates
+# Avoid them to escape cyclic dependencies
+states = { path = "../states"} # Dependency crate (= safe)
+player = { path = "../player"} # Dependency & dependent crate (= be aware of cyclic dependencies issue)

@@ -21,7 +21,7 @@ use traits::OptionalClamp;
 #[cfg(debug_assertions)]
 mod egui;
 mod input;
-mod touch;
+pub mod touch;
 mod traits;
 mod util;
 
@@ -462,6 +462,7 @@ fn pan_orbit_camera(
                             two_finger_gestures.motion,
                             two_finger_gestures.pinch * 0.015,
                         ),
+                        TouchGestures::ThreeFinger => (Vec2::ZERO, Vec2::ZERO, 0.0),
                     },
                     TouchControls::TwoFingerOrbit => match touch_tracker.get_touch_gestures() {
                         TouchGestures::None => (Vec2::ZERO, Vec2::ZERO, 0.0),
@@ -473,6 +474,7 @@ fn pan_orbit_camera(
                             Vec2::ZERO,
                             two_finger_gestures.pinch * 0.015,
                         ),
+                        TouchGestures::ThreeFinger => (Vec2::ZERO, Vec2::ZERO, 0.0),
                     },
                 };
 

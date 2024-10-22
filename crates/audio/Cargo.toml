@@ -31,4 +31,7 @@ bevy = { version = "*", default-features = false, features = [
     "sysinfo_plugin"
 ] }
 bevy_kira_audio = "0.20.0"
-states ={ path = "../states"}
+
+# Internal crates
+# Avoid them to escape cyclic dependencies
+states ={ path = "../states"} # Dependency crate (= safe)

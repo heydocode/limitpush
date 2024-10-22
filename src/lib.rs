@@ -37,6 +37,7 @@ impl Plugin for GamePlugin {
             player::plugin,        // Player controls, animations, and gameplay.
             states::plugin,        // Screen state.
             world::plugin,         // World spawn.
+            ui::plugin,            // UI handling
             #[cfg(debug_assertions)]
             // This plugin isn't available at release to offer
             // cleaner game experience
