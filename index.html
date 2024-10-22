@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>LimiPush</title> <!-- ToDo -->
     
-    <style nonce="Ai1JejSy9hlw7awPWgOCsQ==">:root {
+    <style nonce="tZUGsnGize1oE9FNnsQxDA==">:root {
     /* Consider adjusting this color to match your splash screen! */
     --loading-screen-bg-color: #282828;
 }
@@ -62,7 +62,7 @@ body {
     height: 0;
 }
 </style>
-    <script type="module" nonce="sIRZ7LIgliqjlq9xV/utGA==">// taken from https://developer.chrome.com/blog/web-audio-autoplay/#moving-forward
+    <script type="module" nonce="71qkF1XCrm/wb60JvTE3IQ==">// taken from https://developer.chrome.com/blog/web-audio-autoplay/#moving-forward
 (function () {
     // An array of all contexts to resume on the page
     const audioContextList = [];
@@ -121,9 +121,9 @@ body {
 })();
 </script>
     
-<script type="module" nonce="7pwn3TrXxDtNXt6yz/HgPQ==">
-import init, * as bindings from './limitpush-32cb28083bed1c39.js';
-const wasm = await init('./limitpush-32cb28083bed1c39_bg.wasm');
+<script type="module" nonce="MEYHZghsSxJGctHyLhLXgQ==">
+import init, * as bindings from './limitpush-f7aaffb76ec9e99f.js';
+const wasm = await init('./limitpush-f7aaffb76ec9e99f_bg.wasm');
 
 
 window.wasmBindings = bindings;
@@ -132,7 +132,7 @@ window.wasmBindings = bindings;
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
-<link rel="modulepreload" href="./limitpush-32cb28083bed1c39.js" crossorigin=anonymous><link rel="preload" href="./limitpush-32cb28083bed1c39_bg.wasm" crossorigin=anonymous as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./limitpush-f7aaffb76ec9e99f.js" crossorigin=anonymous><link rel="preload" href="./limitpush-f7aaffb76ec9e99f_bg.wasm" crossorigin=anonymous as="fetch" type="application/wasm"></head>
 
 
 <body>
