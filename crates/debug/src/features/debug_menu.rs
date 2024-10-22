@@ -35,7 +35,7 @@ fn inspector_ui(world: &mut World, mut disabled: Local<bool>) {
         target_os = "macos",
         target_os = "linux"
     )))]
-    let window_size: (f32, f32) = (100.0, 100.0);
+    let window_size: (f32, f32) = (200.0, 200.0);
 
     let egui_context = world
         .query_filtered::<&mut EguiContext, With<PrimaryWindow>>()
