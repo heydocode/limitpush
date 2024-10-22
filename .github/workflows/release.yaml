@@ -11,9 +11,11 @@ on:
         required: true
         type: string
 
+# ToDo: adapt names
 env:
-  GAME_EXECUTABLE_NAME: limitpush
-  GAME_OSX_APP_NAME: LimitPush
+  # This variable is used to name release output files.
+  GAME_EXECUTABLE_NAME: bevy_game
+  GAME_OSX_APP_NAME: BevyGame
 
 permissions:
   contents: write
@@ -22,77 +24,19 @@ jobs:
   get-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Get tag or branch
-        id: get_ref
-        run: |
-          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            version="${GITHUB_REF#refs/tags/}"
-          else
-            version="0.0.0"  # Default version for non-tag builds
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-
-      - name: Strip 'v' from version (if exists)
-        id: strip_v
-        run: |
-          version_without_v="${{ steps.get_ref.outputs.version }}"
-          if [[ "$version_without_v" == v* ]]; then
-            version_without_v="${version_without_v:1}"
-          fi
-          echo "version_without_v=$version_without_v" >> "$GITHUB_OUTPUT"
-
+      - name: Get tag
+        id: tag
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
     outputs:
-      version: ${{ steps.get_ref.outputs.version }}
-      version_without_v: ${{ steps.strip_v.outputs.version_without_v }}
+      version: ${{ inputs.version || steps.tag.outputs.tag }}
 
-  build-windows:
-    runs-on: windows-latest
-    needs: get-version
-    env:
-      VERSION: ${{ needs.get-version.outputs.version }}
-      VERSION_NO_V: ${{ needs.get-version.outputs.version_without_v }}
-      BUILD_INSTALLER: ${{ false }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Install rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: stable
-      - name: Install dotnet
-        if: ${{ env.BUILD_INSTALLER }}
-        uses: actions/setup-dotnet@v3
-        with:
-          global-json-file: build/windows/installer/global.json
-      - name: Build release
-        run: cargo build --profile dist
-      - name: Prepare release
-        run: |
-          mkdir target/dist/assets && cp -r assets target/dist/assets
-          mkdir target/dist/credits && cp -r credits target/dist/credits
-      - name: Zip release
-        uses: vimtor/action-zip@v1.1
-        with:
-          files: target/dist/assets/ target/dist/credits/ target/dist/${{ env.GAME_EXECUTABLE_NAME }}.exe
-          dest: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
-      - name: Create Installer
-        if: ${{ env.BUILD_INSTALLER }}
-        run: dotnet build -p:Version=${{ env.VERSION_NO_V }} -c Release build/windows/installer/Installer.wixproj --output installer
-      - name: Upload release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
-          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_windows.zip
-          tag: ${{ env.VERSION }}
-          overwrite: true
-      
   build-macOS:
     runs-on: macos-latest
     needs: get-version
     env:
+      # macOS 11.0 Big Sur is the first version to support universal binaries
       MACOSX_DEPLOYMENT_TARGET: 11.0
-      VERSION: ${{ needs.get-version.outputs.version }}
+      VERSION: ${{needs.get-version.outputs.version}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -141,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-version
     env:
-      VERSION: ${{ needs.get-version.outputs.version }}
+      VERSION: ${{needs.get-version.outputs.version}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -171,11 +115,63 @@ jobs:
           tag: ${{ env.VERSION }}
           overwrite: true
 
+  build-windows:
+    runs-on: windows-latest
+    needs: get-version
+    env:
+      VERSION: ${{needs.get-version.outputs.version}}
+      BUILD_INSTALLER: ${{ false }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Install dotnet
+        if: ${{ env.BUILD_INSTALLER }}
+        uses: actions/setup-dotnet@v3
+        with:
+          global-json-file: build/windows/installer/global.json
+      - name: Build release
+        run: |
+          cargo build --profile dist
+      - name: Prepare release
+        run: |
+          mkdir target/dist/assets && cp -r assets target/dist/assets
+          mkdir target/dist/credits && cp -r credits target/dist/credits
+      - name: Zip release
+        uses: vimtor/action-zip@v1.1
+        with:
+          files: target/dist/assets/ target/dist/credits/ target/dist/${{ env.GAME_EXECUTABLE_NAME }}.exe
+          dest: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
+      - name: Create Installer
+        if: ${{ env.BUILD_INSTALLER }}
+        run: dotnet build -p:Version=${{ env.VERSION }} -c Release build/windows/installer/Installer.wixproj --output installer
+      - name: Upload release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.GAME_EXECUTABLE_NAME }}_windows.zip
+          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_windows.zip
+          tag: ${{ env.VERSION }}
+          overwrite: true
+      - name: Upload installer
+        if: ${{ env.BUILD_INSTALLER }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: installer/en-US/installer.msi
+          asset_name: ${{ env.GAME_EXECUTABLE_NAME }}_${{ env.VERSION }}_windows.msi
+          release_name: ${{ env.VERSION }}
+          tag: ${{ env.VERSION }}
+          overwrite: true
+
   build-web:
     runs-on: ubuntu-latest
     needs: get-version
     env:
-      VERSION: ${{ needs.get-version.outputs.version }}
+      VERSION: ${{needs.get-version.outputs.version}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -219,7 +215,7 @@ jobs:
     timeout-minutes: 30
     needs: get-version
     env:
-      VERSION: ${{ needs.get-version.outputs.version }}
+      VERSION: ${{needs.get-version.outputs.version}}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -245,17 +241,21 @@ jobs:
 
   build-for-Android:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     needs: get-version
     env:
-      VERSION: ${{ needs.get-version.outputs.version }}
+      VERSION: ${{needs.get-version.outputs.version}}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - name: Add Android targets
-        run: rustup target add armv7-linux-androideabi aarch64-linux-android
+        # could add more targets like armv7-linux-androideabi here (then also add to cargo-apk config)
+        run: rustup target add aarch64-linux-android
       - name: Install Cargo APK
         run: cargo install --force cargo-apk
       - name: Build app for Android
+        # This uses a debug build, since release builds require keystore configuration
+        # For AAB builds that can be pushed to the Play store, see the release-android-google-play workflow.
         run: ANDROID_NDK_ROOT=$ANDROID_NDK_LATEST_HOME cargo apk build --package mobile
       - name: Upload release
         uses: svenstaro/upload-release-action@v2
