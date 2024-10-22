@@ -14,8 +14,8 @@ on:
 # ToDo: adapt names
 env:
   # This variable is used to name release output files.
-  GAME_EXECUTABLE_NAME: bevy_game
-  GAME_OSX_APP_NAME: BevyGame
+  GAME_EXECUTABLE_NAME: limitpush
+  GAME_OSX_APP_NAME: LimitPush
 
 permissions:
   contents: write
