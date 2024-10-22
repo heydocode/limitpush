@@ -12,7 +12,7 @@ pub fn plugin(app: &mut App) {
 // handle (can be multiple), current handle, volume
 // and maybe more params. Also implement a system which
 // rerun the background music with updated changes when
-// the BackgroundAudio ressource is changed so the BackgroundAudio 
+// the BackgroundAudio ressource is changed so the BackgroundAudio
 // will be this struct with all params
 
 #[derive(Resource)]

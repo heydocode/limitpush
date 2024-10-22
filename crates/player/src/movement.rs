@@ -5,7 +5,10 @@ use states::screens::Screen;
 use crate::Player;
 
 pub fn plugin(app: &mut App) {
-    app.add_systems(Update, (player_movement_system, read_movement_output_system).run_if(in_state(Screen::Playing)));
+    app.add_systems(
+        Update,
+        (player_movement_system, read_movement_output_system).run_if(in_state(Screen::Playing)),
+    );
 }
 
 fn player_movement_system(
@@ -50,9 +53,7 @@ fn player_movement_system(
     }
 }
 
-fn read_movement_output_system(
-    outputs: Query<(Entity, &KinematicCharacterControllerOutput)>,
-) {
+fn read_movement_output_system(outputs: Query<(Entity, &KinematicCharacterControllerOutput)>) {
     for (entity, output) in outputs.iter() {
         println!(
             "Entity {:?} moved by {:?} and is grounded: {:?}",
