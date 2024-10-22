@@ -5,8 +5,7 @@ use super::Screen;
 pub(super) fn plugin(app: &mut App) {
     app.add_systems(
         Update,
-        return_to_menu
-            .run_if(input_just_pressed(KeyCode::Escape).and_then(in_state(Screen::Menu))),
+        return_to_menu.run_if(input_just_pressed(KeyCode::Escape).and_then(in_state(Screen::Menu))),
     );
 }
 

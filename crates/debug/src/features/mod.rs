@@ -14,6 +14,6 @@ pub fn plugin(app: &mut App) {
         debug_menu::plugin,
         // DON'T IMPORT WIREFRAME TO MOBILE BUILDS!
         #[cfg(not(any(target_os = "android", target_os = "ios")))]
-        wireframe::plugin, 
+        wireframe::plugin,
     ));
 }

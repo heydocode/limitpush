@@ -36,13 +36,13 @@ fn spawn_player(mut commands: Commands, player_assets: Res<PlayerAssets>) {
             jump_intensity: 10.0,
         },
         RigidBody::KinematicPositionBased, // Set player movement to be kinematic
-        Collider::capsule_y(1.0, 0.6), // Add a capsule collider for the player shape
+        Collider::capsule_y(1.0, 0.6),     // Add a capsule collider for the player shape
         KinematicCharacterController {
             offset: CharacterLength::Absolute(0.05), // Offset to avoid ground clipping
             autostep: Some(CharacterAutostep {
                 max_height: CharacterLength::Absolute(0.5), // Maximum height the player can step over
                 min_width: CharacterLength::Absolute(0.2),  // Minimum width required to step
-                include_dynamic_bodies: true, // Ability to step over dynamic objects
+                include_dynamic_bodies: true,               // Ability to step over dynamic objects
             }),
             ..default()
         },
