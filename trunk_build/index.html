@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>LimiPush</title> <!-- ToDo -->
     
-    <style nonce="XkUbwQ/0meqzS6uDzi2/nA==">:root {
+    <style>:root {
     /* Consider adjusting this color to match your splash screen! */
     --loading-screen-bg-color: #282828;
 }
@@ -62,7 +62,7 @@ body {
     height: 0;
 }
 </style>
-    <script type="module" nonce="37iV2CdzLDr8M8HtKFqirw==">// taken from https://developer.chrome.com/blog/web-audio-autoplay/#moving-forward
+    <script type="module">// taken from https://developer.chrome.com/blog/web-audio-autoplay/#moving-forward
 (function () {
     // An array of all contexts to resume on the page
     const audioContextList = [];
@@ -121,9 +121,9 @@ body {
 })();
 </script>
     
-<script type="module" nonce="6cTXUBNf2sKYwQMcznXWew==">
-import init, * as bindings from './limitpush-b4bf5207fcccd8f2.js';
-const wasm = await init('./limitpush-b4bf5207fcccd8f2_bg.wasm');
+<script type="module">
+import init, * as bindings from './limitpush-d561656d4b14ed98.js';
+const wasm = await init('./limitpush-d561656d4b14ed98_bg.wasm');
 
 
 window.wasmBindings = bindings;
