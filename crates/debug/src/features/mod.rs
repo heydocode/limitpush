@@ -1,4 +1,5 @@
 //! This crate implements debug to help develop the limitpush game
+//!
 //! Wireframe isn't supported by web & mobile builds, well web is rejected
 //! in lib.rs because it doesn't even support the debug menu
 
