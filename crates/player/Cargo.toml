@@ -30,7 +30,11 @@ bevy = { version = "*", default-features = false, features = [
     "webgl2",
     "sysinfo_plugin"
 ] }
-bevy_rapier3d = "0.27.0"
+avian3d = "0.1.2"
+virtual_joystick = { version = "*", default-features = false, features = [ 
+    "inspect", 
+    "serde" 
+] }
 
 # Internal crates
 # Avoid them to escape cyclic dependencies

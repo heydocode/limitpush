@@ -4,7 +4,8 @@
 // if the build is not in debug mode (i.e., for release builds).
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use bevy::asset::AssetMetaCheck; // Importing asset management checks from Bevy.
+use bevy::asset::AssetMetaCheck;
+// Importing asset management checks from Bevy.
 use bevy::prelude::*;
 use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
 use bevy::render::RenderPlugin;

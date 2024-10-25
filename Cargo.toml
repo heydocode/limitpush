@@ -38,6 +38,12 @@ lto = true
 codegen-units = 1
 strip = true
 
+[features]
+default = ["dev"]
+dev = [
+    "debug/dev"
+]
+
 [dependencies]
 # Bevy Engine
 bevy = { version = "*", default-features = false, features = [
@@ -79,6 +85,8 @@ world = { path = "crates/world" }
 # Synchronize with Bevy dependencies for window management and image loading
 winit = { version = "0.30.5", default-features = false }
 image = { version = "0.25.4", default-features = false }
+bevy_transform_interpolation = { git = "https://github.com/Jondolf/bevy_transform_interpolation" }
+avian3d = "0.1.2"
 
 [build-dependencies]
 embed-resource = "2.5.0"

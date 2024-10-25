@@ -2,7 +2,7 @@ use bevy::{prelude::*, render::view::RenderLayers};
 
 use crate::pan_orbit_camera::{self};
 
-use crate::pan_orbit_camera::PanOrbitCamera;
+// use crate::pan_orbit_camera::PanOrbitCamera;
 use player::Player;
 use states::screens::Screen;
 
@@ -30,8 +30,8 @@ struct DecayRate(f32);
 fn spawn_camera(mut commands: Commands) {
     commands.spawn((
         Camera3dBundle {
-            transform: Transform::from_xyz(0.0, 10.0, 10.0).looking_at(Vec3::ZERO, Vec3::Y),
-            ..default()
+            transform: Transform::from_xyz(0.0, 10.0, 10.0),
+            ..default() // TODO! Implement a collider for the camera in order to avoid the camera going through objects and colliders
         },
         Name::new("Camera"),
         MainCamera {
@@ -39,17 +39,17 @@ fn spawn_camera(mut commands: Commands) {
             min_speed: 0.05,
             max_distance: 8.0,
             max_speed: 50.0,
-            ideal_distance: 7.5,
-            height_offset: 4.0,
+            ideal_distance: -15.0,
+            height_offset: 5.0,
         },
-        PanOrbitCamera {
-            // Fix all target-specific issues
-            // Indeed, for some reason PanOrbitCamera
-            // works differently on wasm builds...
-            zoom_upper_limit: Some(1000.0),
-            force_update: true,
-            ..default()
-        },
+        // PanOrbitCamera {
+        //     // Fix all target-specific issues
+        //     // Indeed, for some reason PanOrbitCamera
+        //     // works differently on wasm builds...
+        //     zoom_upper_limit: Some(1000.0),
+        //     force_update: true,
+        //     ..default()
+        // },
         RenderLayers::default(),
     ));
 
@@ -62,6 +62,11 @@ fn player_camera(
     time: Res<Time>,
     decay_rate: Res<DecayRate>, // Add decay rate for smoother movement
 ) {
+    // TODO! Implement the camera collider here too: the camera
+    // will obviously always try to get the ideal_distance, so
+    // we have to change its priorities when the camera collides
+    // with another collider (not KinematicCharacters, to avoid
+    // camera lags on multiplayer if I'll implement that)
     if let Ok(player_transform) = player_query.get_single() {
         let player_position = player_transform.translation + Vec3::Y * 3.0;
 
@@ -85,8 +90,6 @@ fn player_camera(
             } else {
                 camera_transform.translation = target_position; // Snap to position if close enough
             }
-
-            // Always look at the player
             camera_transform.look_at(player_position, Vec3::Y);
         }
     }

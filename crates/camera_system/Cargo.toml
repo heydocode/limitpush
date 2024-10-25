@@ -31,7 +31,7 @@ bevy = { version = "*", default-features = false, features = [
     "sysinfo_plugin"
 ] }
 bevy_egui = "0.30.0"
-float-cmp = "0.10.0"
+avian3d = "0.1.2"
 
 # Internal crates
 # Avoid them to escape cyclic dependencies

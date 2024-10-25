@@ -6,7 +6,7 @@ pub(super) fn plugin(app: &mut App) {
     app.add_systems(
         Update,
         kill_window_on_escape.run_if(
-            input_just_pressed(KILL_KEY).and_then(input_just_pressed(KeyCode::ControlLeft)),
+            input_just_pressed(KILL_KEY), //.and_then(input_just_pressed(KeyCode::ControlLeft)),
         ),
     );
 }
