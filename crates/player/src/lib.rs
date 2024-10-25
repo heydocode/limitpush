@@ -3,14 +3,14 @@
 use bevy::prelude::*;
 use movement::CharacterControllerPlugin;
 
-pub mod movement;
-pub mod spawn;
 #[cfg(any(target_os = "ios", target_os = "android", target_arch = "wasm32"))]
 pub mod mobile_controller;
+pub mod movement;
+pub mod spawn;
 
 pub fn plugin(app: &mut App) {
     app.add_plugins((
-        CharacterControllerPlugin, 
+        CharacterControllerPlugin,
         spawn::plugin,
         #[cfg(any(target_os = "ios", target_os = "android", target_arch = "wasm32"))]
         mobile_controller::plugin,

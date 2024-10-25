@@ -1,5 +1,6 @@
 #![allow(clippy::type_complexity)] // Allow complex types flagged by Clippy (optional).
 
+use avian3d::PhysicsPlugins;
 /// This project follows the structure of the `bevy_new_2d` template.
 /// For reference: https://github.com/TheBevyFlock/bevy_new_2d.
 ///
@@ -20,7 +21,6 @@
 ///
 /// All code in **lib.rs** is shared across all platforms.
 use bevy::prelude::*;
-use avian3d::PhysicsPlugins;
 use bevy_transform_interpolation::TransformInterpolationPlugin; // Common Bevy imports for ease of development. // Debugging tools.
 
 /// Core game plugin for Bevy.
@@ -33,12 +33,12 @@ impl Plugin for GamePlugin {
         // Register core game plugins
         app.add_plugins((
             PhysicsPlugins::default(),
-            audio::plugin,         // Audio management (e.g., background music, sound effects).
+            audio::plugin, // Audio management (e.g., background music, sound effects).
             camera_system::plugin, // Camera system management.
-            player::plugin,        // Player controls, animations, and gameplay.
-            states::plugin,        // Screen state.
-            world::plugin,         // World spawn.
-            ui::plugin,            // UI handling
+            player::plugin, // Player controls, animations, and gameplay.
+            states::plugin, // Screen state.
+            world::plugin, // World spawn.
+            ui::plugin,    // UI handling
             #[cfg(debug_assertions)]
             // This plugin isn't available at release to offer
             // cleaner game experience

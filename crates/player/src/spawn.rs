@@ -9,7 +9,7 @@ pub fn plugin(app: &mut App) {
 }
 
 pub fn setup_player(mut commands: Commands, player_assets: Res<PlayerAssets>) {
-let radians = 180_f32.to_radians();
+    let radians = 180_f32.to_radians();
 
     commands
         .spawn((

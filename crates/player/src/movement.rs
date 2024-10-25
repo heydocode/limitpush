@@ -258,7 +258,8 @@ fn movement(
 
                     if direction.length_squared() > 0.0 {
                         let look_direction = Vec3::new(direction.x, 0.0, direction.y).normalize();
-                        let target_rotation = Quat::from_rotation_y(look_direction.z.atan2(look_direction.x));
+                        let target_rotation =
+                            Quat::from_rotation_y(look_direction.z.atan2(look_direction.x));
                         let right_rotation = Quat::from_rotation_y(-std::f32::consts::FRAC_PI_2);
                         let adjusted_rotation = target_rotation * right_rotation;
                         let current_rotation = player_transform.rotation;
@@ -466,7 +467,7 @@ fn kinematic_controller_collisions(
 }
 
 pub fn player_respawn(mut player_query: Query<&mut Transform, With<Player>>) {
-    let player_y = player_query.get_single_mut().unwrap().translation.y.clone();
+    let player_y = player_query.get_single_mut().unwrap().translation.y;
     if player_y < MINIMAL_PLAYER_Y {
         // Every other solution creates borrow checker issues
         player_query.get_single_mut().unwrap().translation = Vec3::new(0.0, 20.0, 0.0);
