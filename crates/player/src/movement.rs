@@ -263,7 +263,7 @@ fn movement(
                         let right_rotation = Quat::from_rotation_y(-std::f32::consts::FRAC_PI_2);
                         let adjusted_rotation = target_rotation * right_rotation;
                         let current_rotation = player_transform.rotation;
-                        let new_rotation = current_rotation.slerp(adjusted_rotation, 0.05);
+                        let new_rotation = current_rotation.slerp(adjusted_rotation, 0.1);
 
                         player_transform.rotation = new_rotation;
                     }

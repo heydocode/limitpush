@@ -22,4 +22,12 @@ fn spawn_level(queued_objects: ResMut<QueuedObjects>) {
         position: (0.0, 0.0, 3.0),
         name: "Torus".to_string(),
     });
+
+    queued_objects.value.enqueue(ObjectData {
+        form: "plane".to_string(),
+        variant: 2,
+        size: 1000.0,
+        position: (0.0, 0.0, 3.0),
+        name: "Plane3D".to_string(),
+    });
 }

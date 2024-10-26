@@ -1,4 +1,4 @@
-use bevy::{prelude::*, render::renderer::RenderAdapterInfo};
+use bevy::prelude::*;
 use bevy_panic_handler::PanicHandler;
 
 pub(super) fn plugin(app: &mut App) {
@@ -14,7 +14,7 @@ pub(super) fn plugin(app: &mut App) {
             })
             .set_body_func(|info| {
                 format!(
-            "Catched a panic at line {}, column {}.\nIncluded message: {}\nConfiguration: {}",
+            "Catched a panic at line {}, column {}.\nIncluded message: {}\nFull file path: \"{}\"",
             info.location().unwrap().line(),
             info.location().unwrap().column(),
             info.payload()
@@ -25,31 +25,11 @@ pub(super) fn plugin(app: &mut App) {
                     .downcast_ref::<&str>()
                     .unwrap_or(&"")
                     .to_string()),
-            info.location().unwrap().file() // TODO! here implement all the configuration
-            // including the used GPU driver and the target
+            info.location().unwrap().file()
         )
             })
             .build(),
     );
-
-    app.add_systems(Startup, push_adapter_info);
-}
-
-// TODO! Here save the info pushed by push_adapter_info
-// pub struct Drivernfo {
-
-// }
-
-// TODO! Change this function to create another bevy_egui window
-// to display the current backend + indicate it in the
-// unhandle panic cases because some issues can occur due
-// do the backend, graphics card (name) or even vendor
-// (really unsure about it but anyway :3)
-fn push_adapter_info(adapter_info: Res<RenderAdapterInfo>) {
-    println!("GPU Name: {}", adapter_info.name);
-    println!("Vendor: {}", adapter_info.vendor);
-    println!("Device Type: {:?}", adapter_info.device_type);
-    println!("Backend: {:?}", adapter_info.backend);
 }
 
 fn format_string(info: &str) -> String {

@@ -9,7 +9,9 @@ use states::screens::Screen;
 pub fn plugin(app: &mut App) {
     app.add_systems(Update, player_camera.run_if(in_state(Screen::Playing)));
     app.add_systems(Startup, spawn_camera);
-    app.add_plugins(pan_orbit_camera::plugin);
+    app.add_plugins((
+        pan_orbit_camera::plugin,
+    ));
     app.register_type::<MainCamera>();
 }
 

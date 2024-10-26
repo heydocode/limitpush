@@ -82,7 +82,7 @@ pub fn spawn_level(
                 "capsule" => Mesh::from(Capsule3d::new(size / 3.0, size)),
                 "torus" => Mesh::from(Torus::new(size / 2., size * 0.75)),
                 "cylinder" => Mesh::from(Cylinder::new(size / 2.0, size)),
-                "plane" => Mesh::from(Cuboid::new(size, 0.5, size)),
+                "plane" => Mesh::from(Cuboid::new(size, 2.0, size)),
                 "platform" => Mesh::from(Cuboid::new(4.0, 1.0, 4.0)),
                 "sphere" => Mesh::from(Sphere::new(size / 2.).mesh().uv(32, 18)),
                 _ => Mesh::from(Plane3d::default().mesh().size(10.0, 10.0)),

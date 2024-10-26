@@ -1,20 +1,51 @@
-**[Announcement] Bevy Template in Development** 🚀
+# LimitPush: Bevy Game Template
 
-Hey everyone!
+Welcome to **LimitPush**: a modular, high-performance game template for the [Bevy game engine](https://bevyengine.org/), designed with both flexibility and ease of use in mind. This project is a work in progress, but it's making rapid strides towards a stable, feature-rich foundation for 2D and 3D Bevy games.
 
-I’m working on a **Bevy template** that will be regularly updated (until life gets too busy 😅). The main goals of the template are **blazing performance** and **cross-platform support**. Here’s what’s supported so far:
+## 🚀 About the Project
 
-- **Mobile**: Some Android distributives (other Android distributives and iOS not tested yet)
-- **Web**: Fully supported
-- **Desktop**: Fully supported
-  - **MacOS**: Both ARM and Intel-based  
-  - **Linux**: Tested on Ubuntu, works perfectly  
-  - **Windows**: All current builds (planning to test for older versions like Windows 8 soon)
+**LimitPush** aims to be a universal template that enables rapid development and easy extension. By leveraging a **modular crate architecture**, it offers:
+- **Customizability**: Adjust gameplay components like player movement, object spawners, and more.
+- **Cross-platform support**: Compatibility across mobile, web, and desktop platforms.
+- **Future-proofing**: Plans for additional platform support and optimized performance for various hardware setups.
 
-The template is **modular, comprehensive, and universal**. The game is organized in **crates**, which makes it easy to customize and switch between 3D and 2D with minimal changes (e.g., adjusting player movement, world generation, etc.). 
+## How You Can Help
 
-Additionally, the template features a **debug menu** using **bevy-inspector-egui** and all components reflected to help with development and testing. The plan is to support as many targets as possible, including **Raspberry Pi**, **Steam Deck**, and other platforms.
+I’m excited to connect with contributors, testers, and supporters! Here are a few ways you can get involved:
+- **Open Issues**: Encounter a bug or have a feature request? Please share any relevant resources or references to help guide implementation.
+- **Code Contributions**: Check out the repo and submit a PR! Contributions are very welcome.
+- **Feedback and Ideas**: Share any insights or improvements you think could enhance LimitPush.
+- **General Feedback**: Your experiences using the template can help shape its direction and usability.
 
-Right now, the project is in a private repo until I complete the basics, but I’ll make it public soon!
+## Supported Platforms
 
-I’d love to know if anyone is interested in this! Feel free to drop any questions or thoughts below 👇
+The template's main goals are **blazing performance** and **broad platform support**. Current compatibility includes:
+
+- **Mobile**:
+  - Partial support for Android; testing for other Android distributions and iOS is ongoing.
+
+- **Web**:
+  - Fully supported.
+
+- **Desktop**:
+  - **MacOS**: Runs on both ARM and Intel-based systems.
+  - **Linux**: Tested on Ubuntu.
+  - **Windows**: Supported on all current builds, with testing for older versions (e.g., Windows 8) planned.
+
+## Features
+
+LimitPush comes packed with tools and features to streamline development:
+
+- **Modular Design**: The game is organized into **crates** for modularity and flexibility.
+- **Debug Menu**: Includes **bevy-inspector-egui** for easy debugging and component inspection.
+- **Platform Expansion**: Plans for future support on **Raspberry Pi**, **Steam Deck**, and more.
+
+## Project Status
+
+LimitPush is currently **unstable** as foundational work is completed, so expect potential breaking changes. A **stable** release is on the roadmap!
+
+## Feedback & Community
+
+Feedback is crucial to making LimitPush a valuable tool. Feel free to reach out in the issues section or connect with me on Discord (heydo_code)!
+
+Let’s build something amazing together: stay tuned for updates, and happy coding! 🎮
