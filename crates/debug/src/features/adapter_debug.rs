@@ -114,6 +114,7 @@ fn driver_ui(mut contexts: EguiContexts, driver_info: Res<Drivernfo>) {
                 frame.content_ui.label(extra_text);
             }
 
+            frame.allocate_space(ui);
             frame.paint(ui);
         }
     });
