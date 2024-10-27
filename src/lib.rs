@@ -21,7 +21,6 @@ use avian3d::PhysicsPlugins;
 ///
 /// All code in **lib.rs** is shared across all platforms.
 use bevy::prelude::*;
-use bevy_transform_interpolation::TransformInterpolationPlugin; // Common Bevy imports for ease of development. // Debugging tools.
 
 /// Core game plugin for Bevy.
 /// This manages all game-related features and systems by bundling them into the Bevy app.
@@ -43,11 +42,6 @@ impl Plugin for GamePlugin {
             // This plugin isn't available at release to offer
             // cleaner game experience
             debug::plugin,
-            TransformInterpolationPlugin {
-                global_translation_interpolation: true,
-                global_rotation_interpolation: true,
-                global_scale_interpolation: true,
-            },
         ));
     }
 }

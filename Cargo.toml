@@ -82,11 +82,4 @@ ui = { path = "crates/ui" }
 window_manager = { path = "crates/window_manager" }
 world = { path = "crates/world" }
 
-bevy_transform_interpolation = { git = "https://github.com/Jondolf/bevy_transform_interpolation" }
 avian3d = "0.1.2"
-
-# Only desktop
-[target.'cfg(any(target_os = "windows", target_os = "macos", target_os = "linux"))'.dependencies]
-# Synchronize with Bevy dependencies for window management and image loading
-winit = { version = "0.30.5", default-features = false }
-image = { version = "0.25.4", default-features = false }
