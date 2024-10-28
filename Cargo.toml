@@ -38,34 +38,14 @@ lto = true
 codegen-units = 1
 strip = true
 
+[features]
+default = ["dev"]
+dev = [
+    "debug/dev"
+]
+
 [dependencies]
-# Bevy Engine
-bevy = { version = "*", default-features = false, features = [
-    # "animation",
-    # "bevy_state",
-    # "bevy_color",
-    # "bevy_gilrs",
-    # "bevy_scene",
-    # "bevy_winit",
-    # "bevy_core_pipeline",
-    # "bevy_pbr",
-    # "bevy_gltf",
-    # "bevy_render",
-    # "bevy_sprite",
-    # "bevy_text",
-    # "bevy_ui",
-    # "multi_threaded",
-    # "png",
-    # "jpeg",
-    # "hdr",
-    # "x11",
-    # "bevy_gizmos",
-    # "tonemapping_luts",
-    # "smaa_luts",
-    # "default_font",
-    # "webgl2",
-    # "sysinfo_plugin"
-] }
+bevy = { version = "*", default-features = false }
 
 audio = { path = "crates/audio" }
 camera_system = { path = "crates/camera_system" }
@@ -76,9 +56,4 @@ ui = { path = "crates/ui" }
 window_manager = { path = "crates/window_manager" }
 world = { path = "crates/world" }
 
-# Synchronize with Bevy dependencies for window management and image loading
-winit = { version = "0.30.5", default-features = false }
-image = { version = "0.25.4", default-features = false }
-
-[build-dependencies]
-embed-resource = "2.5.0"
+avian3d = "0.1.2"
