@@ -4,34 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy = { version = "*", default-features = false, features = [
-    "animation",
-    "bevy_state",
-    "bevy_color",
-    "bevy_gilrs",
-    "bevy_scene",
-    "bevy_winit",
-    "bevy_core_pipeline",
-    "bevy_pbr",
-    "bevy_gltf",
-    "bevy_render",
-    "bevy_sprite",
-    "bevy_text",
-    "bevy_ui",
-    "multi_threaded",
-    "png",
-    "jpeg",
-    "hdr",
-    "x11",
-    "bevy_gizmos",
-    "tonemapping_luts",
-    "smaa_luts",
-    "default_font",
-    "webgl2",
-    "sysinfo_plugin"
-] }
+bevy = { version = "*", default-features = false }
 bevy_kira_audio = "0.20.0"
 
 # Internal crates
 # Avoid them to escape cyclic dependencies
-states ={ path = "../states"} # Dependency crate (= safe)
+states = { path = "../states"} # Dependency crate (= safe)

@@ -6,7 +6,7 @@ use super::{cleanup, Screen};
 #[derive(Component)]
 struct PipelineOnly;
 
-const EXPECTED_PIPELINES: usize = 9;
+const EXPECTED_PIPELINES: usize = 5;
 
 pub(super) fn plugin(app: &mut App) {
     app.add_plugins(PipelinesReadyPlugin);

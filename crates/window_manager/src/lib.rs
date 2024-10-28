@@ -3,10 +3,10 @@
 pub mod window;
 
 use bevy::prelude::*;
-use std::io::Cursor; // Used to create an in-memory cursor for the image data.
-use winit::window::Icon; // Importing the Icon type for window icon management.
 use bevy::window::PrimaryWindow; // Importing the PrimaryWindow component for window management.
-use bevy::winit::WinitWindows; // Winit is a window management library that Bevy uses for window handling.
+use bevy::winit::WinitWindows;
+use std::io::Cursor; // Used to create an in-memory cursor for the image data.
+use winit::window::Icon; // Importing the Icon type for window icon management. // Winit is a window management library that Bevy uses for window handling.
 
 pub fn plugin(app: &mut App) {
     app.add_plugins(window::plugin);

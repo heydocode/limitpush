@@ -7,7 +7,9 @@
 use bevy::asset::AssetMetaCheck;
 // Importing asset management checks from Bevy.
 use bevy::prelude::*;
+#[cfg(not(target_family = "wasm"))]
 use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
+#[cfg(not(target_family = "wasm"))]
 use bevy::render::RenderPlugin;
 // Importing common Bevy types and traits for ease of use.
 use bevy::DefaultPlugins; // Default plugins provided by Bevy for standard functionalities.
