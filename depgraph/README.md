@@ -4,7 +4,7 @@ This directory provides a **clear dependency graph** to visualize project struct
 
 ## Updating the Dependency Graph
 
-To update the dependency graph and refresh dependencies, run the `update_workspace` script.
+To update the dependency graph and refresh dependencies, run the `update_workspace` (MacOS & Linux) or the `update_graphs` (Windows) script.
 
 ### Installation and Setup
 
@@ -13,7 +13,7 @@ Ensure that **Graphviz** is installed on your system, as the scripts require `do
 ### Windows
 
 1. Install Graphviz.
-2. Edit the `update_workspace.bat` file to provide the correct path to `dot.exe`.
+2. Edit the `update_graphs.bat` file to provide the correct path to `dot.exe`.
 3. Run the script:
    ```powershell
    .\scripts\update_workspace.bat
