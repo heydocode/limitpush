@@ -4,7 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy = { version = "*", default-features = false }
+bevy = { version = "*", default-features = false, features = [
+]}
 avian3d = "0.1.2"
 
 # Internal crates

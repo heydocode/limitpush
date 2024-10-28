@@ -12,3 +12,9 @@ Cargo.lock
 
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
+
+# Remove the generated script_logs components
+script_logs/*
+
+# Remove the temporal output.log, used for scripts
+output.log
