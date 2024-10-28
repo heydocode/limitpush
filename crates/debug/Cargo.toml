@@ -50,7 +50,3 @@ bevy_egui = { version = "0.30.0", default-features = false, features = [
 # Here we want it only on desktop builds
 [target.'cfg(not(any(target_os = "ios", target_os = "android", target_family = "wasm")))'.dependencies]
 bevy-panic-handler = "3.0.0"
-
-# [target.'cfg(not(target_family = "wasm"))'.dependencies]
-# bevy-inspector-egui = { version = "0.27.0", default-features = false }
-# bevy_egui = { version = "0.30.0", default-features = false }
