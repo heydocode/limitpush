@@ -36,21 +36,7 @@ This script compiles the project for multiple targets specified at the beginning
 ./scripts/compile_all_targets.sh
 ```
 
-## Script 3: Install Required Cargo Tools
-
-This script checks for and installs essential Cargo tools like `cargo-audit`, `cargo-clippy`, `trunk`, and `cargo-apk` to ensure your environment is fully set up for Bevy development.
-
-**Run it on Windows:**
-```powershell
-.\scripts\install_tools.bat
-```
-
-**Run it on MacOS/Linux:**
-```bash
-./scripts/install_tools.sh
-```
-
-## Script 4: Update Dependency Graphs
+## Script 3: Update Dependency Graphs
 
 This script generates various dependency graphs using the `cargo-depgraph` crate and Graphviz’s `dot` tool. The generated graphs provide visual insights into the project’s dependencies, including implicit and explicit dependencies and focus graphs for critical crates like `wgpu-core`, `bevy`, and `bevy_render`.
 

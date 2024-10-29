@@ -1,9 +1,13 @@
 #!/bin/bash
+
 # === Configuration: Set Path to Dot ===
-dot="/usr/local/bin/dot"  # Adjust path to 'dot' as needed
+dot="/path/to/graphviz/bin/dot"  # Update with the correct path to the Graphviz dot executable
 
 # === Dependency Graph Generation for Limitpush Bevy Game Template ===
 # This script generates dependency graphs using cargo-depgraph and Graphviz's dot tool.
+
+# Create the output directory if it doesn’t exist
+mkdir -p depgraph/crates-focus
 
 # Generate implicit dependency graph with deduplicated transitive dependencies (depth = 1)
 cargo depgraph --all-deps --depth 1 --dedup-transitive-deps | "$dot" -Tpng -o "depgraph/implicit_graph.png"
