@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 bevy = { version = "*", default-features = false }
 avian3d = "0.1.2"
+bevy_panorbit_camera = "0.19.5"
 
 # Internal crates
 # Avoid them to escape cyclic dependencies

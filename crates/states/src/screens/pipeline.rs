@@ -10,7 +10,7 @@ const EXPECTED_PIPELINES: usize = 5;
 
 pub(super) fn plugin(app: &mut App) {
     app.add_plugins(PipelinesReadyPlugin);
-    app.add_systems(OnEnter(Screen::Pipeline), setup_loading_screen);
+    app.add_systems(OnEnter(Screen::Pipeline), setup_pipeline_screen);
     app.add_systems(Update, print.run_if(resource_changed::<PipelinesReady>));
     app.add_systems(
         Update,
@@ -21,11 +21,18 @@ pub(super) fn plugin(app: &mut App) {
     app.add_systems(OnExit(Screen::Pipeline), cleanup::<PipelineOnly>);
 }
 
-// Your loading screen should include all of the cameras, lights, and other elements that cause
+// Your pipeline screen should include all of the cameras, lights, and other elements that cause
 // pipelines to be built in your app.
-fn setup_loading_screen(mut commands: Commands) {
+fn setup_pipeline_screen(mut commands: Commands) {
     commands.spawn((
-        TextBundle::from_section("Pipelines loading...".to_string(), TextStyle::default()),
+        TextBundle::from_section(
+            "Pipelines loading...".to_string(),
+            TextStyle {
+                font_size: 30.0,
+                color: Color::srgb(0.0, 0.0, 0.0),
+                ..default()
+            },
+        ),
         PipelineOnly,
     ));
 }

@@ -45,7 +45,19 @@ dev = [
 ]
 
 [dependencies]
-bevy = { version = "*", default-features = false }
+# Please don't forget the way by which the rust compiler works!
+# If a dependency feature is set here, every internal crate of this
+#   project will have this feature if it has this dependency!
+# For the best readability of this project, there will be a mention
+#   in all crates' Cargo.toml that need this feature to avoid the case
+#   when a user just copies/pastes the whole crate into his project and
+#   gets an unfixable error because of a missing feature (even if the
+#   rust compiler should keep you aware from missing feature, sometimes
+#   it can not happen..)
+bevy = { version = "*", default-features = false, features = [
+    # Needed by debug (Wiraframe feature) & player crates
+    "bevy_pbr",
+]}
 
 audio = { path = "crates/audio" }
 camera_system = { path = "crates/camera_system" }

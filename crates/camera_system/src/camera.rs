@@ -1,5 +1,6 @@
 use bevy::{prelude::*, render::view::RenderLayers};
 
+use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 use player::Player;
 use states::screens::Screen;
 
@@ -7,6 +8,7 @@ pub fn plugin(app: &mut App) {
     app.add_systems(Update, player_camera.run_if(in_state(Screen::Playing)));
     app.add_systems(Startup, spawn_camera);
     app.register_type::<MainCamera>();
+    app.add_plugins(PanOrbitCameraPlugin);
 }
 
 #[derive(Component, Reflect)]
@@ -37,6 +39,7 @@ fn spawn_camera(mut commands: Commands) {
             ideal_distance: -15.0,
             height_offset: 5.0,
         },
+        PanOrbitCamera::default(),
         RenderLayers::default(),
     ));
 

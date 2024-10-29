@@ -49,3 +49,9 @@ LimitPush is currently **unstable** as foundational work is completed, so expect
 Feedback is crucial to making LimitPush a valuable tool. Feel free to reach out in the issues section or connect with me on Discord (heydo_code)!
 
 Let’s build something amazing together: stay tuned for updates, and happy coding! 🎮
+
+## License
+
+```
+This project is under the MIT license. This project must include attribution to heydocode in any distributed works based on this template.
+```
