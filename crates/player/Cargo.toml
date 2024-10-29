@@ -4,14 +4,14 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy = { version = "*", default-features = false, features = [
-    # "bevy_pbr", See the limitpush Cargo.toml!
-]}
-avian3d = "0.1.2"
-virtual_joystick = { version = "*", default-features = false, features = [ 
-    "serde" 
-] }
+bevy = { version = "*", default-features = false }
+avian3d = { version = "*", default-features = false }
 
 # Internal crates
 # Avoid them to escape cyclic dependencies
 states = { path = "../states"} # Dependency crate (= safe)
+
+[target.'cfg(any(target_os = "ios", target_os = "android", target_family = "wasm"))'.dependencies]
+virtual_joystick = { version = "*", default-features = false, features = [ 
+    "serde" 
+]}

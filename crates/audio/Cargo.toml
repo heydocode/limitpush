@@ -5,7 +5,10 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "*", default-features = false }
-bevy_kira_audio = "0.20.0"
+bevy_kira_audio = { version = "*", default-features = false, features = [
+    # Support audio files of OGG format
+    "ogg"
+]}
 
 # Internal crates
 # Avoid them to escape cyclic dependencies

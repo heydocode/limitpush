@@ -1,0 +1,50 @@
+[package]
+name = "mobile"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "mobile"
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
+limitpush = { path = ".." } # ToDo
+bevy = { version = "*", default-features = false }
+
+# As long as Kira doesn't expose a feature for this, we need to enable it
+# See https://github.com/tesselode/kira/pull/51
+[target."cfg(target_os = \"android\")".dependencies.cpal]
+version = "0.15"
+features = ["oboe-shared-stdcxx"]
+
+# See https://github.com/bevyengine/bevy/pull/12052
+[target.aarch64-apple-ios-sim.dependencies]
+bevy = { version = "*", default-features = false, features = [
+    "ios_simulator",
+] }
+
+[package.metadata.android]
+package = "heydocode.limitpush"  # ToDo
+apk_name = "LimitPush"  # ToDo same as GAME_OSX_APP_NAME in release workflow
+assets = "../assets"
+strip = "strip"
+resources = "../build/android/res"
+build_targets = [ 
+    "armv7-linux-androideabi",
+    # "aarch64-linux-android",
+    # "i686-linux-android",
+    # "x86_64-linux-android"
+]
+
+[package.metadata.android.sdk]
+min_sdk_version = 14
+target_sdk_version = 35
+max_sdk_version = 34
+
+[package.metadata.android.application]
+icon = "@mipmap/icon"
+label = "LimitPush" # ToDo
+
+[profile.release]
+lto = false

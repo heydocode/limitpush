@@ -16,7 +16,7 @@ members = [
     "crates/ui", 
     "crates/window_manager", 
     "crates/world",
-    "mobile"
+    "native/mobile/Cargo.toml"
 ]
 
 [profile.dev.package."*"]
@@ -39,10 +39,6 @@ codegen-units = 1
 strip = true
 
 [features]
-default = ["dev"]
-dev = [
-    "debug/dev"
-]
 
 [dependencies]
 # Please don't forget the way by which the rust compiler works!
@@ -55,17 +51,43 @@ dev = [
 #   rust compiler should keep you aware from missing feature, sometimes
 #   it can not happen..)
 bevy = { version = "*", default-features = false, features = [
-    # Needed by debug (Wiraframe feature) & player crates
+    # Needed by `debug` & `player` | Wireframe & PbrBundle require pbr
     "bevy_pbr",
+    # Needed by `states` | TextBundle & TextStyle require bevy_text to work
+    "bevy_text",
+    # Needed by `states` | TextBundle require bevy_ui to work
+    "bevy_ui",
+    # Camera3dBundle with Tonemapping require tonemapping_luts to entirely work
+    "tonemapping_luts",
+    # Enable built in global state machines
+    "bevy_state",
+    # Enables multithreaded parallelism in the engine. Removing it forces all engine tasks to run on a single thread.
+    "multi_threaded",
+    # "webgl2", Use in the wasm native package
+    # Provides rendering functionality
+    "bevy_render",
+    # Required for bevy_asset_loader when loading PNG assets
+    "png",
+    # Required for TextStyle which isn't using a local text font
+    "default_font",
+    # Fixes the player unlinear acceleration/max speed
+    "bevy_scene",
+]}
+avian3d = { version = "*", default-features = false, features = [
+    "3d",
+    "parry-f32",
+    "collider-from-mesh",
+    "debug-plugin",
+    "parallel",
 ]}
 
 audio = { path = "crates/audio" }
 camera_system = { path = "crates/camera_system" }
-debug = { path = "crates/debug" }
 player = { path = "crates/player" }
 states = { path = "crates/states" }
 ui = { path = "crates/ui" }
 window_manager = { path = "crates/window_manager" }
 world = { path = "crates/world" }
 
-avian3d = "0.1.2"
+[target.'cfg(debug_assertions)'.dependencies]
+debug = { path = "crates/debug" }

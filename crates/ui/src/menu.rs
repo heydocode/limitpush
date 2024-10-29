@@ -40,7 +40,7 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
                 },
                 ..default()
             },
-            Name::new("Menu"), // Why is that not working
+            Name::new("Menu"),
             Menu,
         ))
         .with_children(|children| {
@@ -87,7 +87,7 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
                 ..default()
             },
             Menu,
-            Name::new("Menu Bottom"), // Why is that not working
+            Name::new("Menu Bottom"),
         ))
         .with_children(|children| {
             children
