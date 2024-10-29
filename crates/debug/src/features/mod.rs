@@ -13,7 +13,6 @@ pub mod adapter_debug;
 #[cfg(not(any(target_os = "ios", target_os = "android", target_family = "wasm")))]
 pub mod panic_catcher;
 
-#[cfg(feature = "avian-debug")]
 #[cfg(not(any(target_os = "ios", target_os = "android", target_family = "wasm")))]
 pub mod avian_debug;
 
@@ -31,7 +30,6 @@ pub fn plugin(app: &mut App) {
         debug_menu::plugin,
         #[cfg(not(any(target_os = "android", target_os = "ios", target_family = "wasm")))]
         wireframe::plugin,
-        #[cfg(feature = "avian-debug")]
         #[cfg(not(any(target_os = "ios", target_os = "android", target_arch = "wasm32")))]
         avian_debug::plugin,
         #[cfg(not(any(target_os = "ios", target_os = "android", target_arch = "wasm32")))]

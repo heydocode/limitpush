@@ -39,10 +39,6 @@ codegen-units = 1
 strip = true
 
 [features]
-default = ["dev"]
-dev = [
-    "debug/dev"
-]
 
 [dependencies]
 # Please don't forget the way by which the rust compiler works!
@@ -70,19 +66,28 @@ bevy = { version = "*", default-features = false, features = [
     # "webgl2", Use in the wasm native package
     # Provides rendering functionality
     "bevy_render",
+    # Required for bevy_asset_loader when loading PNG assets
+    "png",
+    # Required for TextStyle which isn't using a local text font
+    "default_font",
+    # Fixes the player unlinear acceleration/max speed
+    "bevy_scene",
 ]}
 avian3d = { version = "*", default-features = false, features = [
-    # "collider-from-mesh",
-    # "debug-plugin",
-    # "parallel",
-    # "3d",
+    "3d",
+    "parry-f32",
+    "collider-from-mesh",
+    "debug-plugin",
+    "parallel",
 ]}
 
 audio = { path = "crates/audio" }
 camera_system = { path = "crates/camera_system" }
-debug = { path = "crates/debug" }
 player = { path = "crates/player" }
 states = { path = "crates/states" }
 ui = { path = "crates/ui" }
 window_manager = { path = "crates/window_manager" }
 world = { path = "crates/world" }
+
+[target.'cfg(debug_assertions)'.dependencies]
+debug = { path = "crates/debug" }

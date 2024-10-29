@@ -5,8 +5,6 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "*", default-features = false }
-bevy_asset_loader = { version = "*", default-features = false, features = [
-    "3d"
-]}
+bevy_asset_loader = { version = "*", default-features = false }
 bevy_kira_audio = { version = "*", default-features = false }
 bevy_pipelines_ready = { version = "*", default-features = false }

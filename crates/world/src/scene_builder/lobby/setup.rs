@@ -11,7 +11,7 @@ fn spawn_level(queued_objects: ResMut<QueuedObjects>) {
         form: "cube".to_string(),
         variant: 1,
         size: 2.0,
-        position: (0.0, 1.0, 0.0),
+        position: (0.0, 5.0, 0.0),
         name: "Cube".to_string(),
     });
 
@@ -19,7 +19,7 @@ fn spawn_level(queued_objects: ResMut<QueuedObjects>) {
         form: "torus".to_string(),
         variant: 3,
         size: 10.0,
-        position: (0.0, 0.0, 3.0),
+        position: (0.0, 10.0, 3.0),
         name: "Torus".to_string(),
     });
 
