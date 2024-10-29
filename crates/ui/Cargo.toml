@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "*", default-features = false }
-webbrowser = "1.0.2"
+webbrowser = { version = "*", default-features = false }
 
 # Internal crates
 # Avoid them to escape cyclic dependencies

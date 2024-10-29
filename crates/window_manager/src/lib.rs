@@ -1,20 +1,27 @@
 #![allow(clippy::type_complexity)]
 
+#![allow(unused_imports)]
+
 pub mod window;
 
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow; // Importing the PrimaryWindow component for window management.
+#[cfg(not(target_family = "wasm"))]
 use bevy::winit::WinitWindows;
 use std::io::Cursor; // Used to create an in-memory cursor for the image data.
+#[cfg(not(target_family = "wasm"))]
 use winit::window::Icon; // Importing the Icon type for window icon management. // Winit is a window management library that Bevy uses for window handling.
 
 pub fn plugin(app: &mut App) {
+    #[cfg(not(target_family = "wasm"))]
     app.add_plugins(window::plugin);
     // Register the system to set the window icon on startup.
+    #[cfg(not(target_family = "wasm"))]
     app.add_systems(Startup, set_window_icon);
 }
 
 // This function sets the window icon for Windows and X11 (Linux).
+#[cfg(not(target_family = "wasm"))]
 fn set_window_icon(
     windows: NonSend<WinitWindows>, // NonSend allows this resource to be used without sending it between threads.
     primary_window: Query<Entity, With<PrimaryWindow>>, // Query to get the entity representing the primary window.

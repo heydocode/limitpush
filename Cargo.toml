@@ -16,7 +16,7 @@ members = [
     "crates/ui", 
     "crates/window_manager", 
     "crates/world",
-    "mobile"
+    "native/mobile/Cargo.toml"
 ]
 
 [profile.dev.package."*"]
@@ -55,8 +55,27 @@ dev = [
 #   rust compiler should keep you aware from missing feature, sometimes
 #   it can not happen..)
 bevy = { version = "*", default-features = false, features = [
-    # Needed by debug (Wiraframe feature) & player crates
+    # Needed by `debug` & `player` | Wireframe & PbrBundle require pbr
     "bevy_pbr",
+    # Needed by `states` | TextBundle & TextStyle require bevy_text to work
+    "bevy_text",
+    # Needed by `states` | TextBundle require bevy_ui to work
+    "bevy_ui",
+    # Camera3dBundle with Tonemapping require tonemapping_luts to entirely work
+    "tonemapping_luts",
+    # Enable built in global state machines
+    "bevy_state",
+    # Enables multithreaded parallelism in the engine. Removing it forces all engine tasks to run on a single thread.
+    "multi_threaded",
+    # "webgl2", Use in the wasm native package
+    # Provides rendering functionality
+    "bevy_render",
+]}
+avian3d = { version = "*", default-features = false, features = [
+    # "collider-from-mesh",
+    # "debug-plugin",
+    # "parallel",
+    # "3d",
 ]}
 
 audio = { path = "crates/audio" }
@@ -67,5 +86,3 @@ states = { path = "crates/states" }
 ui = { path = "crates/ui" }
 window_manager = { path = "crates/window_manager" }
 world = { path = "crates/world" }
-
-avian3d = "0.1.2"
