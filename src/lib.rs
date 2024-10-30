@@ -38,7 +38,7 @@ impl Plugin for GamePlugin {
             states::plugin, // Screen state.
             world::plugin, // World spawn.
             ui::plugin,    // UI handling.
-            #[cfg(debug_assertions)]
+            #[cfg(feature = "debug")]
             debug::plugin,
         ));
     }

@@ -9,7 +9,7 @@ name = "mobile"
 crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
-limitpush = { path = ".." } # ToDo
+limitpush = { path = "../" } # ToDo
 bevy = { version = "*", default-features = false }
 
 # As long as Kira doesn't expose a feature for this, we need to enable it

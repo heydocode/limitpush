@@ -10,4 +10,3 @@ avian3d = { version = "*", default-features = false }
 # Internal crates
 # Avoid them to escape cyclic dependencies
 states = { path = "../states"} # Dependency crate (= safe)
-player = { path = "../player"} # Dependency & dependent crate (= be aware of cyclic dependencies issue)

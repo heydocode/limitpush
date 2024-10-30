@@ -71,10 +71,7 @@ fn main() {
                 }),
         ))
         .add_plugins((
-            // Just make sure the plugin isn't running
-            // on wasm builds (trunk should ignore this
-            // file but anyway)
-            #[cfg(not(target_family = "wasm"))]
+            #[cfg(feature = "desktop")]
             window_manager::plugin,
             GamePlugin, // Add the GamePlugin, which contains the main game logic.
         ))

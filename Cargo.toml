@@ -16,17 +16,24 @@ members = [
     "crates/ui", 
     "crates/window_manager", 
     "crates/world",
-    "native/mobile/Cargo.toml"
+    "mobile",
 ]
 
 [profile.dev.package."*"]
 opt-level = 3
 
 [profile.dev]
-opt-level = 1
+debug = true
+strip = "none"
+overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 256
+rpath = false
 
 [profile.release]
-opt-level = "s"
+opt-level = "z"
 lto = true
 codegen-units = 1
 strip = true
@@ -39,9 +46,15 @@ codegen-units = 1
 strip = true
 
 [features]
+default = [
+    "debug",
+    "desktop",
+]
+debug = ["dep:debug", "avian3d/debug-plugin",]
+desktop = ["dep:window_manager"]
 
 [dependencies]
-# Please don't forget the way by which the rust compiler works!
+# Please don't forget the way by which the rust linkers works!
 # If a dependency feature is set here, every internal crate of this
 #   project will have this feature if it has this dependency!
 # For the best readability of this project, there will be a mention
@@ -70,14 +83,14 @@ bevy = { version = "*", default-features = false, features = [
     "png",
     # Required for TextStyle which isn't using a local text font
     "default_font",
-    # Fixes the player unlinear acceleration/max speed
+    # Fixes the player unlinear acceleration/unstable max speed
     "bevy_scene",
 ]}
 avian3d = { version = "*", default-features = false, features = [
     "3d",
+    # Is parry-f32 used?
     "parry-f32",
     "collider-from-mesh",
-    "debug-plugin",
     "parallel",
 ]}
 
@@ -86,8 +99,7 @@ camera_system = { path = "crates/camera_system" }
 player = { path = "crates/player" }
 states = { path = "crates/states" }
 ui = { path = "crates/ui" }
-window_manager = { path = "crates/window_manager" }
 world = { path = "crates/world" }
 
-[target.'cfg(debug_assertions)'.dependencies]
-debug = { path = "crates/debug" }
+debug = { path = "crates/debug", optional = true }
+window_manager = { path = "crates/window_manager", optional = true }
