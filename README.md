@@ -2,6 +2,10 @@
 
 Welcome to **LimitPush**: a modular, high-performance game template for the [Bevy game engine](https://bevyengine.org/), designed with both flexibility and ease of use in mind. This project is a work in progress, but it's making rapid strides towards a stable, feature-rich foundation for 2D and 3D Bevy games.
 
+## Technologies
+
+This project uses [`bevy`](https://bevyengine.org) as a **game framework** and its **community crates** by organizing everything in the **rusty** way. So, this project is written in rust, with some script and web components for automatic updates/builds and [`wasm`](https://trunkrs.dev/) builds.
+
 ## 🚀 About the Project
 
 **LimitPush** aims to be a universal template that enables rapid development and easy extension. By leveraging a **modular crate architecture**, it offers:
@@ -46,6 +50,6 @@ LimitPush is currently **unstable** as foundational work is completed, so expect
 
 ## Feedback & Community
 
-Feedback is crucial to making LimitPush a valuable tool. Feel free to reach out in the issues section or connect with me on Discord (heydo_code)!
+Feedback is crucial to making LimitPush a valuable tool. Feel free to reach out in the issues section!
 
 Let’s build something amazing together: stay tuned for updates, and happy coding! 🎮
