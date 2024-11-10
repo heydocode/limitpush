@@ -46,6 +46,6 @@ LimitPush is currently **unstable** as foundational work is completed, so expect
 
 ## Feedback & Community
 
-Feedback is crucial to making LimitPush a valuable tool. Feel free to reach out in the issues section or connect with me on Discord (heydo_code)!
+Feedback is crucial to making LimitPush a valuable tool. Feel free to reach out in the issues section!
 
 Let’s build something amazing together: stay tuned for updates, and happy coding! 🎮
