@@ -4,7 +4,7 @@ Welcome to **LimitPush**: a modular, high-performance game template for the [Bev
 
 ## Technologies
 
-This project uses [`bevy`](https://bevyengine.org) as a **game framework** and its **community crates** by organizing everything in the **rusty** way. So, this project is written in rust, with some script and web components for automatic updates/builds and [`wasm`](https://trunkrs.dev/) builds.
+This project uses [`bevy`](https://bevyengine.org) as a **game framework** and its **community crates** by organizing everything in the **rusty** way. So, this project is written in rust, with some script and web components for automatic updates/builds and [`wasm`](https://trunkrs.dev/) builds. Also, this project does graphs (check the [`Graph` section](https://github.com/heydocode/limitpush/edit/main/README.md#graph)) with automated scripts.
 
 ## 🚀 About the Project
 
@@ -43,6 +43,10 @@ LimitPush comes packed with tools and features to streamline development:
 - **Modular Design**: The game is organized into **crates** for modularity and flexibility.
 - **Debug Menu**: Includes **bevy-inspector-egui** for easy debugging and component inspection.
 - **Platform Expansion**: Plans for future support on **Raspberry Pi**, **Steam Deck**, and more.
+
+## Graph
+
+![image](depgraph/internal_crates_graph.png)
 
 ## Project Status
 
