@@ -59,7 +59,7 @@ fn main() {
                         fit_canvas_to_parent: true, // Adjust the canvas to fit its parent element.
                         // Prevent default event handling for WASM (like F5 and Ctrl+R).
                         prevent_default_event_handling: false,
-                        visible: false, // The window module is handling everything related to the window!
+                        visible: true, // The window module is handling everything related to the window!
                         ..default()     // Use default settings for the rest of the Window struct.
                     }),
                     ..default() // Use default settings for the rest of the WindowPlugin.
