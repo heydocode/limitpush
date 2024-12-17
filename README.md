@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> ### THE TEMPLATE IS IN FULL REWRITE! NO-STD & TERMINAL & STD FULL FEATURED 3D GAME! (`no-std` planned on further updates due to current bevy no-std status)
+
 # LimitPush: Bevy Game Template
 
 Welcome to **LimitPush**: a modular, high-performance game template for the [Bevy game engine](https://bevyengine.org/), designed with both flexibility and ease of use in mind. This project is a work in progress, but it's making rapid strides towards a stable, feature-rich foundation for 2D and 3D Bevy games.
