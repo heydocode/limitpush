@@ -1,0 +1,9 @@
+[package]
+name = "dynamic_obj"
+version = "0.1.0"
+edition = "2021"
+description = "Handles all dynamic (= which move) objects/entities"
+
+[dependencies]
+data = { path = "../data" }
+dep_reexp = { path = "../dep_reexp", features = ["bevy_pbr"]}

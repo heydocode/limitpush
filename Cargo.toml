@@ -7,16 +7,13 @@ publish = false
 exclude = ["dist", "build", "assets", "credits"]
 
 [workspace]
-members = [
-    "crates/audio", 
-    "crates/camera_system", 
-    "crates/debug", 
-    "crates/player", 
-    "crates/states", 
-    "crates/ui", 
-    "crates/window_manager", 
-    "crates/world",
-    "mobile",
+members = [ 
+    "crates/data",
+    "crates/cross_setup",
+    "crates/dep_reexp", 
+    "mobile", 
+    "crates/dynamic_obj", 
+    "crates/static_obj",
 ]
 
 [profile.dev.package."*"]
@@ -46,60 +43,22 @@ codegen-units = 1
 strip = true
 
 [features]
-default = [
-    "debug",
-    "desktop",
-]
-debug = ["dep:debug", "avian3d/debug-plugin",]
-desktop = ["dep:window_manager"]
+default = ["terminal"]
+
+# NATIVE (Tier 1)
+desktop = ["cross_setup/desktop"]
+mobile = ["cross_setup/mobile"]
+# + wasm, which is guessed according to target_family value
+# EXOTIC & NO-STD (Tier 2)
+terminal = ["cross_setup/terminal"]
+embedded = ["cross_setup/embedded"]
+
+# Warning: this feature is only intended to work 
+# with `desktop` platform-specific feature
+debug = []
 
 [dependencies]
-# Please don't forget the way by which the rust linkers works!
-# If a dependency feature is set here, every internal crate of this
-#   project will have this feature if it has this dependency!
-# For the best readability of this project, there will be a mention
-#   in all crates' Cargo.toml that need this feature to avoid the case
-#   when a user just copies/pastes the whole crate into his project and
-#   gets an unfixable error because of a missing feature (even if the
-#   rust compiler should keep you aware from missing feature, sometimes
-#   it can not happen..)
-bevy = { version = "*", default-features = false, features = [
-    # Needed by `debug` & `player` | Wireframe & PbrBundle require pbr
-    "bevy_pbr",
-    # Needed by `states` | TextBundle & TextStyle require bevy_text to work
-    "bevy_text",
-    # Needed by `states` | TextBundle require bevy_ui to work
-    "bevy_ui",
-    # Camera3dBundle with Tonemapping require tonemapping_luts to entirely work
-    "tonemapping_luts",
-    # Enable built in global state machines
-    "bevy_state",
-    # Enables multithreaded parallelism in the engine. Removing it forces all engine tasks to run on a single thread.
-    "multi_threaded",
-    # "webgl2", Use in the wasm native package
-    # Provides rendering functionality
-    "bevy_render",
-    # Required for bevy_asset_loader when loading PNG assets
-    "png",
-    # Required for TextStyle which isn't using a local text font
-    "default_font",
-    # Fixes the player unlinear acceleration/unstable max speed
-    "bevy_scene",
-]}
-avian3d = { version = "*", default-features = false, features = [
-    "3d",
-    # Is parry-f32 used?
-    "parry-f32",
-    "collider-from-mesh",
-    "parallel",
-]}
-
-audio = { path = "crates/audio" }
-camera_system = { path = "crates/camera_system" }
-player = { path = "crates/player" }
-states = { path = "crates/states" }
-ui = { path = "crates/ui" }
-world = { path = "crates/world" }
-
-debug = { path = "crates/debug", optional = true }
-window_manager = { path = "crates/window_manager", optional = true }
+dep_reexp = { path = "crates/dep_reexp" }
+cross_setup = { path = "crates/cross_setup" }
+static_obj = { path = "crates/static_obj" }
+dynamic_obj = { path = "crates/dynamic_obj" }

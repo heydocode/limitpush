@@ -9,14 +9,22 @@ name = "mobile"
 crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
-limitpush = { path = "../" } # ToDo
-bevy = { version = "*", default-features = false }
+limitpush = { path = "../", default-features = false, features = [
+    "mobile"
+]} # ToDo
+# You cannot use dep_reexp due to rust constraints
+bevy = { version = "0.15", default-features = false }
 
 # As long as Kira doesn't expose a feature for this, we need to enable it
 # See https://github.com/tesselode/kira/pull/51
-[target."cfg(target_os = \"android\")".dependencies.cpal]
-version = "0.15"
-features = ["oboe-shared-stdcxx"]
+[target."cfg(target_os = \"android\")".dependencies]
+cpal = { version = "0.15", features = ["oboe-shared-stdcxx"] }
+bevy = { version = "0.15", default-features = false, features = [
+    # Even if game activity is better for modern android devices,
+    # # this template is for cross-platform projects! 
+    # # + it's simpler to develop with, even if with less features
+    "android-native-activity"
+]}
 
 # See https://github.com/bevyengine/bevy/pull/12052
 [target.aarch64-apple-ios-sim.dependencies]
@@ -38,7 +46,7 @@ build_targets = [
 ]
 
 [package.metadata.android.sdk]
-min_sdk_version = 14
+min_sdk_version = 14 # Here if you use game activity, min version is ~ 20
 target_sdk_version = 35
 max_sdk_version = 34
 
