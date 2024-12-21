@@ -43,7 +43,7 @@ codegen-units = 1
 strip = true
 
 [features]
-default = ["terminal"]
+default = ["embedded"]
 
 # NATIVE (Tier 1)
 desktop = ["cross_setup/desktop"]

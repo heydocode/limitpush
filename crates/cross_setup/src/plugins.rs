@@ -5,6 +5,7 @@ use crate::terminal::TerminalRender;
 #[cfg(feature = "terminal")]
 use std::time::Duration;
 
+#[cfg(not(feature = "embedded"))]
 use dep_reexp::bevy::asset::AssetMetaCheck;
 #[cfg(feature = "terminal")]
 use dep_reexp::bevy::app::ScheduleRunnerPlugin;
