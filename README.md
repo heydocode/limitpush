@@ -1,6 +1,13 @@
+> [!IMPORTANT]  
+> ### THE TEMPLATE IS IN FULL REWRITE! NO-STD & TERMINAL & STD FULL FEATURED 3D GAME! (`no-std` planned on further updates due to current bevy no-std status)
+
 # LimitPush: Bevy Game Template
 
 Welcome to **LimitPush** – a modular, high-performance game template for the [Bevy game engine](https://bevyengine.org/), designed with flexibility and ease of use in mind. This project is a work in progress but is rapidly evolving into a stable, feature-rich foundation for developing both 2D and 3D games in Bevy.
+
+## Technologies
+
+This project uses [`bevy`](https://bevyengine.org) as a **game framework** and its **community crates** by organizing everything in the **rusty** way. So, this project is written in rust, with some script and web components for automatic updates/builds and [`wasm`](https://trunkrs.dev/) builds. Also, this project does graphs (check the [`Graph` section](https://github.com/heydocode/limitpush/blob/main/README.md#graph)) with automated scripts.
 
 ## 🚀 About the Project
 
