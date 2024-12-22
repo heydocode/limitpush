@@ -1,45 +1,46 @@
-#![allow(clippy::type_complexity)] // Allow complex types flagged by Clippy (optional).
+#![no_std]
+#![allow(clippy::type_complexity)]
 
-use avian3d::PhysicsPlugins;
-/// This project follows the structure of the `bevy_new_2d` template.
-/// For reference: https://github.com/TheBevyFlock/bevy_new_2d.
-///
-/// # Code Organization:
-///
-/// - **screens/**: Handles different UI states (e.g., main menu, pause, inventory).
-///   Manages window attributes, like cursor visibility and gameplay freezing during screens.
-///   
-/// - **game/**: Core gameplay logic when the game is in the "Playing" state (player controls, animations).
-///
-/// # Platform Targets:
-///
-/// - **main.rs**: Entry point for desktop (Windows, MacOS, Linux) and WebAssembly (WASM).
-/// - **src/mobile/src/lib.rs**: Entry point for mobile (iOS and Android).
-///
-/// You can also extend the template for custom platforms, adding platform-specific directories
-/// and functionalities as needed, such as mobile controllers or Android-specific features.
-///
-/// All code in **lib.rs** is shared across all platforms.
-use bevy::prelude::*;
+use dep_reexp::bevy::prelude::*;
+use cross_setup::CrossSetupPlugin;
+use r#static_obj::StaticObjectsPlugin;
+use dynamic_obj::DynamicObjectsPlugin;
 
-/// Core game plugin for Bevy.
-/// This manages all game-related features and systems by bundling them into the Bevy app.
 pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
-    /// The `build` function registers all necessary systems, states, and plugins for the game.
     fn build(&self, app: &mut App) {
-        // Register core game plugins
-        app.add_plugins((
-            PhysicsPlugins::default(),
-            audio::plugin, // Audio management (e.g., background music, sound effects).
-            camera_system::plugin, // Camera system management.
-            player::plugin, // Player controls, animations, and gameplay.
-            states::plugin, // Screen state.
-            world::plugin, // World spawn.
-            ui::plugin,    // UI handling.
-            #[cfg(debug_assertions)]
-            debug::plugin,
-        ));
+        #[cfg(all(
+            any(
+                all(feature = "desktop", feature = "mobile"),
+                all(feature = "desktop", target_family = "wasm"),
+                all(feature = "desktop", feature = "terminal"),
+                all(feature = "desktop", feature = "embedded"),
+
+                all(feature = "mobile", target_family = "wasm"),
+                all(feature = "mobile", feature = "terminal"),
+                all(feature = "mobile", feature = "embedded"),
+
+                all(target_family = "wasm", feature = "terminal"),
+                all(target_family = "wasm", feature = "embedded"),
+
+                all(feature = "terminal", feature = "embedded")
+            ),
+            not(clippy)
+        ))]
+        compile_error!("Please enable only one platform-specific feature! Mind about: when compiling to wasm, wasm becomes automatically a platform-specific feature.");
+
+        #[cfg(all(not(any(
+            feature = "desktop", feature = "mobile", target_family = "wasm", feature = "terminal", feature = "embedded"
+        )), not(clippy)))]
+        compile_error!("Please enable one platform-specific feature! (not needed if the compilation target is wasm)");
+
+        #[cfg(all(not(all(feature = "debug", feature = "desktop")), feature = "debug", not(clippy)))]
+        compile_error!("Feature \"debug\" is intended to work with \"desktop\" platform-specific feature!");
+
+        app.add_plugins((CrossSetupPlugin, StaticObjectsPlugin, DynamicObjectsPlugin));
+
+        #[cfg(debug_assertions)]
+        info!("Dear Developer! The LimitPush template offers astonishing cross-platform abilities (WebGL2 (WebGPU soon), Windows, MacOS, Graphics based Linux + Terminal based Linux, Android, iOS and most important: embedded! (soon)) while keeping easy debugging and extending it. But to extend its cross-platform abilities, please open an issue on github instead of modifying the code yourself (cross_setup and dep_reexp crates are very unstable on edits)!");
     }
 }

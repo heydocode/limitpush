@@ -3,7 +3,7 @@
 
 # LimitPush: Bevy Game Template
 
-Welcome to **LimitPush**: a modular, high-performance game template for the [Bevy game engine](https://bevyengine.org/), designed with both flexibility and ease of use in mind. This project is a work in progress, but it's making rapid strides towards a stable, feature-rich foundation for 2D and 3D Bevy games.
+Welcome to **LimitPush** – a modular, high-performance game template for the [Bevy game engine](https://bevyengine.org/), designed with flexibility and ease of use in mind. This project is a work in progress but is rapidly evolving into a stable, feature-rich foundation for developing both 2D and 3D games in Bevy.
 
 ## Technologies
 
@@ -11,52 +11,56 @@ This project uses [`bevy`](https://bevyengine.org) as a **game framework** and i
 
 ## 🚀 About the Project
 
-**LimitPush** aims to be a universal template that enables rapid development and easy extension. By leveraging a **modular crate architecture**, it offers:
-- **Customizability**: Adjust gameplay components like player movement, object spawners, and more.
-- **Cross-platform support**: Compatibility across mobile, web, and desktop platforms.
-- **Future-proofing**: Plans for additional platform support and optimized performance for various hardware setups.
+**LimitPush** provides a universal template that accelerates development and facilitates easy extension, aiming to be the go-to framework for building Bevy-based games. Key features include:
 
-## How You Can Help
+- **Customizability**: Easily adjust core gameplay components such as player movement, object spawners, game mechanics, and more.
+- **Cross-Platform Support**: Compatibility across mobile, web, and desktop platforms (**terminal-based** OS **supported** too!), with ongoing efforts to expand further.
+- **Future-Proofing**: Built with a vision for future platform support and optimized performance for a range of hardware setups.
 
-I’m excited to connect with contributors, testers, and supporters! Here are a few ways you can get involved:
-- **Open Issues**: Encounter a bug or have a feature request? Please share any relevant resources or references to help guide implementation.
-- **Code Contributions**: Check out the repo and submit a PR! Contributions are very welcome.
-- **Feedback and Ideas**: Share any insights or improvements you think could enhance LimitPush.
-- **General Feedback**: Your experiences using the template can help shape its direction and usability.
+## ⚙️ Key Features
 
-## Supported Platforms
+LimitPush comes packed with tools and features to streamline your development process:
 
-The template's main goals are **blazing performance** and **broad platform support**. Current compatibility includes:
+- **Modular Architecture**: The game is structured with a **modular crate system**, offering flexibility to customize and extend as needed.
+- **Platform Expansion**: Planning for future support on platforms such as **Raspberry Pi**, **Steam Deck**, and more. If you want a platform to be supported, feel free to open an issue!
+- **Cross-Platform Performance**: Designed to provide high-performance gameplay on multiple platforms, ensuring smooth experiences whether you're developing for mobile, desktop, web, or embedded (yes, it supports embedded targets too).
+
+## 🛠 How You Can Help
+
+We’re looking for contributors, testers, and supporters to help make LimitPush even better. Here’s how you can get involved:
+
+- **Open Issues**: If you find a bug or have a feature request, please open an issue and provide any relevant resources or references to help us address it.
+- **Code Contributions**: Feel free to explore the repository and submit a pull request. Your contributions are highly appreciated!
+- **Feedback and Ideas**: Share any insights, suggestions, or improvements you think could enhance LimitPush.
+- **Testing & Usage Feedback**: Your experience with the template can help us improve its direction and usability.
+
+## ✅ Supported Platforms
+
+LimitPush prioritizes **blazing performance** and **broad platform compatibility**. Current platform support includes:
 
 - **Mobile**:
-  - Partial support for Android; testing for other Android distributions and iOS is ongoing.
-
+  - Fully supported (iOS support pending testing).
+  
 - **Web**:
   - Fully supported.
 
 - **Desktop**:
-  - **MacOS**: Runs on both ARM and Intel-based systems.
-  - **Linux**: Tested on Ubuntu.
-  - **Windows**: Supported on all current builds, with testing for older versions (e.g., Windows 8) planned.
+  - **MacOS**: Fully supported.
+  - **Linux (Graphics-based)**: Fully supported.
+  - **Linux (Terminal-based)**: Fully supported.
+  - **Windows**: Fully supported.
 
-## Features
+- **Embedded**:
+  - **UEFI**: Work in progress.
+  - **MCU**: Work in progress.
+  - **Bare Metal**: Work in progress.
 
-LimitPush comes packed with tools and features to streamline development:
+## 🛠 Project Status
 
-- **Modular Design**: The game is organized into **crates** for modularity and flexibility.
-- **Debug Menu**: Includes **bevy-inspector-egui** for easy debugging and component inspection.
-- **Platform Expansion**: Plans for future support on **Raspberry Pi**, **Steam Deck**, and more.
+LimitPush is **currently unstable** as foundational work is still being finalized. Expect occasional breaking changes during development. A **stable** release is planned as we approach feature completion.
 
-## Graph
+## 🌱 Community & Feedback
 
-![image](depgraph/internal_crates_graph.png)
+Your feedback is essential to making LimitPush a valuable tool for game developers. Feel free to contribute, ask questions, or provide suggestions in the issues section.
 
-## Project Status
-
-LimitPush is currently **unstable** as foundational work is completed, so expect potential breaking changes. A **stable** release is on the roadmap!
-
-## Feedback & Community
-
-Feedback is crucial to making LimitPush a valuable tool. Feel free to reach out in the issues section!
-
-Let’s build something amazing together: stay tuned for updates, and happy coding! 🎮
+Join the community, stay tuned for updates, and let’s build something amazing together. Happy coding! 🎮

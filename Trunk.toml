@@ -55,12 +55,6 @@ no_error_reporting = false
 # Protocol used for autoreload WebSockets connection.
 ws_protocol = "ws"
 
-[clean]
-# The output dir for all final assets.
-dist = "trunk_build"
-# Optionally perform a cargo clean.
-cargo = false
-
 [tools]
 # Force wasm-bindgen to be of the newest version
 wasm-bindgen = "*"

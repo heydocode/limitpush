@@ -157,12 +157,7 @@ rustflags = [
   # "-Zthreads=0",
 ]
 
-[target.wasm32-unknown-unknown]
-rustflags = [
-  # "--cfg=web_sys_unstable_apis"
-]
-
-# Optional: Uncommenting the following improves compile times, but reduces the amount of debug info to 'line number tables only'
-# In most cases the gains are negligible, but if you are on macOS and have slow compile times you should see significant gains.
-[profile.dev]
-debug = 1
+[alias]
+run-d = "run --no-default-features --features=desktop"
+run-dd = "run --no-default-features --features=desktop,debug"
+run-t = "run --no-default-features --features=terminal"

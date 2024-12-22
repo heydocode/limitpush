@@ -3,7 +3,7 @@
         "scope": "rust",
         "prefix": "plugin",
         "body": [
-            "use bevy::prelude::*;",
+            "use dep_reexp::bevy::prelude::*;",
             "",
             "pub(super) fn plugin(app: &mut App) {",
             "\t$0",
