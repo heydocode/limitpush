@@ -43,8 +43,6 @@ codegen-units = 1
 strip = true
 
 [features]
-# default = ["embedded"]
-
 # NATIVE (Tier 1)
 desktop = ["cross_setup/desktop"]
 mobile = ["cross_setup/mobile"]
@@ -55,7 +53,7 @@ embedded = ["cross_setup/embedded"]
 
 # Warning: this feature is only intended to work 
 # with `desktop` platform-specific feature
-debug = []
+debug = ["cross_setup/debug", "dynamic_obj/debug"]
 
 [dependencies]
 dep_reexp = { path = "crates/dep_reexp" }

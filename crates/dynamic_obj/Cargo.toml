@@ -4,6 +4,12 @@ version = "0.1.0"
 edition = "2021"
 description = "Handles all dynamic (= which move) objects/entities"
 
+[features]
+# COMMENT This crate is handling dynamic entities,
+# COMMENT which can be deleted on the fly, that's why
+# COMMENT we need to gracefully handle everything when debug
+debug = []
+
 [dependencies]
 data = { path = "../data" }
 dep_reexp = { path = "../dep_reexp", features = ["bevy_pbr"]}

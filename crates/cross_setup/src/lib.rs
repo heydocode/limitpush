@@ -6,6 +6,10 @@ pub(crate) mod std;
 pub(crate) mod terminal;
 mod plugins;
 use plugins::PluginsSetup;
+#[cfg(all(feature = "debug", feature = "desktop"))]
+mod debug;
+#[cfg(all(feature = "debug", feature = "desktop"))]
+use debug::DebugPlugin;
 use dep_reexp::bevy::prelude::*;
 
 pub struct CrossSetupPlugin;
@@ -13,5 +17,7 @@ pub struct CrossSetupPlugin;
 impl Plugin for CrossSetupPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(PluginsSetup);
+        #[cfg(all(feature = "debug", feature = "desktop"))]
+        app.add_plugins(DebugPlugin);
     }
 }

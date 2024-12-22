@@ -22,11 +22,63 @@
             }
         },
         {
-            "label": "Run native release",
+            "label": "Run desktop release",
             "type": "cargo",
             "command": "run",
             "args": [
                 "--release",
+                "--features=desktop",
+                "--no-default-features"
+            ],
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Run mobile release",
+            "type": "cargo",
+            "command": "apk",
+            "args": [
+                "run",
+                "--release",
+                "--features=mobile",
+                "--no-default-features"
+            ],
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Run desktop debug",
+            "type": "cargo",
+            "command": "run",
+            "args": [
+                "--features=desktop,debug",
+                "--no-default-features"
+            ],
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Run terminal release",
+            "type": "cargo",
+            "command": "run",
+            "args": [
+                "--release",
+                "--features=terminal",
                 "--no-default-features"
             ],
             "presentation": {
@@ -64,7 +116,6 @@
             "args": [
                 "serve",
                 "--release",
-                "--no-default-features"
             ],
             "presentation": {
                 "clear": true

@@ -158,6 +158,6 @@ rustflags = [
 ]
 
 [alias]
-run-d = "run --no-default-features --features desktop"
-run-dd = "run --no-default-features --features desktop debug"
-run-t = "run --no-default-features --features terminal"
+run-d = "run --no-default-features --features=desktop"
+run-dd = "run --no-default-features --features=desktop,debug"
+run-t = "run --no-default-features --features=terminal"

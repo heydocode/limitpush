@@ -1,5 +1,111 @@
 {
-    // Allow `rust-analyzer` and `cargo` to run simultaneously.
-    // This uses extra storage space, so consider commenting it out.
-    "rust-analyzer.cargo.targetDir": true
+  // Allow `rust-analyzer` and `cargo` to run simultaneously.
+  // This uses extra storage space, so consider commenting it out.
+  "rust-analyzer.cargo.targetDir": true,
+  "todo-tree.highlights.defaultHighlight": {
+      "icon": "alert",
+      "type": "text-and-comment",
+      "foreground": "#000000",
+      "background": "#FFFFFF",
+      "opacity": 50,
+      "iconColour": "#0000FF",
+      "gutterIcon": true
+  },
+  "todo-tree.highlights.customHighlight": {
+      "TODO": {
+          "icon": "checkbox",
+          "foreground": "#000000",
+          "background": "#FFFF00",
+          "iconColour": "#FFFF00"
+      },
+      "NOTE": {
+          "icon": "note",
+          "foreground": "#FFFFFF",
+          "background": "#6495ED",
+          "iconColour": "#6495ED"
+      },
+      "USEFUL": {
+          "icon": "verified",
+          "foreground": "#000000",
+          "background": "#66CDAA",
+          "iconColour": "#66CDAA"
+      },
+      "COMMENT": {
+          "icon": "comment",
+          "foreground": "#FFFFFF",
+          "background": "#808080",
+          "iconColour": "#FFFFFF"
+      },
+      "LEARN": {
+          "icon": "bookmark",
+          "foreground": "#FFFFFF",
+          "background": "#FF69B4",
+          "iconColour": "#FF69B4"
+      },
+      "FIXME": {
+          "icon": "tools",
+          "foreground": "#DC143C",
+          "background": "#DEB887",
+          "iconColour": "#DEB887"
+      },
+      "RECHECK": {
+          "icon": "codescan",
+          "foreground": "#FFFFFF",
+          "background": "#D2691E",
+          "iconColour": "#D2691E"
+      },
+      "INCOMPLETE": {
+          "icon": "alert",
+          "foreground": "#FFFFFF",
+          "background": "#C71585",
+          "iconColour": "#C71585"
+      },
+      "BUG": {
+          "icon": "bug",
+          "foreground": "#FFFFFF",
+          "background": "#DC143C",
+          "iconColour": "#DC143C"
+      },
+      "SEE NOTES": {
+          "icon": "note",
+          "foreground": "#FFFFFF",
+          "background": "#008080",
+          "iconColour": "#008080"
+      },
+      "POST": {
+          "icon": "share",
+          "foreground": "#FFFFFF",
+          "background": "#008000",
+          "iconColour": "#008000"
+      },
+      "[ ]": {
+          "icon": "check",
+          "foreground": "#000000",
+          "background": "#FFFFFF",
+          "iconColour": "#FFFF00"
+      },
+      "[x]": {
+          "icon": "check",
+          "foreground": "#FFFFFF",
+          "background": "#008000",
+          "iconColour": "#008000"
+      }
+  },
+  "todo-tree.general.tags": [
+      "BUG",
+      "SEE NOTES",
+      "HACK",
+      "FIXME",
+      "RECHECK",
+      "INCOMPLETE",
+      "TODO",
+      "NOTE",
+      "POST",
+      "USEFUL",
+      "LEARN",
+      "COMMENT",
+      "[ ]",
+      "[x]"
+  ],
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS).*(\\n\\s*//\\s{2,}.*)*"
 }

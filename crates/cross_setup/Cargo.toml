@@ -13,6 +13,8 @@ mobile = ["dep_reexp/mobile"]
 terminal = ["dep_reexp/terminal"]
 embedded = ["dep_reexp/embedded"]
 
+debug = ["dep_reexp/bevy_remote"]
+
 [dependencies]
 data = { path = "../data" }
 dep_reexp = { path = "../dep_reexp" }

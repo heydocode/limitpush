@@ -20,6 +20,10 @@ use dep_reexp::bevy::winit::WinitPlugin;
 use dep_reexp::bevy_ratatui::RatatuiPlugins;
 #[cfg(feature = "terminal")]
 use dep_reexp::bevy_ratatui_render::RatatuiCameraPlugin;
+#[cfg(feature = "desktop")]
+use dep_reexp::bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
+#[cfg(feature = "desktop")]
+use dep_reexp::bevy::render::RenderPlugin;
 
 pub struct PluginsSetup;
 

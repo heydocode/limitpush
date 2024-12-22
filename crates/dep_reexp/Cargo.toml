@@ -34,6 +34,7 @@ terminal = [
 embedded = []
 
 bevy_pbr = ["bevy/bevy_pbr"]
+bevy_remote = ["bevy/bevy_remote"]
 
 [dependencies]
 # Please mind that features are global and affect

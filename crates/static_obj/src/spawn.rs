@@ -12,5 +12,5 @@ impl Plugin for SpawnStaticObjects {
 fn setup(
     mut commands: Commands,
 ) {
-    commands.spawn((PointLight::default(), Light, Transform::from_xyz(3., 4., 6.)));
+    commands.spawn((PointLight::default(), Light, Transform::from_xyz(3., 4., 6.), Name::from("Light")));
 }

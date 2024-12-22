@@ -21,6 +21,7 @@ fn setup(
             base_color: Color::srgb(0.6, 0.7, 0.9),
             ..Default::default()
         })),
+        Name::from("Cube"),
     ));
     commands.spawn((
         Mesh3d(meshes.add(Cuboid::new(15., 15., 1.))),
