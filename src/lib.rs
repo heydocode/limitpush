@@ -40,7 +40,7 @@ impl Plugin for GamePlugin {
 
         app.add_plugins((CrossSetupPlugin, StaticObjectsPlugin, DynamicObjectsPlugin));
 
-        #[cfg(debug_assertions)]
+        #[cfg(feature = "debug")]
         info!("Dear Developer! The LimitPush template offers astonishing cross-platform abilities (WebGL2 (WebGPU soon), Windows, MacOS, Graphics based Linux + Terminal based Linux, Android, iOS and most important: embedded! (soon)) while keeping easy debugging and extending it. But to extend its cross-platform abilities, please open an issue on github instead of modifying the code yourself (cross_setup and dep_reexp crates are very unstable on edits)!");
     }
 }
