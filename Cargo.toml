@@ -1,14 +1,13 @@
 [package]
-name = "limitpush" # Todo
+name = "limitpush" # BRANDING: Change according to your project!
 version = "0.1.0"
-authors = ["heydocode <heydocode@outlook.fr>"] # Todo
+authors = ["heydocode"] # BRANDING: Change according to your project!
 edition = "2021"
 publish = false
 exclude = ["dist", "build", "assets", "credits"]
 
 [workspace]
 members = [ 
-    "crates/data",
     "crates/cross_setup",
     "crates/dep_reexp", 
     "mobile", 
