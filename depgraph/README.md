@@ -25,6 +25,7 @@ To run these scripts, you’ll need **Graphviz** installed on your system, as th
 1. Install Graphviz.
 2. Open `update_graphs.bat` and adjust the `dot` variable to the location of `dot.exe`.
 3. Run the script:
+
    ```powershell
    .\scripts\update_graphs.bat
    ```
@@ -34,6 +35,7 @@ To run these scripts, you’ll need **Graphviz** installed on your system, as th
 1. Install Graphviz.
 2. Open `update_graphs.sh` and set the `dot` variable to the location of `dot` on your system.
 3. Make the script executable and run it:
+
    ```bash
    chmod +x ./scripts/update_graphs.sh
    ./scripts/update_graphs.sh
