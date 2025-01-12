@@ -5,7 +5,7 @@ pub use bevy;
 #[cfg(feature = "terminal")]
 pub use bevy_ratatui;
 #[cfg(feature = "terminal")]
-pub use bevy_ratatui_render;
+pub use bevy_ratatui_camera;
 #[cfg(feature = "terminal")]
 pub use crossterm;
 #[cfg(feature = "terminal")]

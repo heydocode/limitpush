@@ -5,7 +5,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use dep_reexp::bevy::app::{App, AppExit};
-use limitpush::GamePlugin;
+use limitpush::GamePlugin; // BRANDING: Change according to your project!
 
 fn main() -> AppExit {
     App::new().add_plugins(GamePlugin).run()

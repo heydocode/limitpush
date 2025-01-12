@@ -9,6 +9,7 @@ description = "Configures the entire app according to platform-specific features
 desktop = ["dep_reexp/desktop"]
 mobile = ["dep_reexp/mobile"]
 # + wasm, which is guessed according to target_family value
+
 # EXOTIC & NO-STD (Tier 2)
 terminal = ["dep_reexp/terminal"]
 embedded = ["dep_reexp/embedded"]
@@ -16,5 +17,4 @@ embedded = ["dep_reexp/embedded"]
 debug = ["dep_reexp/bevy_remote"]
 
 [dependencies]
-data = { path = "../data" }
 dep_reexp = { path = "../dep_reexp" }

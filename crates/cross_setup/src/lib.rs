@@ -12,6 +12,9 @@ mod debug;
 use debug::DebugPlugin;
 use dep_reexp::bevy::prelude::*;
 
+// I don't know why, but it fixes an error
+pub(crate) use dep_reexp::bevy::ecs as bevy_ecs;
+
 pub struct CrossSetupPlugin;
 
 impl Plugin for CrossSetupPlugin {

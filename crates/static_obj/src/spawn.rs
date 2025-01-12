@@ -1,5 +1,5 @@
 use dep_reexp::bevy::prelude::*;
-use data::components::Light;
+use dep_reexp::bevy::ecs as bevy_ecs;
 
 pub struct SpawnStaticObjects;
 
@@ -8,6 +8,9 @@ impl Plugin for SpawnStaticObjects {
         app.add_systems(PreStartup, setup);
     }
 }
+
+#[derive(Component)]
+pub struct Light;
 
 fn setup(
     mut commands: Commands,

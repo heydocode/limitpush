@@ -18,3 +18,8 @@ script_logs/*
 
 # Remove the temporal output.log, used for scripts
 output.log
+
+# Don't include local file history
+.history/*
+
+dist/*

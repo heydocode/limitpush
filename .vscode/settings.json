@@ -89,6 +89,12 @@
           "foreground": "#FFFFFF",
           "background": "#008000",
           "iconColour": "#008000"
+      },
+      "BRANDING": {
+          "icon": "alert",
+          "foreground": "#FFFFFF",
+          "background": "#C71585",
+          "iconColour": "#C71585"
       }
   },
   "todo-tree.general.tags": [
@@ -105,7 +111,8 @@
       "LEARN",
       "COMMENT",
       "[ ]",
-      "[x]"
+      "[x]",
+      "BRANDING" // This project is a template, so all branding occurences should be trackable in order to start a project rapidly
   ],
   "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS).*(\\n\\s*//\\s{2,}.*)*"
 }

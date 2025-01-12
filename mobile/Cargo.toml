@@ -18,7 +18,8 @@ bevy = { version = "0.15", default-features = false }
 # As long as Kira doesn't expose a feature for this, we need to enable it
 # See https://github.com/tesselode/kira/pull/51
 [target."cfg(target_os = \"android\")".dependencies]
-cpal = { version = "0.15", features = ["oboe-shared-stdcxx"] }
+# Redundant explicit dependency
+# cpal = { version = "0.15", features = ["oboe-shared-stdcxx"] }
 bevy = { version = "0.15", default-features = false, features = [
     # Even if game activity is better for modern android devices,
     # # this template is for cross-platform projects! 
@@ -40,9 +41,9 @@ strip = "strip"
 resources = "../build/android/res"
 build_targets = [ 
     "armv7-linux-androideabi",
-    # "aarch64-linux-android",
-    # "i686-linux-android",
-    # "x86_64-linux-android"
+    "aarch64-linux-android",
+    "i686-linux-android",
+    "x86_64-linux-android"
 ]
 
 [package.metadata.android.sdk]

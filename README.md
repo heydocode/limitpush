@@ -1,13 +1,14 @@
+# LimitPush
+
 > [!IMPORTANT]  
-> ### THE TEMPLATE IS IN FULL REWRITE! NO-STD & TERMINAL & STD FULL FEATURED 3D GAME! (`no-std` planned on further updates due to current bevy no-std status)
+>
+> ## THE TEMPLATE IS IN FULL REWRITE! TERMINAL & STD FULL FEATURED 3D TEMPLATE! (`no-std` planned on further updates due to current Bevy no-std status)
 
-# LimitPush: Bevy Game Template
-
-Welcome to **LimitPush** – a modular, high-performance game template for the [Bevy game engine](https://bevyengine.org/), designed with flexibility and ease of use in mind. This project is a work in progress but is rapidly evolving into a stable, feature-rich foundation for developing both 2D and 3D games in Bevy.
+Welcome to **LimitPush** – a modular, high-performance cross-platform template for the [Bevy game engine](https://bevyengine.org/), designed with flexibility and ease of use in mind. This project is a work in progress but is rapidly evolving into a stable, feature-rich foundation for developing both 2D and 3D games in Bevy.
 
 ## Technologies
 
-This project uses [`bevy`](https://bevyengine.org) as a **game framework** and its **community crates** by organizing everything in the **rusty** way. So, this project is written in rust, with some script and web components for automatic updates/builds and [`wasm`](https://trunkrs.dev/) builds. Also, this project does graphs (check the [`Graph` section](https://github.com/heydocode/limitpush/blob/main/README.md#graph)) with automated scripts.
+This project uses [`bevy`](https://bevyengine.org) as a **game framework** and its **community crates** by organizing everything in the **rusty** way. So, this project is written in Rust, with some script and web components for automatic updates/builds and [`wasm`](https://trunkrs.dev/) builds. Also, this project does graphs with automated scripts.
 
 ## 🚀 About the Project
 
@@ -24,6 +25,7 @@ LimitPush comes packed with tools and features to streamline your development pr
 - **Modular Architecture**: The game is structured with a **modular crate system**, offering flexibility to customize and extend as needed.
 - **Platform Expansion**: Planning for future support on platforms such as **Raspberry Pi**, **Steam Deck**, and more. If you want a platform to be supported, feel free to open an issue!
 - **Cross-Platform Performance**: Designed to provide high-performance gameplay on multiple platforms, ensuring smooth experiences whether you're developing for mobile, desktop, web, or embedded (yes, it supports embedded targets too).
+- **Maximum Productivity**: Comes with various tools, preconfigured VSCode, extensions recommendations, bevy basic snippets and more!
 
 ## 🛠 How You Can Help
 
@@ -58,6 +60,17 @@ LimitPush prioritizes **blazing performance** and **broad platform compatibility
 ## 🛠 Project Status
 
 LimitPush is **currently unstable** as foundational work is still being finalized. Expect occasional breaking changes during development. A **stable** release is planned as we approach feature completion.
+
+## 📝 Changelog
+
+Current Version: **v2.1.0**
+
+[`v2.1.0 changelog`](changelogs/v2.1.0.md) – This changelog file will contain a detailed log of changes, updates, and bug fixes for each version of the project. Please refer to this file for information on new features, updates, and fixes as the project evolves.
+
+
+## 🏆 Credits
+
+I want to express my gratitude to the projects and people that inspired and contributed to the creation of **LimitPush**! That's why I've created a dedicated [`CREDITS`](CREDITS.md) file to honour them all!
 
 ## 🌱 Community & Feedback
 
