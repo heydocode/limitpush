@@ -1,5 +1,5 @@
-use dep_reexp::bevy_ratatui_render::RatatuiCameraStrategy;
-use dep_reexp::bevy_ratatui_render::RatatuiCameraWidget;
+use dep_reexp::bevy_ratatui_camera::RatatuiCameraStrategy;
+use dep_reexp::bevy_ratatui_camera::RatatuiCameraWidget;
 use dep_reexp::crossterm::event::{KeyCode, KeyEventKind};
 use dep_reexp::log::LevelFilter;
 use dep_reexp::ratatui::layout::Alignment;
@@ -12,9 +12,9 @@ use dep_reexp::ratatui::widgets::Block;
 use dep_reexp::tui_logger::init_logger;
 use dep_reexp::tui_logger::set_default_level;
 use dep_reexp::tui_logger::TuiLoggerWidget;
-use dep_reexp::bevy_ratatui_render::LuminanceConfig;
-use dep_reexp::bevy_ratatui_render::RatatuiCamera;
-use dep_reexp::bevy_ratatui_render::RatatuiCameraEdgeDetection;
+use dep_reexp::bevy_ratatui_camera::LuminanceConfig;
+use dep_reexp::bevy_ratatui_camera::RatatuiCamera;
+use dep_reexp::bevy_ratatui_camera::RatatuiCameraEdgeDetection;
 use dep_reexp::bevy_ratatui::event::KeyEvent;
 use dep_reexp::bevy_ratatui::kitty::KittyEnabled;
 use dep_reexp::bevy_ratatui::terminal::RatatuiContext;
@@ -22,9 +22,9 @@ use dep_reexp::bevy::utils::error;
 use dep_reexp::bevy::diagnostic::{DiagnosticsStore, FrameTimeDiagnosticsPlugin};
 use dep_reexp::bevy::app::AppExit;
 use dep_reexp::bevy::prelude::*;
-use data::components::Camera;
-use data::resources::Flags;
 use std::io;
+
+use crate::bevy_ecs;
 
 pub struct TerminalRender;
 
@@ -40,19 +40,24 @@ impl Plugin for TerminalRender {
     }
 }
 
+#[derive(Component)]
+pub struct Camera;
+
+#[derive(Resource, Default)]
+pub struct Flags {
+    pub debug: bool,
+}
+
 fn camera_setup(mut commands: Commands) {
     commands.spawn((
-        RatatuiCamera {
-            strategy: RatatuiCameraStrategy::Luminance(LuminanceConfig {
-                luminance_scale: 7.0,
-                ..default()
-            }),
-            autoresize: true,
+        RatatuiCamera::autoresize(),
+        RatatuiCameraStrategy::Luminance(LuminanceConfig {
+            luminance_scale: 7.0,
             ..default()
-        },
+        }),
         RatatuiCameraEdgeDetection {
-            edge_color: Some(dep_reexp::ratatui::style::Color::Magenta),
-            thickness: 0.75,
+            edge_color: Some(dep_reexp::ratatui::style::Color::Black),
+            thickness: 1.0,
             normal_enabled: false,
             color_enabled: false,
             ..default()
