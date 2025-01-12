@@ -158,6 +158,12 @@ rustflags = [
 ]
 
 [alias]
+# Run an application in dev-mode over a connected mobile device
+run-m = "apk run -p mobile"
+# Run an application in dev-mode on a desktop device
 run-d = "run --no-default-features --features=desktop"
+# Run an application in dev-mode with debug features on a desktop device
 run-dd = "run --no-default-features --features=desktop,debug"
+# Run an application in dev-mode with terminal render on a desktop device
+# Terminal-based environments (e.g. Ubuntu Server) are supported!
 run-t = "run --no-default-features --features=terminal"
