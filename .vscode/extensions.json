@@ -1,11 +1,12 @@
 {
     "recommendations": [
-        "fill-labs.dependi",
-        "tamasfe.even-better-toml",
-        "rust-lang.rust-analyzer",
-        "splo.vscode-bevy-inspector",
-        "DavidAnson.vscode-markdownlint", 
-        "Gruntfuggly.todo-tree",
-        "eamodio.gitlens"
+        "fill-labs.dependi",                // Additional information about your dependencies!
+        "tamasfe.even-better-toml",         // Support for TOML file format
+        "rust-lang.rust-analyzer",          // Support for the Rust programming language
+        "splo.vscode-bevy-inspector",       // Bevy debug tool, works with debug feature
+        "DavidAnson.vscode-markdownlint",   // Support for markdown files and hints for correct display
+        "Gruntfuggly.todo-tree",            // Support for tags, most useful extension for communicating in comments!
+        "eamodio.gitlens",                  // Support for Git
+        "xyz.local-history"                 // See the history of your files, in order to backup when need
     ]
 }
