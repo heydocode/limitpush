@@ -11,5 +11,4 @@ description = "Handles all dynamic (= which move) objects/entities"
 debug = []
 
 [dependencies]
-data = { path = "../data" }
 dep_reexp = { path = "../dep_reexp", features = ["bevy_pbr"]}

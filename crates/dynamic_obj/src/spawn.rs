@@ -1,5 +1,5 @@
 use dep_reexp::bevy::prelude::*;
-use data::components::Cube;
+use dep_reexp::bevy::ecs as bevy_ecs;
 
 pub struct SpawnDynamicObjects;
 
@@ -8,6 +8,9 @@ impl Plugin for SpawnDynamicObjects {
         app.add_systems(PreStartup, setup);
     }
 }
+
+#[derive(Component)]
+pub struct Cube;
 
 fn setup(
     mut commands: Commands,
