@@ -1,6 +1,6 @@
 [build]
 # The index HTML file to drive the bundling process.
-target = "web/index.html"
+target = "index.html"
 # Build in release mode.
 release = false
 # Use a custom cargo profile. Overrides the default chosen by cargo. Ignored if the 'index.html' has one configured.
