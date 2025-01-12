@@ -5,5 +5,4 @@ edition = "2021"
 description = "Handles all static (= which don't move) objects/entities"
 
 [dependencies]
-data = { path = "../data" }
 dep_reexp = { path = "../dep_reexp", features = ["bevy_pbr"]}
