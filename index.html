@@ -1,129 +1,200 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
-    <title>LimiPush</title> <!-- ToDo -->
-    
-    <style nonce="bTKf+w+DfLpbrW3nNKvNJA==">:root {
-    /* Consider adjusting this color to match your splash screen! */
-    --loading-screen-bg-color: #282828;
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>LimitPush</title> <!-- BRANDING: Change according to your project! -->
+    <link rel="icon" href="icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(120deg, #1e1e2f, #4a4a6a); 
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
+        .launching-container {
+            text-align: center;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+            position: absolute;
+            z-index: 2;
+        }
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-}
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-.center {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+        .subtitle {
+            font-size: 1.2rem;
+            color: #d1d1f0;
+            margin-bottom: 20px;
+        }
 
-#loading-screen {
-    background-color: var(--loading-screen-bg-color);
-}
+        .lds-dual-ring {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            margin: 20px 0;
+        }
 
-.spinner {
-    width: 128px;
-    height: 128px;
-    border: 64px solid transparent;
-    border-bottom-color: #ececec;
-    border-right-color: #b2b2b2;
-    border-top-color: #787878;
-    border-radius: 50%;
-    box-sizing: border-box;
-    animation: spin 1.2s linear infinite;
-}
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            border-color: #fff transparent #fff transparent;
+            animation: spin 1.2s linear infinite;
+        }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+        .game-container {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: black;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out;
+            animation-fill-mode: forwards;
+        }
 
-    100% {
-        transform: rotate(360deg);
-    }
-}
+        #bevy {
+            width: 100%;
+            height: 100%;
+        }
 
-#bevy {
-    /* Hide Bevy app before it loads */
-    height: 0;
-}
-</style>
-    <script type="module" nonce="zaaRmOJMFCCR0jeH3dBFjA==">// taken from https://developer.chrome.com/blog/web-audio-autoplay/#moving-forward
-(function () {
-    // An array of all contexts to resume on the page
-    const audioContextList = [];
-
-    // An array of various user interaction events we should listen for
-    const userInputEventNames = [
-        'click',
-        'contextmenu',
-        'auxclick',
-        'dblclick',
-        'mousedown',
-        'mouseup',
-        'pointerup',
-        'touchend',
-        'keydown',
-        'keyup',
-    ];
-
-    // A proxy object to intercept AudioContexts and
-    // add them to the array for tracking and resuming later
-    self.AudioContext = new Proxy(self.AudioContext, {
-        construct(target, args) {
-            const result = new target(...args);
-            audioContextList.push(result);
-            return result;
-        },
-    });
-
-    // To resume all AudioContexts being tracked
-    function resumeAllContexts(event) {
-        let count = 0;
-
-        audioContextList.forEach(context => {
-            if (context.state !== 'running') {
-                context.resume();
-            } else {
-                count++;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
             }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+<link rel="modulepreload" href="./limitpush-d2626fd8089362b0.js" crossorigin=anonymous><link rel="preload" href="./limitpush-d2626fd8089362b0_bg.wasm" crossorigin=anonymous as="fetch" type="application/wasm"></head>
+
+<body>
+    <div class="launching-container">
+        <div class="title">Launching...</div> <!-- BRANDING: Change if you want to! -->
+        <div class="subtitle">Pushing the bevy boundaries!</div> <!-- BRANDING: Change if you want to! -->
+        <div class="lds-dual-ring"></div>
+    </div>
+
+    <div class="game-container">
+        <canvas id="bevy">Javascript and support for canvas is required</canvas>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loadingContainer = document.querySelector('.launching-container');
+            const gameContainer = document.querySelector('.game-container');
+            const bevyCanvas = document.getElementById('bevy');
+
+            const observer = new MutationObserver(() => {
+                if (bevyCanvas.height > 1) {
+                    setTimeout(() => {
+                        loadingContainer.style.display = 'none';
+                        gameContainer.style.display = 'flex';
+                    }, 1000);
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(bevyCanvas, { attributes: true, attributeFilter: ['height'] });
         });
 
-        // If all the AudioContexts have now resumed then we
-        // unbind all the event listeners from the page to prevent
-        // unnecessary resume attempts
-        if (count == audioContextList.length) {
-            userInputEventNames.forEach(eventName => {
-                document.removeEventListener(eventName, resumeAllContexts);
-            });
-        }
-    }
+        // Insert hack to make sound autoplay on Chrome as soon as the user interacts with the tab:
+        // https://developers.google.com/web/updates/2018/11/web-audio-autoplay#moving-forward
 
-    // We bind the resume function for each user interaction
-    // event on the page
-    userInputEventNames.forEach(eventName => {
-        document.addEventListener(eventName, resumeAllContexts);
-    });
-})();
-</script>
-    
-<script type="module" nonce="LGE9VsuCvuOYRtdPVZ7wHg==">
-import init, * as bindings from './limitpush-4c872aebd9c60296.js';
-const wasm = await init({ module_or_path: './limitpush-4c872aebd9c60296_bg.wasm' });
+        // the following function keeps track of all AudioContexts and resumes them on the first user
+        // interaction with the page. If the function is called and all contexts are already running,
+        // it will remove itself from all event listeners.
+        // [ ] Check if this even works and is useful!
+        (function () {
+            // An array of all contexts to resume on the page
+            const audioContextList = [];
+
+            // An array of various user interaction events we should listen for
+            const userInputEventNames = [
+                "click",
+                "contextmenu",
+                "auxclick",
+                "dblclick",
+                "mousedown",
+                "mouseup",
+                "pointerup",
+                "touchend",
+                "keydown",
+                "keyup",
+            ];
+
+            // A proxy object to intercept AudioContexts and
+            // add them to the array for tracking and resuming later
+            self.AudioContext = new Proxy(self.AudioContext, {
+                construct(target, args) {
+                    const result = new target(...args);
+                    audioContextList.push(result);
+                    return result;
+                },
+            });
+
+            // To resume all AudioContexts being tracked
+            function resumeAllContexts(_event) {
+                let count = 0;
+
+                audioContextList.forEach((context) => {
+                    if (context.state !== "running") {
+                        context.resume();
+                    } else {
+                        count++;
+                    }
+                });
+
+                // If all the AudioContexts have now resumed then we unbind all
+                // the event listeners from the page to prevent unnecessary resume attempts
+                // Checking count > 0 ensures that the user interaction happens AFTER the game started up
+                if (count > 0 && count === audioContextList.length) {
+                    userInputEventNames.forEach((eventName) => {
+                        document.removeEventListener(eventName, resumeAllContexts);
+                    });
+                }
+            }
+
+            // We bind the resume function for each user interaction
+            // event on the page
+            userInputEventNames.forEach((eventName) => {
+                document.addEventListener(eventName, resumeAllContexts);
+            });
+        })();
+    </script>
+
+<script type="module" nonce="R3JKD4eBZhC2FGIcDeuGmw==">
+import init, * as bindings from './limitpush-d2626fd8089362b0.js';
+const wasm = await init({ module_or_path: './limitpush-d2626fd8089362b0_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -131,32 +202,6 @@ window.wasmBindings = bindings;
 
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
-</script>
-<link rel="modulepreload" href="./limitpush-4c872aebd9c60296.js" crossorigin=anonymous><link rel="preload" href="./limitpush-4c872aebd9c60296_bg.wasm" crossorigin=anonymous as="fetch" type="application/wasm"></head>
-
-
-<body>
-    <div id="game" class="center">
-        <div id="loading-screen" class="center">
-            <span class="spinner"></span>
-        </div>
-
-        <canvas id="bevy">
-            Javascript and canvas support is required
-        </canvas>
-    </div>
-    <script type="module">
-        // Hide loading screen when the game starts.
-        const loading_screen = document.getElementById('loading-screen');
-        const bevy = document.getElementById('bevy');
-        const observer = new MutationObserver(() => {
-            if (bevy.height > 1) {
-                loading_screen.style.display = 'none';
-                observer.disconnect();
-            }
-        });
-        observer.observe(bevy, { attributeFilter: ['height'] });
-    </script>
-</body>
+</script></body>
 
 </html>
