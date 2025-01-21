@@ -1,0 +1,48 @@
+[package]
+name = "game"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+bevy_default = [
+    "bevy/bevy_render",
+    "bevy/bevy_core_pipeline",
+    "bevy/bevy_window",
+    "bevy/bevy_scene",
+    "bevy/multi_threaded",
+    "bevy/bevy_state",
+    "bevy/tonemapping_luts",
+    "bevy/bevy_winit",
+    "bevy/bevy_pbr",
+]
+
+# NATIVE (Tier 1)
+desktop = ["bevy_default"]
+mobile = ["bevy_default"]
+# [ ] Implement
+xr = []
+# + wasm, which is guessed according to target_family value
+# EXOTIC & NO-STD (Tier 2)
+terminal = [
+    "bevy_default",
+]
+embedded = []
+
+debug = ["bevy/bevy_remote"]
+
+[dependencies]
+bevy = { version = "0.15", default-features = false }
+
+[target.'cfg(target_family = "wasm")'.dependencies]
+bevy = { version = "0.15", default-features = false, features = [
+    "bevy_render",
+    "bevy_core_pipeline",
+    "bevy_window",
+    "bevy_scene",
+    "multi_threaded",
+    "bevy_state",
+    "tonemapping_luts",
+    "bevy_winit",
+    "bevy_pbr",
+    "webgl2",
+]}
