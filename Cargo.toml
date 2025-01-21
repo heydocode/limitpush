@@ -1,18 +1,16 @@
 [package]
-name = "limitpush" # BRANDING: Change according to your project!
+name = "limitpush"                               # BRANDING: Change according to your project!
 version = "0.1.0"
-authors = ["heydocode"] # BRANDING: Change according to your project!
+authors = ["heydocode"]                          # BRANDING: Change according to your project!
 edition = "2021"
 publish = false
 exclude = ["dist", "build", "assets", "credits"]
 
 [workspace]
-members = [ 
+members = [
     "crates/cross_setup",
-    "crates/dep_reexp", 
-    "mobile", 
-    "crates/dynamic_obj", 
-    "crates/static_obj",
+    "mobile",
+    "crates/game",
 ]
 
 [profile.dev.package."*"]
@@ -43,19 +41,27 @@ strip = true
 
 [features]
 # NATIVE (Tier 1)
-desktop = ["cross_setup/desktop"]
-mobile = ["cross_setup/mobile"]
+desktop = ["cross_setup/desktop", "game/desktop"]
+mobile = ["cross_setup/mobile", "game/mobile"]
+# [ ] Implement
+xr = ["cross_setup/xr", "game/xr"]
 # + wasm, which is guessed according to target_family value
 # EXOTIC & NO-STD (Tier 2)
-terminal = ["cross_setup/terminal"]
-embedded = ["cross_setup/embedded"]
+terminal = ["cross_setup/terminal", "game/terminal"]
+embedded = ["cross_setup/embedded", "game/embedded"]
 
 # Warning: this feature is only intended to work 
 # with `desktop` platform-specific feature
-debug = ["cross_setup/debug", "dynamic_obj/debug"]
+debug = [
+    "game/debug", 
+    "build_generate_graphs", # Remove if you don't need graphs, you can make this at release if you wish
+]
+
+# build.rs features
+# # Generates graphs in depgraph/
+build_generate_graphs = []
 
 [dependencies]
-dep_reexp = { path = "crates/dep_reexp" }
 cross_setup = { path = "crates/cross_setup" }
-static_obj = { path = "crates/static_obj" }
-dynamic_obj = { path = "crates/dynamic_obj" }
+game = { path = "crates/game" }
+bevy = { version = "0.15", default-features = false }
