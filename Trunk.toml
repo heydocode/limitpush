@@ -6,7 +6,7 @@ release = false
 # Use a custom cargo profile. Overrides the default chosen by cargo. Ignored if the 'index.html' has one configured.
 # cargo_profile = ""
 # The output dir for all final assets.
-dist = "trunk_build"
+# dist = "trunk_build"
 # This is needed in order to host the game on itch.io.
 public_url = "./"
 # Whether to include hash values in the output file names.
@@ -53,7 +53,7 @@ no_error_reporting = false
 # Additional headers set for responses.
 # headers = { "test-header" = "header value", "test-header2" = "header value 2" }
 # Protocol used for autoreload WebSockets connection.
-ws_protocol = "ws"
+ws_protocol = "ws" # RECHECK Please disable this for release builds!
 
 [tools]
 # Force wasm-bindgen to be of the newest version
