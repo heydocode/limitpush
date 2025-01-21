@@ -5,25 +5,27 @@ use crate::terminal::TerminalRender;
 #[cfg(feature = "terminal")]
 use std::time::Duration;
 
+#[cfg(feature = "terminal")]
+use bevy::app::ScheduleRunnerPlugin;
 #[cfg(not(feature = "embedded"))]
-use dep_reexp::bevy::asset::AssetMetaCheck;
+#[allow(unused_imports)]
+// This import is ALWAYS used, but rust-analyzer is unable to understand that
+use bevy::asset::AssetMetaCheck;
 #[cfg(feature = "terminal")]
-use dep_reexp::bevy::app::ScheduleRunnerPlugin;
+use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 #[cfg(feature = "terminal")]
-use dep_reexp::bevy::diagnostic::FrameTimeDiagnosticsPlugin;
-#[cfg(feature = "terminal")]
-use dep_reexp::bevy::log::LogPlugin;
-use dep_reexp::bevy::prelude::*;
-#[cfg(feature = "terminal")]
-use dep_reexp::bevy::winit::WinitPlugin;
-#[cfg(feature = "terminal")]
-use dep_reexp::bevy_ratatui::RatatuiPlugins;
-#[cfg(feature = "terminal")]
-use dep_reexp::bevy_ratatui_camera::RatatuiCameraPlugin;
+use bevy::log::LogPlugin;
+use bevy::prelude::*;
 #[cfg(feature = "desktop")]
-use dep_reexp::bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
+use bevy::render::settings::{RenderCreation, WgpuFeatures, WgpuSettings};
 #[cfg(feature = "desktop")]
-use dep_reexp::bevy::render::RenderPlugin;
+use bevy::render::RenderPlugin;
+#[cfg(feature = "terminal")]
+use bevy::winit::WinitPlugin;
+#[cfg(feature = "terminal")]
+use bevy_ratatui::RatatuiPlugins;
+#[cfg(feature = "terminal")]
+use bevy_ratatui_camera::RatatuiCameraPlugin;
 
 pub struct PluginsSetup;
 
@@ -58,7 +60,7 @@ impl Plugin for PluginsSetup {
 
         #[cfg(target_family = "wasm")]
         app.add_plugins((
-            DefaultPlugins 
+            DefaultPlugins
                 .set(WindowPlugin {
                     primary_window: Some(Window {
                         title: "LimitPush".to_string(),
@@ -91,7 +93,7 @@ impl Plugin for PluginsSetup {
             FrameTimeDiagnosticsPlugin,
             RatatuiPlugins::default(),
             RatatuiCameraPlugin,
-            TerminalRender
+            TerminalRender,
         ));
 
         #[cfg(feature = "embedded")]

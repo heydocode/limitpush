@@ -1,8 +1,11 @@
 use bevy::prelude::*;
 
-pub struct StdPlugin;
+// I don't know why, but it fixes an error
+use bevy::ecs as bevy_ecs;
 
-impl Plugin for StdPlugin {
+pub struct XrPlugin;
+
+impl Plugin for XrPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, camera_setup);
     }

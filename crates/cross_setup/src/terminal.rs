@@ -1,30 +1,28 @@
-use dep_reexp::bevy_ratatui_camera::RatatuiCameraStrategy;
-use dep_reexp::bevy_ratatui_camera::RatatuiCameraWidget;
-use dep_reexp::crossterm::event::{KeyCode, KeyEventKind};
-use dep_reexp::log::LevelFilter;
-use dep_reexp::ratatui::layout::Alignment;
-use dep_reexp::ratatui::layout::Constraint;
-use dep_reexp::ratatui::layout::Direction;
-use dep_reexp::ratatui::layout::Layout;
-use dep_reexp::ratatui::style::Style;
-use dep_reexp::ratatui::style::Stylize;
-use dep_reexp::ratatui::widgets::Block;
-use dep_reexp::tui_logger::init_logger;
-use dep_reexp::tui_logger::set_default_level;
-use dep_reexp::tui_logger::TuiLoggerWidget;
-use dep_reexp::bevy_ratatui_camera::LuminanceConfig;
-use dep_reexp::bevy_ratatui_camera::RatatuiCamera;
-use dep_reexp::bevy_ratatui_camera::RatatuiCameraEdgeDetection;
-use dep_reexp::bevy_ratatui::event::KeyEvent;
-use dep_reexp::bevy_ratatui::kitty::KittyEnabled;
-use dep_reexp::bevy_ratatui::terminal::RatatuiContext;
-use dep_reexp::bevy::utils::error;
-use dep_reexp::bevy::diagnostic::{DiagnosticsStore, FrameTimeDiagnosticsPlugin};
-use dep_reexp::bevy::app::AppExit;
-use dep_reexp::bevy::prelude::*;
+use bevy::app::AppExit;
+use bevy::diagnostic::{DiagnosticsStore, FrameTimeDiagnosticsPlugin};
+use bevy::prelude::*;
+use bevy::utils::error;
+use bevy_ratatui::event::KeyEvent;
+use bevy_ratatui::kitty::KittyEnabled;
+use bevy_ratatui::terminal::RatatuiContext;
+use bevy_ratatui_camera::LuminanceConfig;
+use bevy_ratatui_camera::RatatuiCamera;
+use bevy_ratatui_camera::RatatuiCameraEdgeDetection;
+use bevy_ratatui_camera::RatatuiCameraStrategy;
+use bevy_ratatui_camera::RatatuiCameraWidget;
+use crossterm::event::{KeyCode, KeyEventKind};
+use log::LevelFilter;
+use ratatui::layout::Alignment;
+use ratatui::layout::Constraint;
+use ratatui::layout::Direction;
+use ratatui::layout::Layout;
+use ratatui::style::Style;
+use ratatui::style::Stylize;
+use ratatui::widgets::Block;
 use std::io;
-
-use crate::bevy_ecs;
+use tui_logger::init_logger;
+use tui_logger::set_default_level;
+use tui_logger::TuiLoggerWidget;
 
 pub struct TerminalRender;
 
@@ -56,7 +54,7 @@ fn camera_setup(mut commands: Commands) {
             ..default()
         }),
         RatatuiCameraEdgeDetection {
-            edge_color: Some(dep_reexp::ratatui::style::Color::Black),
+            edge_color: Some(ratatui::style::Color::Black),
             thickness: 1.0,
             normal_enabled: false,
             color_enabled: false,
@@ -83,8 +81,8 @@ fn draw_scene_system(
         .split(frame.area());
 
         let mut block = Block::bordered()
-            .bg(dep_reexp::ratatui::style::Color::Rgb(0, 0, 0))
-            .border_style(Style::default().bg(dep_reexp::ratatui::style::Color::Rgb(0, 0, 0)))
+            .bg(ratatui::style::Color::Rgb(0, 0, 0))
+            .border_style(Style::default().bg(ratatui::style::Color::Rgb(0, 0, 0)))
             .title_bottom("[q for quit]")
             .title_bottom("[d for debug]")
             .title_bottom("[p for panic]")
@@ -112,7 +110,7 @@ fn draw_scene_system(
             frame.render_widget(
                 TuiLoggerWidget::default()
                     .block(Block::bordered())
-                    .style(Style::default().bg(dep_reexp::ratatui::style::Color::Reset)),
+                    .style(Style::default().bg(ratatui::style::Color::Reset)),
                 layout[1],
             );
             if let Ok(camera_widget) = ratatui_camera_widget.get_single() {
