@@ -8,10 +8,10 @@ publish = false
 name = "mobile"
 crate-type = ["staticlib", "cdylib"]
 
-[dependencies]
-limitpush = { path = "../", default-features = false, features = [
+[dependencies] 
+limitpush = { path = "../", default-features = false, features = [ # BRANDING: Change according to your project!
     "mobile"
-]} # ToDo
+]}
 # You cannot use dep_reexp due to rust constraints
 bevy = { version = "0.15", default-features = false }
 
@@ -23,37 +23,59 @@ bevy = { version = "0.15", default-features = false }
 bevy = { version = "0.15", default-features = false, features = [
     # Even if game activity is better for modern android devices,
     # # this template is for cross-platform projects! 
-    # # + it's simpler to develop with, even if with less features
+    # # + it's simpler to develop with using bevy,
+    # # even if with less features
     "android-native-activity"
 ]}
 
 # See https://github.com/bevyengine/bevy/pull/12052
 [target.aarch64-apple-ios-sim.dependencies]
-bevy = { version = "*", default-features = false, features = [
+bevy = { version = "0.15", default-features = false, features = [
     "ios_simulator",
 ] }
 
 [package.metadata.android]
-package = "heydocode.limitpush"  # ToDo
-apk_name = "LimitPush"  # ToDo same as GAME_OSX_APP_NAME in release workflow
+package = "heydocode.limitpush"  # BRANDING: Change according to your project!
+apk_name = "LimitPush"  # BRANDING: Change according to your project!
 assets = "../assets"
 strip = "strip"
 resources = "../build/android/res"
 build_targets = [ 
     "armv7-linux-androideabi",
-    "aarch64-linux-android",
-    "i686-linux-android",
-    "x86_64-linux-android"
+    # "aarch64-linux-android",
+    # "i686-linux-android",
+    # "x86_64-linux-android"
 ]
 
 [package.metadata.android.sdk]
-min_sdk_version = 14 # Here if you use game activity, min version is ~ 20
+min_sdk_version = 7 # Here if you use game activity, min version is ~ 20
 target_sdk_version = 35
 max_sdk_version = 34
 
 [package.metadata.android.application]
 icon = "@mipmap/icon"
-label = "LimitPush" # ToDo
+label = "LimitPush" # BRANDING: Change according to your project!
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.dev]
+debug = true
+strip = "none"
+opt-level = 1 # Lower for faster compile times
+overflow-checks = true
+lto = false
+incremental = true
+codegen-units = 16 # More balanced for typical development
+panic = 'unwind'
+rpath = false
 
 [profile.release]
-lto = false
+debug = false
+strip = true
+opt-level = "z"
+overflow-checks = false
+lto = "fat" # Better optimization across crates
+codegen-units = 1 # Full optimization
+panic = 'abort' # More efficient error handling
+rpath = false
