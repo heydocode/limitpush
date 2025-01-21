@@ -5,17 +5,17 @@
         <key>CFBundleDevelopmentRegion</key>
         <string>en</string>
         <key>CFBundleDisplayName</key>
-        <string>LimitPush</string> <!-- ToDo: this should be the same as your OSX app name in the release flow -->
+        <string>LimitPush</string> <!-- BRANDING: this should be the same as your OSX app name in the release flow -->
         <key>CFBundleExecutable</key>
-        <string>limitpush</string> <!-- ToDo: this should be the same as your executable name in the release flow -->
+        <string>limitpush</string> <!-- BRANDING: this should be the same as your executable name in the release flow -->
         <key>CFBundleIconFile</key>
         <string>AppIcon.icns</string>
         <key>CFBundleIdentifier</key>
-        <string>heydocode.limitpush</string> <!-- ToDo -->
+        <string>heydocode.limitpush</string> <!-- BRANDING -->
         <key>CFBundleInfoDictionaryVersion</key>
         <string>6.0</string>
         <key>CFBundleName</key>
-        <string>LimitPush</string> <!-- ToDo -->
+        <string>LimitPush</string> <!-- BRANDING -->
         <key>CFBundlePackageType</key>
         <string>APPL</string>
         <key>CFBundleShortVersionString</key>
