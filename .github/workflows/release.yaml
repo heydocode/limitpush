@@ -11,7 +11,7 @@ on:
         required: true
         type: string
 
-# ToDo: adapt names
+# BRANDING: adapt names
 env:
   # This variable is used to name release output files.
   GAME_EXECUTABLE_NAME: limitpush
