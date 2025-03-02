@@ -2,7 +2,7 @@
 
 > [!IMPORTANT]  
 >
-> ## THE TEMPLATE IS IN FULL REWRITE! TERMINAL & STD FULL FEATURED 3D TEMPLATE! (`no-std` planned on further updates due to current Bevy no-std status)
+> ## Development in progress...
 
 Welcome to **LimitPush** – a modular, high-performance cross-platform template for the [Bevy game engine](https://bevyengine.org/), designed with flexibility and ease of use in mind. This project is a work in progress but is rapidly evolving into a stable, feature-rich foundation for developing both 2D and 3D games in Bevy.
 
@@ -49,7 +49,7 @@ LimitPush prioritizes **blazing performance** and **broad platform compatibility
 - **Desktop**:
   - **MacOS**: Fully supported.
   - **Linux (Graphics-based)**: Fully supported.
-  - **Linux (Terminal-based)**: Fully supported.
+  - **Linux (Terminal-based)**: Rendering is OK, but audio and further functionality has issues.
   - **Windows**: Fully supported.
 
 - **Embedded**:
