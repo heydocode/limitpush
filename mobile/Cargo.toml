@@ -13,7 +13,7 @@ limitpush = { path = "../", default-features = false, features = [
     "mobile"
 ]} # ToDo
 # You cannot use dep_reexp due to rust constraints
-bevy = { version = "0.15", default-features = false }
+bevy = { version = "0.16", default-features = false }
 
 # As long as Kira doesn't expose a feature for this, we need to enable it
 # See https://github.com/tesselode/kira/pull/51
