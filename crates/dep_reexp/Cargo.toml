@@ -40,7 +40,7 @@ bevy_remote = ["bevy/bevy_remote"]
 # Please mind that features are global and affect
 # all internal crates!
 bevy = { version = "0.15.0", default-features = false }
-bevy_ratatui = { version = "0.7.0", optional = true }
+bevy_ratatui = { version = "0.9.0", optional = true }
 bevy_ratatui_camera = { git = "https://github.com/cxreiff/bevy_ratatui_camera", optional = true }
 crossterm = { version = "0.28.1", optional = true }
 log = { version = "0.4.22", optional = true }
